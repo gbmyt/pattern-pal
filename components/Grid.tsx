@@ -1,3 +1,4 @@
+import Button from "./Button";
 import GridPixel from "./Pixel";
 
 // todos
@@ -24,15 +25,18 @@ function Grid({ height, width }: { height?: number; width?: number }) {
     const target = e.target as HTMLInputElement;
 
     // target &&
+    // for pixel in pixels remove classes:
+    //  - bg-green-700
+    //  - text-green-700
+    // add class text-white
   }
   return (
     <>
-      <h1>Pattern Maker Grid</h1>
       <div className="flex justify-center">
         <div className=" border-solid border-2 grid grid-cols-12 w-3/6">
           {pixels && pixels.map((p, i) => <GridPixel key={i} />)}
         </div>
-        <button onClick={handleResetGrid}>Reset Grid</button>
+        <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
       </div>
     </>
   );

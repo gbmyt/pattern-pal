@@ -1,5 +1,6 @@
 import { Pattern } from "@/types/pattern";
 import { SetStateAction, useEffect } from "react";
+import Button from "./Button";
 
 function PatternForm({
   pattern,
@@ -8,15 +9,14 @@ function PatternForm({
   pattern: Pattern;
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
-  const handleSubmit: () => void = function handleSubmit() {
-    console.log("saving pattern to your account");
-  };
-
-  const handleSave: (e: React.MouseEvent) => void = function handleSave(
-    e: React.MouseEvent
-  ) {
+  function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
-    console.log("saving pattern changes");
+    console.log("saving pattern to your account");
+  }
+
+  function handleUpdateGrid(e: React.MouseEvent) {
+    e.preventDefault();
+    console.log("Updating Grid State");
     const target = e.target as HTMLInputElement;
 
     target &&
@@ -24,11 +24,11 @@ function PatternForm({
         ...prevState,
         [target.id]: target.value,
       }));
-  };
+  }
 
-  useEffect(() => {
-    pattern && console.log(pattern);
-  }, [pattern, setPattern]);
+  //   useEffect(() => {
+  //     pattern && console.log(pattern);
+  //   }, [pattern, setPattern]);
 
   return (
     <form>
@@ -41,14 +41,14 @@ function PatternForm({
 
         <label htmlFor="grid-height"></label>
         <input type="text" name="size" placeholder="Grid Height" />
-        <button onClick={handleSave} type="submit">
-          Update Grid
-        </button>
+
+        <Button handleClick={handleUpdateGrid} buttonText="Update Grid" />
       </div>
 
-      <button onClick={handleSubmit} type="submit">
-        Save Pattern to your Account
-      </button>
+      <Button
+        handleClick={handleSubmit}
+        buttonText="Save Pattern to your Account"
+      />
     </form>
   );
 }
