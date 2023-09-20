@@ -16,11 +16,23 @@ function Grid({ height, width }: { height?: number; width?: number }) {
   // split into rows and cols
   const pixels = height && width && Array(height * width).fill(height * width);
 
+  // TODO
+  // Reset form to default color on click
+  function handleResetGrid(e: React.MouseEvent) {
+    e.preventDefault();
+    console.log("Resetting the grid");
+    const target = e.target as HTMLInputElement;
+
+    // target &&
+  }
   return (
     <>
       <h1>Pattern Maker Grid</h1>
-      <div className="border-solid border-2 grid grid-cols-12 gap-1">
-        {pixels && pixels.map((p, i) => <GridPixel key={i} />)}
+      <div className="flex justify-center">
+        <div className=" border-solid border-2 grid grid-cols-12 w-3/6">
+          {pixels && pixels.map((p, i) => <GridPixel key={i} />)}
+        </div>
+        <button onClick={handleResetGrid}>Reset Grid</button>
       </div>
     </>
   );
