@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function GridPixel() {
   const [clickState, setClickState] = useState(false);
+
   function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
     if (target) {
@@ -21,10 +22,8 @@ function GridPixel() {
   return (
     <div
       onClick={handleClick}
-      className="text-white border-solid border-y border-x w-full"
-    >
-      .
-    </div>
+      className="text-white border-solid border-y border-x w-4 h-4 p-4"
+    ></div>
   );
 }
 

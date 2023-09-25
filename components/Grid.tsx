@@ -33,7 +33,7 @@ function Grid({ height, width }: { height?: number; width?: number }) {
   return (
     <>
       <div className="flex justify-center">
-        <div className=" border-solid border-2 grid grid-cols-12 w-3/6">
+        <div className=" border-solid border-2 grid grid-cols-12">
           {pixels && pixels.map((p, i) => <GridPixel key={i} />)}
         </div>
         <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
