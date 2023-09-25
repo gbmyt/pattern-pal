@@ -1,5 +1,5 @@
-import Button from "./Button";
-import GridPixel from "./Pixel";
+import Button from "@/components/Button";
+import GridPixel from "@/components/Pixel";
 
 // todos
 // allow user to create their own grid with custom size

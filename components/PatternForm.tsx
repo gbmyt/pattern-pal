@@ -1,6 +1,6 @@
 import { Pattern } from "@/types/pattern";
 import { SetStateAction, useEffect } from "react";
-import Button from "./Button";
+import Button from "@/components/Button";
 
 function PatternForm({
   pattern,
