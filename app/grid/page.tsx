@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import Grid from "@/components/Grid";
+import GridPixel from "@/components/Pixel";
 import PatternForm from "@/components/PatternForm";
 import { Pattern } from "@/types/pattern";
 
@@ -12,12 +13,16 @@ function Page() {
     gridHeight: 12,
   });
 
+  const pixels: JSX.Element[] = new Array(
+    pattern.gridHeight * pattern.gridWidth
+  ).fill(pattern.gridHeight * pattern.gridWidth);
+
   return (
     <>
       <h1>Create a new pattern</h1>
       <PatternForm pattern={pattern} setPattern={setPattern} />
 
-      <Grid height={pattern.gridHeight} width={pattern.gridWidth} />
+      <Grid>{pixels && pixels.map((p, i) => <GridPixel key={i} />)}</Grid>
     </>
   );
 }

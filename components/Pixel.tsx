@@ -5,6 +5,7 @@ function GridPixel() {
 
   function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
+
     if (target) {
       // TODO remove hard-coded pixel fill color
       setClickState(!clickState);
@@ -22,7 +23,7 @@ function GridPixel() {
   return (
     <div
       onClick={handleClick}
-      className="text-white border-solid border-y border-x w-4 h-4 p-4"
+      className="grid-pixel text-white border-solid border-y border-x w-4 h-4 p-4"
     ></div>
   );
 }
