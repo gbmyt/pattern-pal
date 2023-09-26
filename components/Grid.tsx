@@ -1,7 +1,6 @@
-import Button from "./Button";
-import GridPixel from "./Pixel";
-
-// todos
+import { useState } from "react";
+import GridPixel from "@/components/Pixel";
+// TODO
 // allow user to create their own grid with custom size
 // allow user to name the pattern and save to their account
 
@@ -10,35 +9,39 @@ import GridPixel from "./Pixel";
 // add a paint dropper tool
 // allow selecting color with hex code/manually
 
-// allow click to fill a pixel
-// allow draggin to fill multiple pixels on the grid
+// allow dragging to fill multiple pixels on the grid
 function Grid({ height, width }: { height?: number; width?: number }) {
-  // TODO
-  // split into rows and cols
-  const pixels = height && width && Array(height * width).fill(height * width);
+  // TODO: split grid into rows and cols
+  const [mouseIsDown, setMouseDownState] = useState(false);
 
-  // TODO
-  // Reset form to default color on click
-  function handleResetGrid(e: React.MouseEvent) {
-    e.preventDefault();
-    console.log("Resetting the grid");
+  const pixels =
+    height && width && new Array(height * width).fill(height * width);
+
+  function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
 
-    // target &&
-    // for pixel in pixels remove classes:
-    //  - bg-green-700
-    //  - text-green-700
-    // add class text-white
+    if (target) {
+      target.addEventListener("mousedown", function () {
+        setMouseDownState(true);
+      });
+
+      target.addEventListener("mouseup", function () {
+        setMouseDownState(false);
+      });
+    }
   }
+
   return (
-    <>
+    <div onClick={handleClick}>
       <div className="flex justify-center">
-        <div className=" border-solid border-2 grid grid-cols-12 w-3/6">
-          {pixels && pixels.map((p, i) => <GridPixel key={i} />)}
+        <div className=" border-solid border-2 grid grid-cols-12">
+          {pixels &&
+            pixels.map((p, i) => (
+              <GridPixel mouseIsDown={mouseIsDown} key={i} />
+            ))}
         </div>
-        <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
       </div>
-    </>
+    </div>
   );
 }
 

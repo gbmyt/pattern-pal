@@ -1,6 +1,6 @@
 import { Pattern } from "@/types/pattern";
 import { SetStateAction, useEffect } from "react";
-import Button from "./Button";
+import Button from "@/components/Button";
 
 function PatternForm({
   pattern,
@@ -26,6 +26,19 @@ function PatternForm({
       }));
   }
 
+  function handleResetGrid(e: React.MouseEvent) {
+    e.preventDefault();
+    const target = e.target as HTMLInputElement;
+
+    let pixels = document.querySelectorAll(".grid-pixel");
+    pixels &&
+      pixels.forEach((p) => {
+        p.classList.remove("bg-green-700");
+        p.classList.remove("text-green-700");
+        p.classList.add("text-white");
+      });
+  }
+
   //   useEffect(() => {
   //     pattern && console.log(pattern);
   //   }, [pattern, setPattern]);
@@ -49,6 +62,8 @@ function PatternForm({
         handleClick={handleSubmit}
         buttonText="Save Pattern to your Account"
       />
+
+      <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
     </form>
   );
 }
