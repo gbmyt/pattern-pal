@@ -61,12 +61,10 @@ function PatternForm({
 
         <Button handleClick={handleUpdateGrid} buttonText="Update Grid" />
       </div>
-
       <Button
         handleClick={handleSubmit}
         buttonText="Save Pattern to your Account"
       />
-
       <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
     </form>
   );

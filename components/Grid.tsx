@@ -1,5 +1,7 @@
 import { useState } from "react";
 import GridPixel from "@/components/Pixel";
+import Button from "./Button";
+
 // TODO
 // allow user to create their own grid with custom size
 // allow user to name the pattern and save to their account
@@ -9,9 +11,8 @@ import GridPixel from "@/components/Pixel";
 // add a paint dropper tool
 // allow selecting color with hex code/manually
 
-// allow dragging to fill multiple pixels on the grid
+// split grid into rows and cols
 function Grid({ height, width }: { height?: number; width?: number }) {
-  // TODO: split grid into rows and cols
   const [mouseIsDown, setMouseDownState] = useState(false);
 
   const pixels =
