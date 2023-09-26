@@ -30,11 +30,10 @@ function GridPixel({ mouseIsDown }: { mouseIsDown: boolean }) {
     const target = e.target as HTMLInputElement;
 
     if (target) {
-      target.addEventListener("mouseenter", function () {
-        if (mouseIsDown) {
-          setPixelFillColor(target, "bg-green-700");
-        }
-      });
+      if (mouseIsDown) {
+        setPixelIsFilled(true);
+        setPixelFillColor(target, "bg-green-700");
+      }
     }
   }
 
@@ -42,7 +41,7 @@ function GridPixel({ mouseIsDown }: { mouseIsDown: boolean }) {
     <div
       onMouseDown={handleClick}
       onMouseEnter={handleClickandDrag}
-      className="grid-pixel text-white border-solid border-y border-x w-4 h-4 p-4"
+      className="grid-pixel border-solid border-y border-x w-4 h-4 p-4"
     ></div>
   );
 }
