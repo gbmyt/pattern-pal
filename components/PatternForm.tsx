@@ -1,5 +1,7 @@
+import { SetStateAction } from "react";
 import { Pattern } from "@/types/pattern";
-import { SetStateAction, useEffect } from "react";
+import { usePixelIsFilled } from "@/hooks/usePixelFillState";
+
 import Button from "@/components/Button";
 
 function PatternForm({
@@ -9,6 +11,13 @@ function PatternForm({
   pattern: Pattern;
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
+  const {
+    pixelIsFilled,
+    setPixelIsFilled,
+    setPixelFillColor,
+    resetPixelFillColor,
+  } = usePixelIsFilled();
+
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     console.log("saving pattern to your account");
@@ -33,15 +42,10 @@ function PatternForm({
     let pixels = document.querySelectorAll(".grid-pixel");
     pixels &&
       pixels.forEach((p) => {
-        p.classList.remove("bg-green-700");
-        p.classList.remove("text-green-700");
-        p.classList.add("text-white");
+        resetPixelFillColor(p, "bg-green-700");
+        setPixelIsFilled(false);
       });
   }
-
-  //   useEffect(() => {
-  //     pattern && console.log(pattern);
-  //   }, [pattern, setPattern]);
 
   return (
     <form>
