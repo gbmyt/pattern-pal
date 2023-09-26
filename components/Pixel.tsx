@@ -1,37 +1,28 @@
-import { useState } from "react";
+import { usePixelIsFilled } from "@/hooks/usePixelFillState";
 
 // TODO: Look into using canvas instead of React/JS + event listeners
 // https://stackoverflow.com/questions/28284754/dragging-shapes-using-mouse-after-creating-them-with-html5-canvas
 
 // TODO remove hard-coded pixel fill color (set up color vars - tailwind config)
 function GridPixel({ mouseIsDown }: { mouseIsDown: boolean }) {
-  const [pixelIsFilled, setPixelFillState] = useState(false);
-
-  function setPixelFillColor(pixel: HTMLInputElement, color: string) {
-    pixel.classList.add(color);
-  }
-
-  function resetPixelFillColor(pixel: HTMLInputElement, color: string) {
-    pixel.classList.remove("bg-green-700");
-  }
+  const {
+    pixelIsFilled,
+    setPixelIsFilled,
+    setPixelFillColor,
+    resetPixelFillColor,
+  } = usePixelIsFilled();
 
   function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
 
     if (target) {
-      setPixelFillState(!pixelIsFilled);
-
       if (!pixelIsFilled) {
+        setPixelIsFilled(true);
         setPixelFillColor(target, "bg-green-700");
       } else if (pixelIsFilled) {
+        setPixelIsFilled(false);
         resetPixelFillColor(target, "bg-green-700");
       }
-
-      target.addEventListener("mouseenter", function () {
-        if (mouseIsDown) {
-          setPixelFillColor(target, "bg-green-700");
-        }
-      });
     }
   }
 
