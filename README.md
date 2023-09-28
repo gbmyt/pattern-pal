@@ -1,26 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pattern Pal
 
-## Getting Started
+**_A fiber artist and pattern designer's best friend! The goal of this project is to make creating custom pixel-based patterns fun and easy for fiber artists with a love of crochet and/or knitting 🧶._**
 
-First, run the development server:
+_Use our pattern-maker to create a custom grid-based design by hand, or import an existing grid to be converted to a pattern as-is- or customize it to your liking by making changes via the pattern-maker. Once you're happy with the way your design looks, save it to your account or share it with other crafters on Ravelry, Instagram, or Facebook!_
+
+<!-- ## Video and GIF Demo -->
+<!-- To-Do -->
+
+<!-- ## Code Samples -->
+<!-- To-Do -->
+
+## Contributing
+
+First, fork the repo and clone the project down to your local machine.
+
+Install dependencies and then start the development server.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+```
+
+To start the server, run:
+
+```bash
 pnpm dev
-# or
-bun run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Once you're happy with your changes, please submit a PR with a detailed description of the changes you've made.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Bug reports
+
+If you discover any bugs, feel free to create an issue on GitHub. Please add as much information as possible to help us in fixing the potential bug. We also encourage you to help even more by forking and submitting a pull request.
+
+https://github.com/gbmyt/pattern-pal/issues
 
 ## Learn More
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -29,8 +47,10 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+# Maintainers
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Gabriela Taylor - [Github](https://github.com/gbmyt)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# License
+
+This project is licensed under the terms of the MIT license. Copyright 2023 Gabriela Taylor.
