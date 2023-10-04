@@ -22,7 +22,6 @@ const Main = () => {
         <a
           href="/grid"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -39,7 +38,6 @@ const Main = () => {
         <a
           href="/faq"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -56,7 +54,6 @@ const Main = () => {
         <a
           href="/templates"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -65,15 +62,15 @@ const Main = () => {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-25`}>
             Create a new pattern from a template.
           </p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Coming Soon</p>
         </a>
 
         <a
           href="/share"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -82,9 +79,10 @@ const Main = () => {
               -&gt;
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Share your patterns with the community! (Coming soon)
+          <p className={`m-0 max-w-[30ch] text-sm opacity-25`}>
+            Share your patterns with the community!
           </p>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>Coming Soon</p>
         </a>
       </div>
     </div>

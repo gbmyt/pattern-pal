@@ -48,24 +48,52 @@ function PatternForm({
   }
 
   return (
-    <form>
-      <div className="border-solid border-2">
-        <label htmlFor="title"></label>
-        <input type="text" name="title" placeholder="Title" />
+    <form className="flex flex-col justify-between w-3/4 my-4">
+      <>
+        <div>
+          <label htmlFor="title">Title</label>
+          <input
+            className="rounded-md w-1/4 m-2"
+            type="text"
+            name="title"
+            placeholder="Title"
+          />
 
-        <label htmlFor="grid-width"></label>
-        <input type="text" name="size" placeholder="Grid Width" />
+          <label htmlFor="grid-height">Height</label>
+          <input
+            className="rounded-md w-1/6 m-2"
+            type="text"
+            name="size"
+            placeholder="Grid Height"
+          />
 
-        <label htmlFor="grid-height"></label>
-        <input type="text" name="size" placeholder="Grid Height" />
+          <label htmlFor="grid-width">Width</label>
+          <input
+            className="rounded-md w-1/6 m-2"
+            type="text"
+            name="size"
+            placeholder="Grid Width"
+          />
+        </div>
 
-        <Button handleClick={handleUpdateGrid} buttonText="Update Grid" />
+        <div>
+          <label htmlFor="grid-width">Pixel Fill Color</label>
+          <input
+            className="rounded-md w-1/6 m-2"
+            type="text"
+            name="size"
+            placeholder="#FFFFFF"
+          />
+        </div>
+      </>
+
+      <div className="m-4 ml-0">
+        <Button handleClick={handleUpdateGrid} buttonText="Save Changes" />
+
+        <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
+
+        <Button handleClick={handleSubmit} buttonText="Save Pattern" />
       </div>
-      <Button
-        handleClick={handleSubmit}
-        buttonText="Save Pattern to your Account"
-      />
-      <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
     </form>
   );
 }
