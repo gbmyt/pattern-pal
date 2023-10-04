@@ -75,12 +75,22 @@ function PatternForm({
             placeholder="Grid Width"
           />
         </div>
+
+        <div>
+          <label htmlFor="grid-width">Pixel Fill Color</label>
+          <input
+            className="rounded-md w-1/6 m-2"
+            type="text"
+            name="size"
+            placeholder="#FFFFFF"
+          />
+        </div>
       </>
 
       <div className="m-4 ml-0">
-        <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
+        <Button handleClick={handleUpdateGrid} buttonText="Save Changes" />
 
-        <Button handleClick={handleUpdateGrid} buttonText="Update Grid" />
+        <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
 
         <Button handleClick={handleSubmit} buttonText="Save Pattern" />
       </div>
