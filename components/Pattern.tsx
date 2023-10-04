@@ -15,7 +15,7 @@ function Pattern() {
 
   return (
     <>
-      <h1>Create a new pattern</h1>
+      <h1 className="font-semibold">Create a New Pattern</h1>
       <PatternForm pattern={pattern} setPattern={setPattern} />
       <Grid height={pattern.gridHeight} width={pattern.gridWidth} />
     </>
