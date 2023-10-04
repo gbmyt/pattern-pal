@@ -25,6 +25,7 @@
       "@/lib": ["./lib"],
       "@/styles": ["./styles"],
       "@/components": ["./components"],
+      "@/data": ["./data"],
       "@/hooks": ["./hooks"]
     }
   },
