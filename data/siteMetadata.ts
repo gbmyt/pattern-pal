@@ -7,5 +7,8 @@ const siteMetadata = {
   siteRepo: "https://github.com/gbmyt/pattern-pal",
   siteLogo: "",
   locale: "en-US",
+  email: "gabrielataylor1994@gmail.com",
+  github: "https://github.com/gbmyt",
+  linkedin: "https://www.linkedin.com/in/gabriela-taylor/",
 };
 export default siteMetadata;

@@ -1,7 +1,7 @@
 const Main = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-around p-24">
-      <div className="flex-none max-w-5xl items-cente text-sm pb-4 md:pb-0">
+    <div className="flex h-screen flex-col items-center justify-between p-24">
+      <div className="max-w-5xl items-center text-sm pb-4 md:pb-0">
         <p className="mb-14">
           A fiber artist and pattern designer&apos;s best friend! The goal of
           this project is to make creating custom pixel-based patterns fun and
@@ -87,7 +87,7 @@ const Main = () => {
           </p>
         </a>
       </div>
-    </main>
+    </div>
   );
 };
 
