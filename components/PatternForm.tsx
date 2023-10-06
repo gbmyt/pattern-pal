@@ -3,6 +3,7 @@ import { Pattern } from "@/types/pattern";
 import { usePixelIsFilled } from "@/hooks/usePixelFillState";
 
 import Button from "@/components/Button";
+import { useGridContext } from "@/context/GridContext";
 
 function PatternForm({
   pattern,
@@ -11,12 +12,9 @@ function PatternForm({
   pattern: Pattern;
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
-  const {
-    pixelIsFilled,
-    setPixelIsFilled,
-    setPixelFillColor,
-    resetPixelFillColor,
-  } = usePixelIsFilled();
+  const { setPixelFillColor } = useGridContext();
+  const { pixelIsFilled, setPixelIsFilled, removePixelFill } =
+    usePixelIsFilled();
 
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
@@ -25,24 +23,47 @@ function PatternForm({
 
   function handleUpdateGrid(e: React.MouseEvent) {
     e.preventDefault();
-    console.log("Updating Grid State");
-    const target = e.target as HTMLInputElement;
 
-    target &&
-      setPattern((prevState) => ({
-        ...prevState,
-        [target.id]: target.value,
-      }));
+    const height = document.getElementById("height") as HTMLInputElement;
+    const width = document.getElementById("width") as HTMLInputElement;
+    const title = document.getElementById("title") as HTMLInputElement;
+    const updatedPixelFillColor = document.getElementById(
+      "pixelFillColor"
+    ) as HTMLInputElement;
+
+    const updatedPatternState = {
+      title: title.value,
+      gridWidth: width.valueAsNumber,
+      gridHeight: height.valueAsNumber,
+    };
+
+    try {
+      setPixelFillColor(updatedPixelFillColor.value);
+
+      Object.entries(updatedPatternState).forEach((entry) => {
+        if (entry[1]) {
+          setPattern((prevState) => ({
+            ...prevState,
+            [entry[0]]: entry[1],
+          }));
+        }
+      });
+    } catch (e) {
+      console.log("Error updating the grid", e);
+      throw new Error();
+    }
   }
 
   function handleResetGrid(e: React.MouseEvent) {
     e.preventDefault();
-    const target = e.target as HTMLInputElement;
+    const target = e.target as HTMLButtonElement;
 
-    let pixels = document.querySelectorAll(".grid-pixel");
+    let pixels = document.querySelectorAll(
+      ".grid-pixel"
+    ) as NodeListOf<HTMLDivElement>;
     pixels &&
       pixels.forEach((p) => {
-        resetPixelFillColor(p, "bg-green-700");
+        removePixelFill(p);
         setPixelIsFilled(false);
       });
   }
@@ -54,6 +75,7 @@ function PatternForm({
           <label htmlFor="title">Title</label>
           <input
             className="rounded-md w-1/4 m-2"
+            id="title"
             type="text"
             name="title"
             placeholder="Title"
@@ -62,26 +84,29 @@ function PatternForm({
           <label htmlFor="grid-height">Height</label>
           <input
             className="rounded-md w-1/6 m-2"
-            type="text"
-            name="size"
+            id="height"
+            type="number"
+            name="height"
             placeholder="Grid Height"
           />
 
           <label htmlFor="grid-width">Width</label>
           <input
             className="rounded-md w-1/6 m-2"
-            type="text"
-            name="size"
+            id="width"
+            type="number"
+            name="width"
             placeholder="Grid Width"
           />
         </div>
 
         <div>
-          <label htmlFor="grid-width">Pixel Fill Color</label>
+          <label htmlFor="pixelFillColor"> Color</label>
           <input
             className="rounded-md w-1/6 m-2"
+            id="pixelFillColor"
             type="text"
-            name="size"
+            name="pixelFillColor"
             placeholder="#FFFFFF"
           />
         </div>
@@ -89,9 +114,7 @@ function PatternForm({
 
       <div className="m-4 ml-0">
         <Button handleClick={handleUpdateGrid} buttonText="Save Changes" />
-
         <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
-
         <Button handleClick={handleSubmit} buttonText="Save Pattern" />
       </div>
     </form>

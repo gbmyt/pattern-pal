@@ -1,20 +1,23 @@
+import { useGridContext } from "@/context/GridContext";
 import { useState } from "react";
 
 export function usePixelIsFilled() {
   const [pixelIsFilled, setPixelIsFilled] = useState(false);
+  const { pixelFillColor } = useGridContext();
 
-  function setPixelFillColor(pixel: Element, color: string) {
-    pixel.classList.add(color);
+  function fillGridPixel(pixel: HTMLDivElement) {
+    pixel.style.backgroundColor = "";
+    pixel.style.backgroundColor = pixelFillColor;
   }
 
-  function resetPixelFillColor(pixel: Element, color: string) {
-    pixel.classList.remove("bg-green-700");
+  function removePixelFill(pixel: HTMLDivElement) {
+    pixel.style.backgroundColor = "";
   }
 
   return {
     pixelIsFilled,
     setPixelIsFilled,
-    setPixelFillColor,
-    resetPixelFillColor,
+    fillGridPixel,
+    removePixelFill,
   };
 }
