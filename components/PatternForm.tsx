@@ -3,6 +3,7 @@ import { Pattern } from "@/types/pattern";
 import { usePixelIsFilled } from "@/hooks/usePixelFillState";
 
 import Button from "@/components/Button";
+import { useGridContext } from "@/context/GridContext";
 
 function PatternForm({
   pattern,
@@ -11,12 +12,9 @@ function PatternForm({
   pattern: Pattern;
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
-  const {
-    pixelIsFilled,
-    setPixelIsFilled,
-    setPixelFillColor,
-    resetPixelFillColor,
-  } = usePixelIsFilled();
+  const { setPixelFillColor } = useGridContext();
+  const { pixelIsFilled, setPixelIsFilled, removePixelFill } =
+    usePixelIsFilled();
 
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
@@ -29,16 +27,20 @@ function PatternForm({
     const height = document.getElementById("height") as HTMLInputElement;
     const width = document.getElementById("width") as HTMLInputElement;
     const title = document.getElementById("title") as HTMLInputElement;
-    const pixelFillColor = document.getElementById("pixelFillColor");
+    const updatedPixelFillColor = document.getElementById(
+      "pixelFillColor"
+    ) as HTMLInputElement;
 
-    const updated = {
+    const updatedPatternState = {
       title: title.value,
       gridWidth: width.valueAsNumber,
       gridHeight: height.valueAsNumber,
     };
 
     try {
-      Object.entries(updated).forEach((entry) => {
+      setPixelFillColor(updatedPixelFillColor.value);
+
+      Object.entries(updatedPatternState).forEach((entry) => {
         if (entry[1]) {
           setPattern((prevState) => ({
             ...prevState,
@@ -54,12 +56,14 @@ function PatternForm({
 
   function handleResetGrid(e: React.MouseEvent) {
     e.preventDefault();
-    const target = e.target as HTMLInputElement;
+    const target = e.target as HTMLButtonElement;
 
-    let pixels = document.querySelectorAll(".grid-pixel");
+    let pixels = document.querySelectorAll(
+      ".grid-pixel"
+    ) as NodeListOf<HTMLDivElement>;
     pixels &&
       pixels.forEach((p) => {
-        resetPixelFillColor(p, "bg-green-700");
+        removePixelFill(p);
         setPixelIsFilled(false);
       });
   }
@@ -97,12 +101,12 @@ function PatternForm({
         </div>
 
         <div>
-          <label htmlFor="pixelFillColor">Pixel Fill Color</label>
+          <label htmlFor="pixelFillColor"> Color</label>
           <input
             className="rounded-md w-1/6 m-2"
-            id="color"
+            id="pixelFillColor"
             type="text"
-            name="color"
+            name="pixelFillColor"
             placeholder="#FFFFFF"
           />
         </div>
@@ -110,9 +114,7 @@ function PatternForm({
 
       <div className="m-4 ml-0">
         <Button handleClick={handleUpdateGrid} buttonText="Save Changes" />
-
         <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
-
         <Button handleClick={handleSubmit} buttonText="Save Pattern" />
       </div>
     </form>

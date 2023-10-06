@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import ContextProvider from "@/context/GridContext";
 
 import Grid from "@/components/Grid";
 
@@ -14,11 +15,11 @@ function Pattern() {
   });
 
   return (
-    <>
+    <ContextProvider>
       <h1 className="font-semibold">Create a New Pattern</h1>
       <PatternForm pattern={pattern} setPattern={setPattern} />
       <Grid height={pattern.gridHeight} width={pattern.gridWidth} />
-    </>
+    </ContextProvider>
   );
 }
 
