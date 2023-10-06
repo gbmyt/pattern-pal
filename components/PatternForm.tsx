@@ -25,14 +25,31 @@ function PatternForm({
 
   function handleUpdateGrid(e: React.MouseEvent) {
     e.preventDefault();
-    console.log("Updating Grid State");
-    const target = e.target as HTMLInputElement;
 
-    target &&
-      setPattern((prevState) => ({
-        ...prevState,
-        [target.id]: target.value,
-      }));
+    const height = document.getElementById("height") as HTMLInputElement;
+    const width = document.getElementById("width") as HTMLInputElement;
+    const title = document.getElementById("title") as HTMLInputElement;
+    const pixelFillColor = document.getElementById("pixelFillColor");
+
+    const updated = {
+      title: title.value,
+      gridWidth: width.valueAsNumber,
+      gridHeight: height.valueAsNumber,
+    };
+
+    try {
+      Object.entries(updated).forEach((entry) => {
+        if (entry[1]) {
+          setPattern((prevState) => ({
+            ...prevState,
+            [entry[0]]: entry[1],
+          }));
+        }
+      });
+    } catch (e) {
+      console.log("Error updating the grid", e);
+      throw new Error();
+    }
   }
 
   function handleResetGrid(e: React.MouseEvent) {
@@ -54,6 +71,7 @@ function PatternForm({
           <label htmlFor="title">Title</label>
           <input
             className="rounded-md w-1/4 m-2"
+            id="title"
             type="text"
             name="title"
             placeholder="Title"
@@ -62,26 +80,29 @@ function PatternForm({
           <label htmlFor="grid-height">Height</label>
           <input
             className="rounded-md w-1/6 m-2"
-            type="text"
-            name="size"
+            id="height"
+            type="number"
+            name="height"
             placeholder="Grid Height"
           />
 
           <label htmlFor="grid-width">Width</label>
           <input
             className="rounded-md w-1/6 m-2"
-            type="text"
-            name="size"
+            id="width"
+            type="number"
+            name="width"
             placeholder="Grid Width"
           />
         </div>
 
         <div>
-          <label htmlFor="grid-width">Pixel Fill Color</label>
+          <label htmlFor="pixelFillColor">Pixel Fill Color</label>
           <input
             className="rounded-md w-1/6 m-2"
+            id="color"
             type="text"
-            name="size"
+            name="color"
             placeholder="#FFFFFF"
           />
         </div>
