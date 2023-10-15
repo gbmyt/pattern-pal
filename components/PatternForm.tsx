@@ -12,8 +12,7 @@ function PatternForm({
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
   const { setPixelFillColor } = useGridContext();
-  const { pixelIsFilled, setPixelIsFilled, removePixelFill } =
-    usePixelIsFilled();
+  const { setPixelIsFilled, removePixelFill } = usePixelIsFilled();
 
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();

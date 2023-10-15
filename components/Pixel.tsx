@@ -1,14 +1,9 @@
 "use client";
-import { useGridContext } from "@/context/GridContext";
 import { usePixelIsFilled } from "@/hooks/usePixelFillState";
-
-// TODO: Look into using canvas instead of React/JS + event listeners
-// https://stackoverflow.com/questions/28284754/dragging-shapes-using-mouse-after-creating-them-with-html5-canvas
 
 function GridPixel({ mouseIsDown }: { mouseIsDown: boolean }) {
   const { pixelIsFilled, setPixelIsFilled, fillGridPixel, removePixelFill } =
     usePixelIsFilled();
-  const { pixelFillColor } = useGridContext();
 
   function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLDivElement;
