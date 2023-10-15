@@ -1,6 +1,5 @@
 import { useState } from "react";
 import GridPixel from "@/components/Pixel";
-import Button from "./Button";
 
 // TODO
 // allow user to create their own grid with custom size
@@ -15,8 +14,15 @@ import Button from "./Button";
 function Grid({ height, width }: { height?: number; width?: number }) {
   const [mouseIsDown, setMouseDownState] = useState(false);
 
-  const pixels =
-    height && width && new Array(height * width).fill(height * width);
+  var pixels: JSX.Element[][] = new Array(height).fill(
+    new Array(width).fill(<GridPixel mouseIsDown={mouseIsDown} />)
+  );
+
+  pixels?.forEach((p) => {
+    for (var i = 0; i < p.length; i++) {
+      p[i] = <GridPixel mouseIsDown={mouseIsDown} key={i} />;
+    }
+  });
 
   function handleClick(e: React.MouseEvent) {
     const target = e.target as HTMLInputElement;
