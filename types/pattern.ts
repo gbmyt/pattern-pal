@@ -1,5 +1,5 @@
 export type Pattern = {
-  title: string;
-  gridWidth: number;
-  gridHeight: number;
+  title: string | undefined;
+  gridWidth: number | undefined;
+  gridHeight: number | undefined;
 };

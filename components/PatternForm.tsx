@@ -1,9 +1,8 @@
 import { SetStateAction } from "react";
-import { Pattern } from "@/types/pattern";
-import { usePixelIsFilled } from "@/hooks/usePixelFillState";
-
-import Button from "@/components/Button";
 import { useGridContext } from "@/context/GridContext";
+import { usePixelIsFilled } from "@/hooks/usePixelFillState";
+import Button from "@/components/Button";
+import { Pattern } from "@/types/pattern";
 
 function PatternForm({
   pattern,
@@ -13,41 +12,54 @@ function PatternForm({
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
   const { setPixelFillColor } = useGridContext();
-  const { pixelIsFilled, setPixelIsFilled, removePixelFill } =
-    usePixelIsFilled();
+  const { setPixelIsFilled, removePixelFill } = usePixelIsFilled();
 
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     console.log("saving pattern to your account");
   }
 
+  function setPatternState(
+    p: Pattern = {
+      title: undefined,
+      gridWidth: undefined,
+      gridHeight: undefined,
+    }
+  ) {
+    const heightInput = document.getElementById("height") as HTMLInputElement;
+    const widthInput = document.getElementById("width") as HTMLInputElement;
+    const titleInput = document.getElementById("title") as HTMLInputElement;
+
+    // Get the new pattern state values from user or function args
+    const updatedPatternState = {
+      title: p.title ? p.title : titleInput.value,
+      gridWidth: p.gridWidth ? p.gridWidth : widthInput.valueAsNumber,
+      gridHeight: p.gridHeight ? p.gridHeight : heightInput.valueAsNumber,
+    };
+
+    // Don't update values unless they were explicitly modified
+    Object.entries(updatedPatternState).forEach((entry) => {
+      if (entry[1]) {
+        setPattern((prevState) => ({
+          ...prevState,
+          [entry[0]]: entry[1],
+        }));
+      }
+    });
+  }
+
   function handleUpdateGrid(e: React.MouseEvent) {
     e.preventDefault();
 
-    const height = document.getElementById("height") as HTMLInputElement;
-    const width = document.getElementById("width") as HTMLInputElement;
-    const title = document.getElementById("title") as HTMLInputElement;
     const updatedPixelFillColor = document.getElementById(
       "pixelFillColor"
     ) as HTMLInputElement;
 
-    const updatedPatternState = {
-      title: title.value,
-      gridWidth: width.valueAsNumber,
-      gridHeight: height.valueAsNumber,
-    };
-
     try {
-      setPixelFillColor(updatedPixelFillColor.value);
-
-      Object.entries(updatedPatternState).forEach((entry) => {
-        if (entry[1]) {
-          setPattern((prevState) => ({
-            ...prevState,
-            [entry[0]]: entry[1],
-          }));
-        }
-      });
+      updatedPixelFillColor.value && updatedPixelFillColor.value !== ""
+        ? setPixelFillColor(updatedPixelFillColor.value)
+        : null;
+      setPatternState();
     } catch (e) {
       console.log("Error updating the grid", e);
       throw new Error();
@@ -55,12 +67,20 @@ function PatternForm({
   }
 
   function handleResetGrid(e: React.MouseEvent) {
-    e.preventDefault();
-    const target = e.target as HTMLButtonElement;
+    handleSetGridtoDefault(e);
+    handleRemoveGridFill();
+  }
 
+  function handleSetGridtoDefault(e: React.MouseEvent) {
+    e.preventDefault();
+    setPatternState({ title: "", gridWidth: 25, gridHeight: 25 });
+  }
+
+  function handleRemoveGridFill() {
     let pixels = document.querySelectorAll(
       ".grid-pixel"
     ) as NodeListOf<HTMLDivElement>;
+
     pixels &&
       pixels.forEach((p) => {
         removePixelFill(p);
@@ -115,6 +135,11 @@ function PatternForm({
       <div className="m-4 ml-0">
         <Button handleClick={handleUpdateGrid} buttonText="Save Changes" />
         <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
+        <Button
+          handleClick={handleRemoveGridFill}
+          buttonText="Remove Pixel Fill"
+        />
+        <Button handleClick={handleSetGridtoDefault} buttonText="Reset Size" />
         <Button handleClick={handleSubmit} buttonText="Save Pattern" />
       </div>
     </form>

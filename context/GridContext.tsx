@@ -8,9 +8,11 @@ export default function ContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [pixelFillColor, setPixelFillColor] = useState("#0000FF");
+  const defaultFillColor = "#0000FF";
+  const [pixelFillColor, setPixelFillColor] = useState(defaultFillColor);
 
   const ctx: GridContextType = {
+    defaultFillColor,
     pixelFillColor,
     setPixelFillColor,
   };
