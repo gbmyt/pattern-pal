@@ -11,7 +11,7 @@ function PatternForm({
   pattern: Pattern;
   setPattern: React.Dispatch<SetStateAction<Pattern>>;
 }) {
-  const { setPixelFillColor } = useGridContext();
+  const { setPixelFillColor, maxGridWidth } = useGridContext();
   const { setPixelIsFilled, removePixelFill } = usePixelIsFilled();
 
   function handleSubmit(e: React.MouseEvent) {
@@ -33,9 +33,22 @@ function PatternForm({
     // Get the new pattern state values from user or function args
     const updatedPatternState = {
       title: p.title ? p.title : titleInput.value,
-      gridWidth: p.gridWidth ? p.gridWidth : widthInput.valueAsNumber,
+      gridWidth: p.gridWidth
+        ? p.gridWidth
+        : widthInput.valueAsNumber <= maxGridWidth
+        ? widthInput.valueAsNumber
+        : null,
       gridHeight: p.gridHeight ? p.gridHeight : heightInput.valueAsNumber,
     };
+
+    if (
+      (p.gridWidth && p.gridWidth > maxGridWidth) ||
+      widthInput.valueAsNumber > maxGridWidth
+    ) {
+      return {
+        msg: "Sorry, your pattern is too wide! Try setting a smaller width.",
+      };
+    }
 
     // Don't update values unless they were explicitly modified
     Object.entries(updatedPatternState).forEach((entry) => {
@@ -59,7 +72,8 @@ function PatternForm({
       updatedPixelFillColor.value && updatedPixelFillColor.value !== ""
         ? setPixelFillColor(updatedPixelFillColor.value)
         : null;
-      setPatternState();
+      const result = setPatternState();
+      if (result) alert(result.msg);
     } catch (e) {
       console.log("Error updating the grid", e);
       throw new Error();
@@ -68,15 +82,21 @@ function PatternForm({
 
   function handleResetGrid(e: React.MouseEvent) {
     handleSetGridtoDefault(e);
-    handleRemoveGridFill();
+    handleRemoveGridFill(e);
   }
 
   function handleSetGridtoDefault(e: React.MouseEvent) {
     e.preventDefault();
-    setPatternState({ title: "", gridWidth: 25, gridHeight: 25 });
+    const result = setPatternState({
+      title: "",
+      gridWidth: 25,
+      gridHeight: 25,
+    });
+    if (result) alert(result.msg);
   }
 
-  function handleRemoveGridFill() {
+  function handleRemoveGridFill(e: React.MouseEvent) {
+    e.preventDefault();
     let pixels = document.querySelectorAll(
       ".grid-pixel"
     ) as NodeListOf<HTMLDivElement>;

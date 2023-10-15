@@ -31,10 +31,10 @@ function Grid({ height, width }: { height?: number; width?: number }) {
 
   return (
     <div onClick={handleClick}>
-      <div className="flex justify-center">
+      <div className="flex justify-center" id="grid">
         <div
           style={{ gridTemplateColumns: `repeat(${width}, minmax(0, 1fr))` }}
-          className=" border-solid border-2 grid"
+          className="border-solid border-2 grid"
         >
           {pixels && pixels}
         </div>
