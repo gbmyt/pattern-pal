@@ -39,7 +39,7 @@ function GridPixel({ mouseIsDown }: { mouseIsDown: boolean }) {
     <div
       onMouseDown={handleClick}
       onMouseEnter={handleClickandDrag}
-      className="grid-pixel border-solid border-y border-x w-4 h-4 p-3"
+      className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
     ></div>
   );
 }

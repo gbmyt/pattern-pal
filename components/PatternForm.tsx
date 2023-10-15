@@ -1,9 +1,8 @@
 import { SetStateAction } from "react";
-import { Pattern } from "@/types/pattern";
-import { usePixelIsFilled } from "@/hooks/usePixelFillState";
-
-import Button from "@/components/Button";
 import { useGridContext } from "@/context/GridContext";
+import { usePixelIsFilled } from "@/hooks/usePixelFillState";
+import Button from "@/components/Button";
+import { Pattern } from "@/types/pattern";
 
 function PatternForm({
   pattern,

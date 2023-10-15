@@ -2,16 +2,16 @@
 import { useState } from "react";
 import ContextProvider from "@/context/GridContext";
 
+import PatternForm from "@/components/PatternForm";
 import Grid from "@/components/Grid";
 
-import PatternForm from "@/components/PatternForm";
 import { Pattern } from "@/types/pattern";
 
 function Pattern() {
   const [pattern, setPattern] = useState<Pattern>({
     title: "",
-    gridWidth: 12,
-    gridHeight: 12,
+    gridHeight: 25,
+    gridWidth: 25,
   });
 
   return (
