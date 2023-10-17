@@ -1,8 +1,9 @@
-import { SetStateAction } from "react";
-import { useGridContext } from "@/context/GridContext";
-import { usePixelIsFilled } from "@/hooks/usePixelFillState";
-import Button from "@/components/Button";
-import { Pattern } from "@/types/pattern";
+import { SetStateAction } from "react"
+import { useGridContext } from "@/context/GridContext"
+import { usePixelIsFilled } from "@/hooks/usePixelFillState"
+import Button from "@/components/Button"
+import { Pattern } from "@/types/pattern"
+import { createNewPattern } from "@/lib/api"
 
 function PatternForm({
     pattern,
@@ -11,19 +12,21 @@ function PatternForm({
     pattern: Pattern
     setPattern: React.Dispatch<SetStateAction<Pattern>>
 }) {
-  const { setPixelFillColor, maxGridWidth } = useGridContext();
-  const { setPixelIsFilled, removePixelFill } = usePixelIsFilled();
+    const { pixelFillColor, setPixelFillColor, maxGridWidth } = useGridContext()
+    const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
 
-  function handleSubmit(e: React.MouseEvent) {
-    e.preventDefault();
-    console.log("saving pattern to your account");
-  }
-
-  function setPatternState(
-    p: Pattern = {
-      title: undefined,
-      gridWidth: undefined,
-      gridHeight: undefined,
+    async function handleSubmit(e: React.MouseEvent) {
+        e.preventDefault()
+        try {
+            var p = composePatternObj(pattern)
+            var dbSaveResult = await createNewPattern(pattern)
+        } catch (e) {
+            console.log(
+                "There was a problem saving your pattern to the database, please try again.",
+                e
+            )
+            throw new Error("Pattern couldn't be saved.")
+        }
     }
 
     function composePatternObj(p?: Pattern) {
