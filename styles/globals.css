@@ -25,6 +25,3 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
-.pixel-text {
-  color: rgb(255, 255, 255);
-}
