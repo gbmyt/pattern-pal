@@ -1,24 +1,23 @@
-import { SetStateAction } from "react"
 import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 import Button from "@/components/Button"
-import { Pattern } from "@/types/pattern"
+
 import { createNewPattern } from "@/lib/api"
 
-function PatternForm({
-    pattern,
-    setPattern,
-}: {
-    pattern: Pattern
-    setPattern: React.Dispatch<SetStateAction<Pattern>>
-}) {
-    const { pixelFillColor, setPixelFillColor, maxGridWidth } = useGridContext()
+function PatternForm() {
+    const {
+        pattern,
+        setPattern,
+        pixelFillColor,
+        setPixelFillColor,
+        renderEmptyGrid,
+        maxGridWidth,
+    } = useGridContext()
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
 
     async function handleSubmit(e: React.MouseEvent) {
         e.preventDefault()
         try {
-            var p = composePatternObj(pattern)
             var dbSaveResult = await createNewPattern(pattern)
         } catch (e) {
             console.log(
@@ -29,70 +28,14 @@ function PatternForm({
         }
     }
 
-    function composePatternObj(p?: Pattern) {
-        const heightInput = document.getElementById(
-            "gridHeight"
-        ) as HTMLInputElement
-        const widthInput = document.getElementById(
-            "gridWidth"
-        ) as HTMLInputElement
-        const titleInput = document.getElementById("title") as HTMLInputElement
-
-        if (
-            (p?.gridWidth && p.gridWidth > maxGridWidth) ||
-            widthInput.valueAsNumber > maxGridWidth
-        ) {
-            return {
-                msg: "Sorry, your pattern is too wide! Try setting a smaller width.",
-            }
-        }
-        return {
-            title: p?.title ? p.title : titleInput.value,
-            gridWidth: p?.gridWidth
-                ? p.gridWidth
-                : widthInput.valueAsNumber <= maxGridWidth
-                ? widthInput.valueAsNumber
-                : null,
-            gridHeight: p?.gridHeight
-                ? p.gridHeight
-                : heightInput.valueAsNumber,
-        }
-    }
-
-    function setPatternState(
-        p: Pattern = {
-            title: undefined,
-            gridWidth: undefined,
-            gridHeight: undefined,
-        }
-    ) {
-        // Get the new pattern state values from user or function args
-        const updatedPatternState = composePatternObj(p)
-        updatedPatternState.msg && alert(updatedPatternState.msg)
-
-        // Don't update values unless they were explicitly modified
-        Object.entries(updatedPatternState).forEach((entry) => {
-            if (entry[1]) {
-                setPattern((prevState) => ({
-                    ...prevState,
-                    [entry[0]]: entry[1],
-                }))
-            }
-        })
-    }
-
-    function handleResetGrid(e: React.MouseEvent) {
-        handleSetGridtoDefault(e)
+    function handleResetGridToDefault(e: React.MouseEvent) {
+        handleResetGridSize(e)
         handleRemoveGridFill(e)
     }
 
-    function handleSetGridtoDefault(e: React.MouseEvent) {
+    function handleResetGridSize(e: React.MouseEvent) {
         e.preventDefault()
-        setPatternState({
-            title: "",
-            gridWidth: 25,
-            gridHeight: 25,
-        })
+        renderEmptyGrid()
     }
 
     function handleRemoveGridFill(e: React.MouseEvent) {
@@ -110,8 +53,6 @@ function PatternForm({
 
     function handlePatternFormChange(e: React.FormEvent) {
         const target = e.target as HTMLInputElement
-        target &&
-            console.log("E Target", target.id, typeof target.valueAsNumber)
 
         switch (target.id) {
             case "title":
@@ -124,13 +65,39 @@ function PatternForm({
                 setPattern((prevState) => ({
                     ...prevState,
                     gridHeight: target.valueAsNumber,
+                    pixels: JSON.stringify(
+                        new Array(pattern.gridWidth || 0).fill(
+                            new Array(
+                                (target && target.valueAsNumber) ||
+                                    (pattern && pattern.gridHeight) ||
+                                    0
+                            ).fill(null)
+                        )
+                    ),
                 }))
                 break
             case "gridWidth":
-                setPattern((prevState) => ({
-                    ...prevState,
-                    gridWidth: target.valueAsNumber,
-                }))
+                if (target.valueAsNumber > maxGridWidth) {
+                    alert(
+                        "Sorry, your pattern is too wide! Try setting a smaller width."
+                    )
+                } else {
+                    setPattern((prevState) => ({
+                        ...prevState,
+                        gridWidth: target.valueAsNumber,
+                        pixels: JSON.stringify(
+                            new Array(
+                                (target && target.valueAsNumber) ||
+                                    (pattern && pattern.gridWidth) ||
+                                    0
+                            ).fill(
+                                new Array(
+                                    (pattern && pattern.gridHeight) || 0
+                                ).fill(null)
+                            )
+                        ),
+                    }))
+                }
                 break
             case "pixelFillColor":
                 setPixelFillColor(target.value)
@@ -193,13 +160,16 @@ function PatternForm({
             </>
 
             <div className="m-4 ml-0">
-                <Button handleClick={handleResetGrid} buttonText="Reset Grid" />
+                <Button
+                    handleClick={handleResetGridToDefault}
+                    buttonText="Reset Grid"
+                />
                 <Button
                     handleClick={handleRemoveGridFill}
                     buttonText="Remove Pixel Fill"
                 />
                 <Button
-                    handleClick={handleSetGridtoDefault}
+                    handleClick={handleResetGridSize}
                     buttonText="Reset Size"
                 />
                 <Button handleClick={handleSubmit} buttonText="Save Pattern" />

@@ -1,5 +1,8 @@
 export type Pattern = {
-  title: string | undefined;
-  gridWidth: number | undefined;
-  gridHeight: number | undefined;
-};
+    id?: string
+    title: string | undefined
+    createdAt?: Date
+    gridWidth: number | undefined
+    gridHeight: number | undefined
+    pixels: string
+}

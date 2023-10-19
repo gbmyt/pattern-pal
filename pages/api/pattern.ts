@@ -11,6 +11,7 @@ export default async function createNewPattern(
                 title: req.body.title,
                 gridWidth: req.body.gridWidth,
                 gridHeight: req.body.gridHeight,
+                pixels: req.body.pixels,
             },
         })
         return res.json(pattern)
