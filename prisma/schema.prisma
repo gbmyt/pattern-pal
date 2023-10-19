@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Pattern {
-  id         String   @id @default(uuid())
-  title      String
-  createdAt  DateTime @default(now())
-  // content    String[]
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+
   // published  Boolean  @default(false)
-  gridWidth  Int      @default(25)
-  gridHeight Int      @default(25)
+  gridWidth  Int    @default(5)
+  gridHeight Int    @default(5)
+  pixels     String
 }

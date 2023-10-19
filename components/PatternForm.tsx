@@ -18,7 +18,6 @@ function PatternForm({
     async function handleSubmit(e: React.MouseEvent) {
         e.preventDefault()
         try {
-            var p = composePatternObj(pattern)
             var dbSaveResult = await createNewPattern(pattern)
         } catch (e) {
             console.log(
