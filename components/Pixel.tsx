@@ -45,24 +45,25 @@ function GridPixel({
         }
     }
 
-  function handleClickandDrag(e: React.MouseEvent) {
-    const target = e.target as HTMLInputElement;
+    function handleClickandDrag(e: React.MouseEvent) {
+        const target = e.target as HTMLInputElement
 
-    if (target) {
-      if (mouseIsDown) {
-        setPixelIsFilled(true);
-        fillGridPixel(target);
-      }
+        if (target) {
+            if (mouseIsDown) {
+                setPixelIsFilled(true)
+                fillGridPixel(target)
+            }
+        }
     }
-  }
 
-  return (
-    <div
-      onMouseDown={handleClick}
-      onMouseEnter={handleClickandDrag}
-      className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
-    ></div>
-  );
+    return (
+        <div
+            onMouseDown={handleClick}
+            onMouseEnter={handleClickandDrag}
+            style={{ backgroundColor: !filled ? undefined : pixelFillColor }}
+            className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
+        ></div>
+    )
 }
 
-export default GridPixel;
+export default GridPixel

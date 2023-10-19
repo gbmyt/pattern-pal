@@ -1,23 +1,14 @@
-import { useState } from "react"
-import GridPixel from "@/components/Pixel"
+import { useGridContext } from "@/context/GridContext"
+import { Pattern } from "@/types/pattern"
+import { useEffect } from "react"
 
-// allow user to name the pattern and save to their account
-function Grid({ height, width }: { height?: number; width?: number }) {
-    const [mouseIsDown, setMouseDownState] = useState(false)
+function Grid({ pattern }: { pattern: Pattern | null }) {
+    const { setPattern, grid, setMouseDownState } = useGridContext()
 
-    var pixels: JSX.Element[][] = new Array(
-        height && height > 0 ? height : 0
-    ).fill(
-        new Array(width && width > 0 ? width : 0).fill(
-            <GridPixel mouseIsDown={mouseIsDown} />
-        )
-    )
-
-    pixels?.forEach((p) => {
-        for (var i = 0; i < p.length; i++) {
-            p[i] = <GridPixel mouseIsDown={mouseIsDown} key={i} />
-        }
-    })
+    // Render the pattern the user selected
+    useEffect(() => {
+        pattern && setPattern(pattern)
+    }, [pattern, setPattern])
 
     function handleClick(e: React.MouseEvent) {
         const target = e.target as HTMLInputElement
@@ -39,11 +30,11 @@ function Grid({ height, width }: { height?: number; width?: number }) {
                 <div className="flex justify-center" id="grid">
                     <div
                         style={{
-                            gridTemplateColumns: `repeat(${width}, minmax(0, 1fr))`,
+                            gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
                         }}
                         className="border-solid border-2 grid"
                     >
-                        {pixels && pixels}
+                        {grid.length && grid}
                     </div>
                 </div>
             </header>
