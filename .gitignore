@@ -51,3 +51,5 @@ next-env.d.ts
 
 # Workspace files
 pattern-pal.code-workspace
+# Local Netlify folder
+.netlify
