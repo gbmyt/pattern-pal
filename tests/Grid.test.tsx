@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import PatternMaker from "@/components/PatternMaker"
-import { render, renderWithProvider, screen, waitFor } from "@/test/utils"
+import { render, renderWithProvider, screen } from "@/test/utils"
 
 import Grid from "@/components/Grid"
 

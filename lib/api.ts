@@ -29,14 +29,19 @@ export const fetcher = async ({ url, method, body, json }: FetcherOptions) => {
     }
 }
 
-// UTILITY FUNCTIONS
-
 // Patterns
 export const createNewPattern = (pattern: Pattern) => {
-    // console.log("Create New Pattern (api.ts)", pattern)
+    var urlString
+
+    if (process.env.NODE_ENV === "test") {
+        const baseURL = "http://localhost:3000"
+        urlString = `${baseURL}/api/pattern`
+    } else {
+        urlString = `/api/pattern`
+    }
 
     return fetcher({
-        url: "/api/pattern",
+        url: urlString,
         method: "post",
         body: pattern,
         json: true,

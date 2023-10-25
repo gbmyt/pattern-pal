@@ -1,4 +1,4 @@
-import { db } from "@/lib/db"
+import db from "@/lib/db"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function createNewPattern(
@@ -14,7 +14,7 @@ export default async function createNewPattern(
                 pixels: req.body.pixels,
             },
         })
-        return res.json(pattern)
+        return res.json({ statusCode: 201, payload: pattern })
     } catch (err) {
         return res.json({ error: "Failed to create pattern", status: 500 })
     }
