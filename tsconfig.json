@@ -1,36 +1,37 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vitest/globals"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./*"],
-      "@/types": ["./types"],
-      "@/assets": ["./assets"],
-      "@/lib": ["./lib"],
-      "@/styles": ["./styles"],
-      "@/components": ["./components"],
-      "@/data": ["./data"],
-      "@/test": ["./tests"],
-      "@/hooks": ["./hooks"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "types": ["vitest/globals", "node", "@testing-library/jest-dom"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "paths": {
+            "@/*": ["./*"],
+            "@/types/*": ["./types/*"],
+            "@/assets/*": ["./assets/*"],
+            "@/lib/*": ["./lib/*"],
+            "@/styles/*": ["./styles/*"],
+            "@/components/*": ["./components/*"],
+            "@/data/*": ["./data/*"],
+            "@/test/*": ["./tests/*"],
+            "@/__mocks__/*": ["./__mocks__/*"],
+            "@/hooks/*": ["./hooks/*"]
+        }
+    },
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    "exclude": ["node_modules"]
 }

@@ -27,7 +27,12 @@ function Grid({ pattern }: { pattern: Pattern | null }) {
     return (
         <div onClick={handleClick}>
             <header>
-                <div className="flex justify-center" id="grid">
+                <div
+                    className="flex justify-center"
+                    id="grid"
+                    aria-label="grid"
+                    data-testid="grid"
+                >
                     <div
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,

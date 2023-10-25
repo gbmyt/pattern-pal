@@ -53,3 +53,6 @@ next-env.d.ts
 pattern-pal.code-workspace
 # Local Netlify folder
 .netlify
+
+# test coverage
+tests/coverage/**/*

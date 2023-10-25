@@ -1,5 +1,5 @@
 import PatternDetail from "@/components/PatternDetail"
-import { db } from "@/lib/db"
+import db from "@/lib/db"
 
 async function Page() {
     async function fetchData() {

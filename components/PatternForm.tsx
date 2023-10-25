@@ -116,7 +116,7 @@ function PatternForm() {
                         className="rounded-md w-1/4 m-2"
                         id="title"
                         type="text"
-                        name="title"
+                        aria-label="title"
                         placeholder="Title"
                         value={pattern.title}
                         onChange={handlePatternFormChange}
@@ -127,7 +127,7 @@ function PatternForm() {
                         className="rounded-md w-1/6 m-2"
                         id="gridHeight"
                         type="number"
-                        name="height"
+                        aria-label="height"
                         value={pattern.gridHeight}
                         onChange={handlePatternFormChange}
                         placeholder="Grid Height"
@@ -138,7 +138,7 @@ function PatternForm() {
                         className="rounded-md w-1/6 m-2"
                         id="gridWidth"
                         type="number"
-                        name="width"
+                        aria-label="width"
                         value={pattern.gridWidth}
                         onChange={handlePatternFormChange}
                         placeholder="Grid Width"
@@ -151,7 +151,7 @@ function PatternForm() {
                         className="rounded-md w-1/6 m-2"
                         id="pixelFillColor"
                         type="text"
-                        name="pixelFillColor"
+                        aria-label="pixelFillColor"
                         placeholder="#FFFFFF"
                         value={pixelFillColor}
                         onChange={handlePatternFormChange}
