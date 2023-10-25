@@ -1,6 +1,7 @@
 import PatternDetail from "@/components/PatternDetail"
 import db from "@/lib/db"
 
+export const dynamic = "force-dynamic"
 async function Page() {
     async function fetchData() {
         const res = await db.pattern.findMany()
