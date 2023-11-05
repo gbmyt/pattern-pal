@@ -6,13 +6,15 @@ import PatternDetail from "@/components/PatternDetail"
 
 export const dynamic = "force-dynamic"
 
+// TODO: Make the PatternForm collapse by default.
+// Clicking a button to edit the Pattern opens the form
 function Page() {
     return (
         <ContextProvider>
             <h1 className="font-semibold">Create a New Pattern</h1>
             <PatternForm />
-            <Grid />
             <PatternDetail />
+            <Grid />
             <PatternList />
         </ContextProvider>
     )
