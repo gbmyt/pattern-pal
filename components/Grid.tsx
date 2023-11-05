@@ -1,14 +1,22 @@
+"use client"
 import { useGridContext } from "@/context/GridContext"
-import { Pattern } from "@/types/pattern"
+
 import { useEffect } from "react"
 
-function Grid({ pattern }: { pattern: Pattern | null }) {
-    const { setPattern, grid, setMouseDownState } = useGridContext()
+function Grid() {
+    const {
+        currentPattern,
+        setPattern,
+        grid,
+        mouseIsDown,
+        setMouseDownState,
+        setFillOnDrag,
+    } = useGridContext()
 
     // Render the pattern the user selected
     useEffect(() => {
-        pattern && setPattern(pattern)
-    }, [pattern, setPattern])
+        currentPattern && setPattern(currentPattern)
+    }, [currentPattern, setPattern])
 
     function handleClick(e: React.MouseEvent) {
         const target = e.target as HTMLInputElement
@@ -19,6 +27,7 @@ function Grid({ pattern }: { pattern: Pattern | null }) {
             })
 
             target.addEventListener("mouseup", function () {
+                setFillOnDrag(false)
                 setMouseDownState(false)
             })
         }

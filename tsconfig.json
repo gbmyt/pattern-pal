@@ -3,7 +3,7 @@
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
         "types": ["vitest/globals", "node", "@testing-library/jest-dom"],
-        "allowJs": true,
+        "allowJs": false,
         "skipLibCheck": true,
         "strict": true,
         "noEmit": true,
@@ -20,16 +20,7 @@
             }
         ],
         "paths": {
-            "@/*": ["./*"],
-            "@/types/*": ["./types/*"],
-            "@/assets/*": ["./assets/*"],
-            "@/lib/*": ["./lib/*"],
-            "@/styles/*": ["./styles/*"],
-            "@/components/*": ["./components/*"],
-            "@/data/*": ["./data/*"],
-            "@/test/*": ["./tests/*"],
-            "@/__mocks__/*": ["./__mocks__/*"],
-            "@/hooks/*": ["./hooks/*"]
+            "@/*": ["./*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

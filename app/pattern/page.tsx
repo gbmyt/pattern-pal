@@ -1,15 +1,19 @@
-import PatternDetail from "@/components/PatternDetail"
-import db from "@/lib/db"
+import ContextProvider from "@/context/GridContext"
+import PatternForm from "@/components/PatternForm"
+import Grid from "@/components/Grid"
+import PatternList from "@/components/PatternList"
 
 export const dynamic = "force-dynamic"
-async function Page() {
-    async function fetchData() {
-        const res = await db.pattern.findMany()
-        return res
-    }
-    var allPatterns = await fetchData()
 
-    return <PatternDetail allPatterns={allPatterns} />
+async function Page() {
+    return (
+        <ContextProvider>
+            <h1 className="font-semibold">Create a New Pattern</h1>
+            <PatternForm />
+            <Grid />
+            <PatternList />
+        </ContextProvider>
+    )
 }
 
 export default Page
