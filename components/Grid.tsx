@@ -46,7 +46,7 @@ function Grid() {
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
                         }}
-                        className="border-solid border-2 grid"
+                        className="border-solid border-2 grid rounded-lg"
                     >
                         {grid.length && grid}
                     </div>
