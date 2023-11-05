@@ -6,14 +6,15 @@ export function usePixelIsFilled() {
     const [pixelIsFilled, setPixelIsFilled] = useState(false)
     const { pixelFillColor, setPattern } = useGridContext()
 
-    function updatePixelFillStateInGrid(
+    async function updatePixelFillStateInGrid(
         type: string,
-        pixels: string[][],
+        pixels: (string | null)[][],
         position: string
     ) {
+        console.log("type", type)
         let x = parseInt(position.split(",")[0])
         let y = parseInt(position.split(",")[1])
-        pixels[x][y] = type === "fill" ? pixelFillColor : ""
+        pixels[x][y] = type === "fill" ? pixelFillColor : null
 
         try {
             setPattern((prevState) => ({
@@ -26,7 +27,7 @@ export function usePixelIsFilled() {
         }
     }
 
-    function fillGridPixel(
+    async function fillGridPixel(
         pixel: HTMLDivElement,
         pixels: string[][] | undefined = undefined,
         position: string | undefined = undefined
@@ -34,11 +35,11 @@ export function usePixelIsFilled() {
         pixel.style.backgroundColor = ""
         pixel.style.backgroundColor = pixelFillColor
         if (pixels && position) {
-            updatePixelFillStateInGrid("fill", pixels, position)
+            await updatePixelFillStateInGrid("fill", pixels, position)
         }
     }
 
-    function removePixelFill(
+    async function removePixelFill(
         pixel: HTMLDivElement,
         pixels: string[][] | undefined = undefined,
         position: string | undefined = undefined
@@ -46,7 +47,7 @@ export function usePixelIsFilled() {
         pixel.style.backgroundColor = ""
 
         if (pixels && position) {
-            updatePixelFillStateInGrid("clear", pixels, position)
+            await updatePixelFillStateInGrid("clear", pixels, position)
         }
     }
 
