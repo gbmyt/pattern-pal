@@ -16,10 +16,14 @@ async function PatternList() {
     var allPatterns = await fetchData()
 
     return (
-        <div className="inline-block">
-            <h1 className="font-bold">Patterns</h1>
-            {allPatterns &&
-                allPatterns.map((p, i) => <PatternCard p={p} key={i} />)}
+        <div className="mt-10">
+            <h1 className="font-semibold mb-2 text-center md:text-left">
+                Patterns
+            </h1>
+            <div className="md:h-60 flex flex-col justify-center items-center md:flex-row md:overflow-scroll md:flex-nowrap md:justify-start">
+                {allPatterns &&
+                    allPatterns.map((p, i) => <PatternCard p={p} key={i} />)}
+            </div>
         </div>
     )
 }

@@ -112,36 +112,33 @@ function PatternForm() {
                     <label htmlFor="title">Title</label>
                     <input
                         required
-                        className="rounded-md w-1/4 m-2"
+                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/4 m-2"
                         id="title"
                         name="title"
                         type="text"
                         aria-label="title"
-                        placeholder="Title"
-                        value={pattern.title}
+                        placeholder="Name Your Pattern"
                         onChange={handlePatternFormChange}
                     />
 
                     <label htmlFor="grid-height">Height</label>
                     <input
-                        className="rounded-md w-1/6 m-2"
+                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
                         id="gridHeight"
                         name="gridHeight"
                         type="number"
                         aria-label="height"
-                        value={pattern.gridHeight}
                         onChange={handlePatternFormChange}
                         placeholder="Grid Height"
                     />
 
                     <label htmlFor="grid-width">Width</label>
                     <input
-                        className="rounded-md w-1/6 m-2"
+                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
                         id="gridWidth"
                         name="gridWidth"
                         type="number"
                         aria-label="width"
-                        value={pattern.gridWidth}
                         onChange={handlePatternFormChange}
                         placeholder="Grid Width"
                     />
@@ -150,13 +147,12 @@ function PatternForm() {
                 <div>
                     <label htmlFor="pixelFillColor"> Color</label>
                     <input
-                        className="rounded-md w-1/6 m-2"
+                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
                         id="pixelFillColor"
                         name="pixelFillColor"
                         type="text"
                         aria-label="pixelFillColor"
                         placeholder="#FFFFFF"
-                        value={pixelFillColor}
                         onChange={handlePatternFormChange}
                     />
                 </div>
