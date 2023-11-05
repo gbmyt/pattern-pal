@@ -3,11 +3,11 @@ import { createMocks } from "node-mocks-http"
 
 import db from "@/lib/__mocks__/db"
 import mockPatterns from "../__mocks__/patterns"
-import createNewPattern from "@/pages/api/pattern"
+// import createNewPattern from "@/ignore/api/pattern" // NO LONGER USING THIS
 
 vi.mock("@/lib/db")
 
-describe("Pattern API", function () {
+describe.todo("Pattern Server Actions", function () {
     it.only("createPattern should save a pattern to the database", async function () {
         expect.hasAssertions()
         expect.assertions(3)
@@ -35,7 +35,8 @@ describe("Pattern API", function () {
             gridWidth: 3,
             pixels: '[["#0000FF",null,"#0000FF"],[null,null,null],[null,"#0000FF",null]]',
         })
-        const p = await createNewPattern(req, res)
+        // REPLACE THIS
+        // const p = await createNewPattern(req, res)
 
         expect(res._getJSONData().statusCode).toBe(201)
         expect(res.statusCode).toBe(200)

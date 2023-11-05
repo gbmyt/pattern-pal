@@ -18,28 +18,35 @@ export default function ContextProvider({
 }: {
     children: React.ReactNode
 }) {
-    /** Grid State */
+    /** Grid Default Values */
     const maxGridWidth = 80
+    const defaultGridWidth = 35
+    const defaultGridHeight = 25
+    const defaultFillColor = "#0000FF"
+
+    var defaultGrid = JSON.stringify(
+        new Array(defaultGridWidth).fill(
+            new Array(defaultGridHeight).fill(null)
+        )
+    )
+
+    /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
     const [fillWhenDragged, setFillOnDrag] = useState(false)
     const [grid, setGrid] = useState<React.ReactNode[]>([])
 
     /** Pixel State */
-    const defaultFillColor = "#0000FF"
     const [pixelFillColor, setPixelFillColor] = useState(defaultFillColor)
-
-    var defaultGrid = JSON.stringify(new Array(3).fill(new Array(3).fill(null)))
+    /** Pattern Maker Currently Rendered Pattern State (pulled from database) */
+    const [currentPattern, setCurrentPattern] = useState<Pattern | null>(null)
 
     /** Pattern State */
     const [pattern, setPattern] = useState<Pattern>({
         title: "",
-        gridHeight: 5,
-        gridWidth: 5,
+        gridHeight: defaultGridHeight,
+        gridWidth: defaultGridWidth,
         pixels: defaultGrid,
     })
-
-    /** Pattern Maker Currently Rendered Pattern State (pulled from database) */
-    const [currentPattern, setCurrentPattern] = useState<Pattern | null>(null)
 
     // ･ﾟ･｡✧･ﾟ: * .・。.・゜✭・.・✫・゜・。. ゜゜・。.・゜✭・
     // Update UI Logic
@@ -60,8 +67,8 @@ export default function ContextProvider({
 
             setPattern({
                 title: "",
-                gridHeight: 5,
-                gridWidth: 5,
+                gridHeight: defaultGridHeight,
+                gridWidth: defaultGridWidth,
                 pixels: defaultGrid,
             })
             setGrid(composeGrid(emptyGrid))
@@ -95,7 +102,7 @@ export default function ContextProvider({
                     typeof row[i] === "string" ? (
                         <GridPixel
                             filled={true}
-                            // fillColor={row[i]}
+                            fillColor={row[i] as unknown as string}
                             position={`${idx}, ${i}`}
                             key={i}
                         />
