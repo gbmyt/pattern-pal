@@ -3,7 +3,6 @@ import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 import Button from "@/components/Button"
 
-import { createNewPattern } from "@/lib/api"
 import { createPatternServerAction } from "@/lib/actions"
 
 function PatternForm() {
@@ -112,6 +111,7 @@ function PatternForm() {
                 <div>
                     <label htmlFor="title">Title</label>
                     <input
+                        required
                         className="rounded-md w-1/4 m-2"
                         id="title"
                         name="title"

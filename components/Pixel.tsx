@@ -50,11 +50,14 @@ function GridPixel({
         }
     }
 
+    const fill = !filled ? undefined : fillColor ? fillColor : pixelFillColor
     return (
         <div
             onMouseDown={handleClick}
             onMouseEnter={handleClickandDrag}
-            style={{ backgroundColor: !filled ? undefined : pixelFillColor }}
+            style={{
+                backgroundColor: fill,
+            }}
             className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
         ></div>
     )
