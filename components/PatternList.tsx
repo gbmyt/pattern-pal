@@ -1,24 +1,25 @@
-"use client"
-import { Pattern } from "@/types/pattern"
-import { SetStateAction } from "react"
+import PatternCard from "./PatternCard"
+import db from "@/lib/db"
 
-function PatternList({
-    allPatterns,
-    setCurrentPattern,
-}: {
-    allPatterns: Pattern[]
-    setCurrentPattern: React.Dispatch<SetStateAction<Pattern | null>>
-}) {
+async function fetchData() {
+    const data = await db.pattern.findMany({
+        orderBy: [
+            {
+                createdAt: "desc",
+            },
+        ],
+    })
+    return data
+}
+
+async function PatternList() {
+    var allPatterns = await fetchData()
+
     return (
         <div className="inline-block">
-            <h1 className="font-bold">Pattern List</h1>
-
+            <h1 className="font-bold">Patterns</h1>
             {allPatterns &&
-                allPatterns.map((p, i) => (
-                    <div onClick={() => setCurrentPattern(p)} key={i}>
-                        {p.title}
-                    </div>
-                ))}
+                allPatterns.map((p, i) => <PatternCard p={p} key={i} />)}
         </div>
     )
 }

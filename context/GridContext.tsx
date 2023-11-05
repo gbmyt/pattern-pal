@@ -1,7 +1,8 @@
+"use client"
 import GridPixel from "@/components/Pixel"
 import { GridContextType } from "@/types/context"
 import { Pattern } from "@/types/pattern"
-import React, {
+import {
     createContext,
     useCallback,
     useContext,
@@ -17,22 +18,28 @@ export default function ContextProvider({
 }: {
     children: React.ReactNode
 }) {
-    /** State Stuff */
+    /** Grid State */
     const maxGridWidth = 80
     const [mouseIsDown, setMouseDownState] = useState(false)
+    const [fillWhenDragged, setFillOnDrag] = useState(false)
     const [grid, setGrid] = useState<React.ReactNode[]>([])
 
+    /** Pixel State */
     const defaultFillColor = "#0000FF"
     const [pixelFillColor, setPixelFillColor] = useState(defaultFillColor)
 
     var defaultGrid = JSON.stringify(new Array(3).fill(new Array(3).fill(null)))
 
+    /** Pattern State */
     const [pattern, setPattern] = useState<Pattern>({
         title: "",
         gridHeight: 5,
         gridWidth: 5,
         pixels: defaultGrid,
     })
+
+    /** Pattern Maker Currently Rendered Pattern State (pulled from database) */
+    const [currentPattern, setCurrentPattern] = useState<Pattern | null>(null)
 
     // ･ﾟ･｡✧･ﾟ: * .・。.・゜✭・.・✫・゜・。. ゜゜・。.・゜✭・
     // Update UI Logic
@@ -114,6 +121,10 @@ export default function ContextProvider({
         setPattern,
         grid,
         renderEmptyGrid,
+        fillWhenDragged,
+        setFillOnDrag,
+        currentPattern,
+        setCurrentPattern,
     }
 
     return <GridContext.Provider value={ctx}>{children}</GridContext.Provider>

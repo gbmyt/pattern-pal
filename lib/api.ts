@@ -7,9 +7,9 @@ type FetcherOptions = {
     json?: boolean
 }
 
-export const fetcher = async ({ url, method, body, json }: FetcherOptions) => {
-    console.log("Fetcher body", body)
+// Utils
 
+export const fetcher = async ({ url, method, body, json }: FetcherOptions) => {
     const res = await fetch(url, {
         method,
         body: body && JSON.stringify(body),
@@ -29,19 +29,14 @@ export const fetcher = async ({ url, method, body, json }: FetcherOptions) => {
     }
 }
 
+const createURL = (path: string) => {
+    return window.location.origin + path
+}
+
 // Patterns
 export const createNewPattern = (pattern: Pattern) => {
-    var urlString
-
-    if (process.env.NODE_ENV === "test") {
-        const baseURL = "http://localhost:3000"
-        urlString = `${baseURL}/api/pattern`
-    } else {
-        urlString = `/api/pattern`
-    }
-
     return fetcher({
-        url: urlString,
+        url: createURL("/api/pattern"),
         method: "post",
         body: pattern,
         json: true,

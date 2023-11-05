@@ -1,8 +1,10 @@
+"use client"
 import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 import Button from "@/components/Button"
 
 import { createNewPattern } from "@/lib/api"
+import { createPatternServerAction } from "@/lib/actions"
 
 function PatternForm() {
     const {
@@ -15,18 +17,12 @@ function PatternForm() {
     } = useGridContext()
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
 
-    async function handleSubmit(e: React.MouseEvent) {
-        e.preventDefault()
-        try {
-            var dbSaveResult = await createNewPattern(pattern)
-        } catch (e) {
-            console.log(
-                "There was a problem saving your pattern to the database, please try again.",
-                e
-            )
-            throw new Error("Pattern couldn't be saved.")
-        }
-    }
+    // server action stuff
+    const pixels = pattern.pixels
+    const createPattern = createPatternServerAction.bind(
+        null,
+        pixels as unknown as FormData
+    )
 
     function handleResetGridToDefault(e: React.MouseEvent) {
         handleResetGridSize(e)
@@ -108,13 +104,17 @@ function PatternForm() {
     }
 
     return (
-        <form className="flex flex-col justify-between w-3/4 my-4">
+        <form
+            action={createPattern}
+            className="flex flex-col justify-between w-3/4 my-4"
+        >
             <>
                 <div>
                     <label htmlFor="title">Title</label>
                     <input
                         className="rounded-md w-1/4 m-2"
                         id="title"
+                        name="title"
                         type="text"
                         aria-label="title"
                         placeholder="Title"
@@ -126,6 +126,7 @@ function PatternForm() {
                     <input
                         className="rounded-md w-1/6 m-2"
                         id="gridHeight"
+                        name="gridHeight"
                         type="number"
                         aria-label="height"
                         value={pattern.gridHeight}
@@ -137,6 +138,7 @@ function PatternForm() {
                     <input
                         className="rounded-md w-1/6 m-2"
                         id="gridWidth"
+                        name="gridWidth"
                         type="number"
                         aria-label="width"
                         value={pattern.gridWidth}
@@ -150,6 +152,7 @@ function PatternForm() {
                     <input
                         className="rounded-md w-1/6 m-2"
                         id="pixelFillColor"
+                        name="pixelFillColor"
                         type="text"
                         aria-label="pixelFillColor"
                         placeholder="#FFFFFF"
@@ -172,7 +175,7 @@ function PatternForm() {
                     handleClick={handleResetGridSize}
                     buttonText="Reset Size"
                 />
-                <Button handleClick={handleSubmit} buttonText="Save Pattern" />
+                <Button buttonText="Save Pattern" />
             </div>
         </form>
     )
