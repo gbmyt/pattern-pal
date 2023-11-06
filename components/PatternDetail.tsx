@@ -4,7 +4,7 @@ import { useGridContext } from "@/context/GridContext"
 const PatternDetail = () => {
     const { pattern, currentPattern, pixelFillColor } = useGridContext()
     return (
-        <>
+        <div className="mt-4">
             <div className="font-semibold">Current Pattern</div>
             <div>
                 Title:{" "}
@@ -26,7 +26,7 @@ const PatternDetail = () => {
                 Color:{" "}
                 <span className="text-slate-500/75">{pixelFillColor}</span>
             </div>
-        </>
+        </div>
     )
 }
 export default PatternDetail
