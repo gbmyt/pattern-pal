@@ -47,7 +47,7 @@ export async function createPatternServerAction(
     const title = formData.get("title") as string
     const width = formData.get("gridWidth")
     const height = formData.get("gridHeight")
-    console.log("w, h", !width, height)
+
     try {
         await db.pattern.create({
             data: {
