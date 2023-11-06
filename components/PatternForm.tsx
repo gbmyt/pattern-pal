@@ -52,7 +52,7 @@ function PatternForm() {
     function handlePatternFormChange(e: React.FormEvent) {
         const target = e.target as HTMLInputElement
 
-        switch (target.id) {
+        switch (target.name) {
             case "title":
                 setPattern((prevState) => ({
                     ...prevState,
