@@ -7,7 +7,7 @@ async function fetchData() {
 
     const data = await db.pattern.findMany({
         where: {
-            userId: user.id,
+            userId: user?.id,
         },
         orderBy: [
             {
