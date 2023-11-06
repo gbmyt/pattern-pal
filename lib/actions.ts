@@ -48,18 +48,21 @@ export async function createPatternServerAction(
     const width = formData.get("gridWidth")
     const height = formData.get("gridHeight")
 
-    try {
-        await db.pattern.create({
-            data: {
-                title,
-                gridWidth: Number(width) || DEFAULTGRIDHEIGHT,
-                gridHeight: Number(height) || DEFAULTGRIDWIDTH,
-                pixels: pixels as unknown as string,
-                userId: user.id,
-            },
-        })
-    } catch (e) {
-        console.log("There was an error in create pattern server action", e)
+    if (user) {
+        try {
+            await db.pattern.create({
+                data: {
+                    title,
+                    gridWidth: Number(width) || DEFAULTGRIDHEIGHT,
+                    gridHeight: Number(height) || DEFAULTGRIDWIDTH,
+                    pixels: pixels as unknown as string,
+                    userId: user.id,
+                },
+            })
+        } catch (e) {
+            console.log("There was an error in create pattern server action", e)
+        } finally {
+            revalidatePath("/pattern")
+        }
     }
-    revalidatePath("/pattern")
 }
