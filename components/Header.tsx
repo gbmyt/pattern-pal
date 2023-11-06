@@ -1,6 +1,7 @@
 "use client"
 import headerNavLinks from "@/data/headerNavLinks"
 import siteMetadata from "@/data/siteMetadata"
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -39,6 +40,17 @@ const Header = () => {
                             {link.title}
                         </Link>
                     ))}
+
+                <SignedIn>
+                    {/* Mount the UserButton component */}
+                    <UserButton afterSignOutUrl="/" />
+                </SignedIn>
+                <SignedOut>
+                    {/* Signed out users get sign in button */}
+                    <div className="sm:block font-medium">
+                        <SignInButton />
+                    </div>
+                </SignedOut>
             </div>
         </header>
     )

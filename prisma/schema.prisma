@@ -11,12 +11,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clerkId String @unique
+  email   String @unique
+
+  patterns Pattern[]
+}
+
 model Pattern {
   id        String   @id @default(uuid())
   title     String
   createdAt DateTime @default(now())
 
   // published  Boolean  @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
   gridWidth  Int    @default(5)
   gridHeight Int    @default(5)
   pixels     String
