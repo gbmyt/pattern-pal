@@ -11,7 +11,6 @@ function PatternForm() {
     const {
         pattern,
         setPattern,
-        pixelFillColor,
         setPixelFillColor,
         renderEmptyGrid,
         maxGridWidth,
@@ -19,7 +18,6 @@ function PatternForm() {
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
     const [modalIsOpen, setModalOpen] = useState(false)
 
-    // server action stuff
     const pixels = pattern.pixels
     const createPattern = createPatternServerAction.bind(
         null,
@@ -105,6 +103,12 @@ function PatternForm() {
         }
     }
 
+    async function handleSubmit(data: FormData) {
+        await createPattern(data)
+        const form = document.getElementById("form") as HTMLFormElement
+        form && form.reset()
+    }
+
     return (
         <>
             <Button
@@ -125,7 +129,9 @@ function PatternForm() {
 
             <Modal isOpen={modalIsOpen}>
                 <form
-                    action={createPattern}
+                    id="form"
+                    // action={createPattern}
+                    action={async (data) => await handleSubmit(data)}
                     className="flex flex-col justify-between w-3/4 my-4"
                 >
                     <>

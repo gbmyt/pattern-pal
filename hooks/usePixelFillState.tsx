@@ -11,7 +11,6 @@ export function usePixelIsFilled() {
         pixels: (string | null)[][],
         position: string
     ) {
-        console.log("type", type)
         let x = parseInt(position.split(",")[0])
         let y = parseInt(position.split(",")[1])
         pixels[x][y] = type === "fill" ? pixelFillColor : null
