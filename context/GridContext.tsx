@@ -1,5 +1,6 @@
 "use client"
 import GridPixel from "@/components/Pixel"
+import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
 import { GridContextType } from "@/types/context"
 import { Pattern } from "@/types/pattern"
 import {
@@ -20,8 +21,8 @@ export default function ContextProvider({
 }) {
     /** Grid Default Values */
     const maxGridWidth = 80
-    const defaultGridWidth = 35
-    const defaultGridHeight = 25
+    const defaultGridWidth = DEFAULTGRIDWIDTH
+    const defaultGridHeight = DEFAULTGRIDHEIGHT
     const defaultFillColor = "#0000FF"
 
     var defaultGrid = JSON.stringify(

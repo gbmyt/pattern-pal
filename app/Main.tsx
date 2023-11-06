@@ -1,4 +1,7 @@
-const Main = () => {
+import { auth } from "@clerk/nextjs"
+
+const Main = async () => {
+    const { userId } = await auth()
     return (
         <div className="flex h-screen flex-col items-center justify-between p-24">
             <div className="max-w-5xl items-center text-sm pb-4 md:pb-0">
@@ -21,7 +24,7 @@ const Main = () => {
 
             <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
                 <a
-                    href="/pattern"
+                    href={userId ? "/pattern" : "/new-user"}
                     className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
                     rel="noopener noreferrer"
                 >
@@ -73,7 +76,7 @@ const Main = () => {
                 </a>
 
                 <a
-                    href="/share"
+                    href={userId ? "/share" : "/new-user"}
                     className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
                     rel="noopener noreferrer"
                 >

@@ -1,8 +1,14 @@
+import { getUserByClerkId } from "@/lib/auth"
 import PatternCard from "./PatternCard"
 import db from "@/lib/db"
 
 async function fetchData() {
+    const user = await getUserByClerkId()
+
     const data = await db.pattern.findMany({
+        where: {
+            userId: user.id,
+        },
         orderBy: [
             {
                 createdAt: "desc",

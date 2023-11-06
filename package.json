@@ -11,6 +11,7 @@
         "test": "vitest"
     },
     "dependencies": {
+        "@clerk/nextjs": "^4.26.2",
         "@prisma/client": "5.4.2",
         "@types/node": "20.6.3",
         "@types/react": "18.2.22",
