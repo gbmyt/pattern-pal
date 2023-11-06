@@ -5,11 +5,13 @@ export const getUserByClerkId = async () => {
     console.log("in get user by clerk id")
     const { userId } = await auth()
 
-    const user = await db.user.findUniqueOrThrow({
-        where: {
-            clerkId: userId,
-        },
-    })
+    if (userId) {
+        const user = await db.user.findUniqueOrThrow({
+            where: {
+                clerkId: userId,
+            },
+        })
 
-    return user
+        return user
+    }
 }
