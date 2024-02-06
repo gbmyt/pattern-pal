@@ -1,7 +1,7 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
+import html2canvas from "html2canvas"
 
 function Grid() {
     const {
@@ -12,6 +12,7 @@ function Grid() {
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
+    const ref = useRef<HTMLDivElement>(null)
 
     // Render the pattern the user selected
     useEffect(() => {
@@ -33,6 +34,25 @@ function Grid() {
         }
     }
 
+    const handleDownloadImage = async () => {
+        const element = ref.current as HTMLDivElement
+        const canvas = await html2canvas(element)
+
+        const data = canvas.toDataURL("image/jpg")
+        const link = document.createElement("a")
+
+        if (typeof link.download === "string") {
+            link.href = data
+            link.download = "image.jpg"
+
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        } else {
+            window.open(data)
+        }
+    }
+
     return (
         <div onClick={handleClick}>
             <header>
@@ -47,11 +67,13 @@ function Grid() {
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
                         }}
                         className="border-solid border-2 grid rounded-lg"
+                        ref={ref}
                     >
                         {grid.length && grid}
                     </div>
                 </div>
             </header>
+            <button onClick={handleDownloadImage}>Download Img</button>
         </div>
     )
 }
