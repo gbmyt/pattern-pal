@@ -116,26 +116,27 @@ function PatternForm() {
 
     return (
         <>
-            <div className="flex flex-row justify-center items-center">
+            <div className="flex flex-row justify-center items-center mb-10">
                 <Button
-                    buttonText={`${menuControlsOpen ? "X" : "V"}`}
+                    buttonText={`${menuControlsOpen ? "-" : "Menu +"}`}
                     handleClick={() => {
                         setMenuOpen(!menuControlsOpen)
-                        if (menuControlsOpen && modalIsOpen) setModalOpen(false)
+                        // if (menuControlsOpen && modalIsOpen) setModalOpen(false)
                     }}
                 />
 
                 {/* TODO fix typescript error */}
                 <div className={!menuControlsOpen && `hidden`}>
                     <Button
-                        buttonText={`${modalIsOpen ? "Close X" : "Edit"}`}
+                        modalIsOpen={modalIsOpen}
+                        buttonText="Edit ✎"
                         handleClick={() => {
                             setModalOpen(!modalIsOpen)
                         }}
                     />
                     <Button
                         handleClick={handleResetGridToDefault}
-                        buttonText="New Grid"
+                        buttonText="New +"
                     />
                 </div>
             </div>
@@ -204,11 +205,7 @@ function PatternForm() {
                                 handleClick={handleResetGridSize}
                                 buttonText="Reset Size"
                             />
-                            <Button buttonText="Save New Pattern" />
-                            <Button
-                                buttonText="Update Pattern"
-                                handleClick={handleUpdateCurrentPattern}
-                            />
+                            <Button buttonText="Save Grid" />
                         </div>
                     </form>
                 </Modal>
