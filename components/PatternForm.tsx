@@ -17,6 +17,7 @@ function PatternForm() {
     } = useGridContext()
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
     const [modalIsOpen, setModalOpen] = useState(false)
+    const [menuControlsOpen, setMenuOpen] = useState(true)
 
     const pixels = pattern.pixels
     const createPattern = createPatternServerAction.bind(
@@ -109,83 +110,109 @@ function PatternForm() {
         form && form.reset()
     }
 
+    function handleUpdateCurrentPattern(e: React.MouseEvent) {
+        console.log("Updating Pattern")
+    }
+
     return (
         <>
-            <Button
-                buttonText={`${modalIsOpen ? "Close X" : "Save New Pattern +"}`}
-                handleClick={() => {
-                    setModalOpen(!modalIsOpen)
-                }}
-            />
-            <Button
-                handleClick={handleResetGridToDefault}
-                buttonText="Reset Grid"
-            />
-            <Button
-                handleClick={handleRemoveGridFill}
-                buttonText="Remove Pixel Fill"
-            />
-            <Button handleClick={handleResetGridSize} buttonText="Reset Size" />
+            <div className="flex flex-row justify-center items-center">
+                <Button
+                    buttonText={`${menuControlsOpen ? "X" : "V"}`}
+                    handleClick={() => {
+                        setMenuOpen(!menuControlsOpen)
+                        if (menuControlsOpen && modalIsOpen) setModalOpen(false)
+                    }}
+                />
 
-            <Modal isOpen={modalIsOpen}>
-                <form
-                    id="form"
-                    // action={createPattern}
-                    action={async (data) => await handleSubmit(data)}
-                    className="flex flex-col justify-between w-3/4 my-4"
-                >
-                    <>
-                        <div>
-                            <label htmlFor="title">Title</label>
-                            <input
-                                required
-                                className="text-slate-600 border-2 border-black/10 rounded-md w-1/4 m-2"
-                                name="title"
-                                type="text"
-                                aria-label="title"
-                                placeholder="Name Your Pattern"
-                                onChange={handlePatternFormChange}
+                {/* TODO fix typescript error */}
+                <div className={!menuControlsOpen && `hidden`}>
+                    <Button
+                        buttonText={`${modalIsOpen ? "Close X" : "Edit"}`}
+                        handleClick={() => {
+                            setModalOpen(!modalIsOpen)
+                        }}
+                    />
+                    <Button
+                        handleClick={handleResetGridToDefault}
+                        buttonText="New Grid"
+                    />
+                </div>
+            </div>
+
+            <div className="flex flex-row justify-center items-center">
+                <Modal isOpen={modalIsOpen}>
+                    <form
+                        id="form"
+                        // action={createPattern}
+                        action={async (data) => await handleSubmit(data)}
+                        className="flex flex-col justify-between w-3/4 my-4"
+                    >
+                        <>
+                            <div>
+                                <label htmlFor="title">Title</label>
+                                <input
+                                    required
+                                    className="text-slate-600 border-2 border-black/10 rounded-md w-1/4 m-2"
+                                    name="title"
+                                    type="text"
+                                    aria-label="title"
+                                    placeholder="Name Your Grid"
+                                    onChange={handlePatternFormChange}
+                                />
+
+                                <label htmlFor="grid-height">Height</label>
+                                <input
+                                    className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
+                                    name="gridHeight"
+                                    type="number"
+                                    aria-label="height"
+                                    onChange={handlePatternFormChange}
+                                    placeholder="Height in Pixels"
+                                />
+
+                                <label htmlFor="grid-width">Width</label>
+                                <input
+                                    className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
+                                    name="gridWidth"
+                                    type="number"
+                                    aria-label="width"
+                                    onChange={handlePatternFormChange}
+                                    placeholder="Width in Pixels"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="pixelFillColor"> Color</label>
+                                <input
+                                    className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
+                                    name="pixelFillColor"
+                                    type="text"
+                                    aria-label="pixelFillColor"
+                                    placeholder="#FFFFFF"
+                                    onChange={handlePatternFormChange}
+                                />
+                            </div>
+                        </>
+
+                        <div className="m-4 ml-0">
+                            <Button
+                                handleClick={handleRemoveGridFill}
+                                buttonText="Remove Pixel Fill"
                             />
-
-                            <label htmlFor="grid-height">Height</label>
-                            <input
-                                className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
-                                name="gridHeight"
-                                type="number"
-                                aria-label="height"
-                                onChange={handlePatternFormChange}
-                                placeholder="Grid Height"
+                            <Button
+                                handleClick={handleResetGridSize}
+                                buttonText="Reset Size"
                             />
-
-                            <label htmlFor="grid-width">Width</label>
-                            <input
-                                className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
-                                name="gridWidth"
-                                type="number"
-                                aria-label="width"
-                                onChange={handlePatternFormChange}
-                                placeholder="Grid Width"
+                            <Button buttonText="Save New Pattern" />
+                            <Button
+                                buttonText="Update Pattern"
+                                handleClick={handleUpdateCurrentPattern}
                             />
                         </div>
-
-                        <div>
-                            <label htmlFor="pixelFillColor"> Color</label>
-                            <input
-                                className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
-                                name="pixelFillColor"
-                                type="text"
-                                aria-label="pixelFillColor"
-                                placeholder="#FFFFFF"
-                                onChange={handlePatternFormChange}
-                            />
-                        </div>
-                    </>
-
-                    <div className="m-4 ml-0">
-                        <Button buttonText="Submit" />
-                    </div>
-                </form>
-            </Modal>
+                    </form>
+                </Modal>
+            </div>
         </>
     )
 }
