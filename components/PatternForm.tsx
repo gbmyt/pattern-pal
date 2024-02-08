@@ -20,7 +20,7 @@ function PatternForm() {
     const [menuControlsOpen, setMenuOpen] = useState(true)
 
     const pixels = pattern.pixels
-    const createPattern = createPatternServerAction.bind(
+    const saveGrid = createPatternServerAction.bind(
         null,
         pixels as unknown as FormData
     )
@@ -105,7 +105,7 @@ function PatternForm() {
     }
 
     async function handleSubmit(data: FormData) {
-        await createPattern(data)
+        await saveGrid(data)
         const form = document.getElementById("form") as HTMLFormElement
         form && form.reset()
     }
@@ -120,13 +120,16 @@ function PatternForm() {
                 <Button
                     buttonText={`${menuControlsOpen ? "-" : "Menu +"}`}
                     handleClick={() => {
-                        setMenuOpen(!menuControlsOpen)
-                        // if (menuControlsOpen && modalIsOpen) setModalOpen(false)
+                        if (modalIsOpen) {
+                            setModalOpen(false)
+                        } else {
+                            setMenuOpen(!menuControlsOpen)
+                        }
                     }}
                 />
 
                 {/* TODO fix typescript error */}
-                <div className={!menuControlsOpen && `hidden`}>
+                <div className={!menuControlsOpen ? "hidden" : ""}>
                     <Button
                         modalIsOpen={modalIsOpen}
                         buttonText="Edit ✎"
@@ -137,6 +140,12 @@ function PatternForm() {
                     <Button
                         handleClick={handleResetGridToDefault}
                         buttonText="New +"
+                    />
+                    <Button
+                        buttonText="Delete Grid"
+                        handleClick={(e) => {
+                            console.log("Deleting pattern")
+                        }}
                     />
                 </div>
             </div>
@@ -159,6 +168,7 @@ function PatternForm() {
                                     type="text"
                                     aria-label="title"
                                     placeholder="Name Your Grid"
+                                    value={pattern.title ? pattern.title : ""}
                                     onChange={handlePatternFormChange}
                                 />
 
@@ -205,7 +215,9 @@ function PatternForm() {
                                 handleClick={handleResetGridSize}
                                 buttonText="Reset Size"
                             />
+                            {/* TODO: If new text says save grid, otherwise save changes */}
                             <Button buttonText="Save Grid" />
+                            {/* <Button buttonText="Save Changes" /> */}
                         </div>
                     </form>
                 </Modal>
