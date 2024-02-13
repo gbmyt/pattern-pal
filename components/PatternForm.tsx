@@ -6,6 +6,7 @@ import Button from "@/components/Button"
 import { createPatternServerAction } from "@/lib/actions"
 import { useState } from "react"
 import Modal from "@/components/Modal"
+import ColorWheel from "./ColorWheel"
 
 function PatternForm() {
     const {
@@ -203,6 +204,11 @@ function PatternForm() {
                                     placeholder="#FFFFFF"
                                     onChange={handlePatternFormChange}
                                 />
+                            </div>
+
+                            <div>
+                                <span>Fill Color</span>
+                                <ColorWheel />
                             </div>
                         </>
 

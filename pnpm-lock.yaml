@@ -20,6 +20,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.2.7
     version: 18.2.7
+  '@uiw/react-color-wheel':
+    specifier: ^2.0.6
+    version: 2.0.6(@babel/runtime@7.23.2)(react-dom@18.2.0)(react@18.2.0)
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.30)
@@ -3134,6 +3137,40 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.10.0
       eslint-visitor-keys: 3.4.3
+    dev: false
+
+  /@uiw/color-convert@2.0.6(@babel/runtime@7.23.2):
+    resolution: {integrity: sha512-LDu9r8geEjUgGzsuTkUu6rV5SCqR9r2liVYQxH42tZ5NkFx87Oswz/lpwthCoulhgjSWA+QEjjE3XB8Z9ove1g==}
+    peerDependencies:
+      '@babel/runtime': '>=7.19.0'
+    dependencies:
+      '@babel/runtime': 7.23.2
+    dev: false
+
+  /@uiw/react-color-wheel@2.0.6(@babel/runtime@7.23.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-7EfZ3db+NUd+2AQ7Nm7lsXmmVXCD65cZFhpTQuM3PIF8VgzwVTumXKBV2WyfCdo+alQowvN8DQCxdcmmjIozFg==}
+    peerDependencies:
+      '@babel/runtime': '>=7.19.0'
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@babel/runtime': 7.23.2
+      '@uiw/color-convert': 2.0.6(@babel/runtime@7.23.2)
+      '@uiw/react-drag-event-interactive': 2.0.6(@babel/runtime@7.23.2)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@uiw/react-drag-event-interactive@2.0.6(@babel/runtime@7.23.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-LO3Q5x7NMAiIiZMwd6Yulpim+bYafs8ZYOhp+uOgY3Isvbke/me2Ix62qM+gQimEQjOYuH/9GZx5aC+uOcYo2w==}
+    peerDependencies:
+      '@babel/runtime': '>=7.19.0'
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@babel/runtime': 7.23.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@vercel/nft@0.23.1(supports-color@9.4.0):
