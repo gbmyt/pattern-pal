@@ -36,6 +36,7 @@ function PatternForm() {
     function handleResetGridToDefault(e: React.MouseEvent) {
         handleResetGridSize(e)
         handleRemoveGridFill(e)
+        setPixelFillColor(defaultFillColor)
     }
 
     function handleResetGridSize(e: React.MouseEvent) {
@@ -210,21 +211,9 @@ function PatternForm() {
                                     />
                                 </div>
 
-                                <div>
-                                    <span>Fill Color</span>
-                                    <Button
-                                        style="link"
-                                        buttonText="Reset Color"
-                                        handleClick={() =>
-                                            setPixelFillColor(defaultFillColor)
-                                        }
-                                    />
-                                    <ColorWheel
-                                        disabled={
-                                            !modalIsOpen || !menuControlsOpen
-                                        }
-                                    />
-                                </div>
+                                <ColorWheel
+                                    disabled={!modalIsOpen || !menuControlsOpen}
+                                />
                             </>
 
                             <div className="m-4 ml-0">
