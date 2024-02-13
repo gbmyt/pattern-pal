@@ -163,7 +163,7 @@ function PatternForm() {
                             <>
                                 <div>
                                     <label htmlFor="title">Title</label>
-                                    <input
+                                    {/* <input
                                         className="hidden"
                                         name="pixelGridId"
                                         type="text"
@@ -175,7 +175,7 @@ function PatternForm() {
                                                 : "Missing ID error"
                                         }
                                         onChange={handlePatternFormChange}
-                                    />
+                                    /> */}
 
                                     <label htmlFor="title">Title</label>
                                     <input
