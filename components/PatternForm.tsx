@@ -26,6 +26,7 @@ function PatternForm() {
 
     // FORM STATE
     const [formError, setFormError] = useState(false)
+    const [formSaveText, setFormText] = useState<string | null>(null)
 
     const pixels = pattern.pixels
     const saveGrid = createPatternServerAction.bind(
@@ -118,6 +119,7 @@ function PatternForm() {
 
         if (!data.get("title")) {
             console.log("Whoops! Please add a title and try again.")
+            setFormText("Whoops! Please add a title and try again.")
             setFormError(true)
         } else if (menuControlsOpen && modalIsOpen) {
             try {
@@ -130,6 +132,7 @@ function PatternForm() {
             } finally {
                 form && form.reset()
                 setFormError(false)
+                setFormText("Saved!")
             }
         }
     }
@@ -147,9 +150,7 @@ function PatternForm() {
                 setMenuOpen={setMenuOpen}
                 handleResetGridToDefault={handleResetGridToDefault}
             />
-            <Modal isOpen={formError}>
-                Whoops! Please add a title and try again.
-            </Modal>
+            <Modal isOpen={!formSaveText ? false : true}>{formSaveText}</Modal>
 
             {menuControlsOpen && modalIsOpen && (
                 <div className="flex flex-row justify-center items-center">

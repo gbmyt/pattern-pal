@@ -1,8 +1,18 @@
 import { useGridContext } from "@/context/GridContext"
-import Sketch from "@uiw/react-color-wheel"
+import {
+    Slider,
+    Sketch,
+    Material,
+    Colorful,
+    Compact,
+    Circle,
+    Block,
+    Github,
+    Chrome,
+} from "@uiw/react-color"
 // import { Alpha, Hue, ShadeSlider, Saturation, Interactive, hsvaToHslaString } from '@uiw/react-color';
 // import { EditableInput, EditableInputRGBA, EditableInputHSLA } from '@uiw/react-color';
-import { SetStateAction, useContext, useState } from "react"
+import { useState } from "react"
 import Button from "./Button"
 
 function ColorWheel({ disabled }: { disabled: boolean }) {
