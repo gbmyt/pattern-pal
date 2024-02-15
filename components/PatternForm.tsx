@@ -3,7 +3,7 @@ import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 import Button from "@/components/Button"
 
-import { createPatternServerAction } from "@/lib/actions"
+import { createPixelGridServerAction } from "@/lib/actions"
 import { useState } from "react"
 import Modal from "@/components/Modal"
 import ColorWheel from "./ColorWheel"
@@ -29,7 +29,7 @@ function PatternForm() {
     const [formSaveText, setFormText] = useState<string | null>(null)
 
     const pixels = pattern.pixels
-    const saveGrid = createPatternServerAction.bind(
+    const saveGrid = createPixelGridServerAction.bind(
         null,
         pixels as unknown as FormData
     )
