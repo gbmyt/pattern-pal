@@ -14,15 +14,10 @@ function PatternForm({ authorized }: { authorized: boolean }) {
         pattern,
         setPattern,
         setPixelFillColor,
-        renderEmptyGrid,
         maxGridWidth,
-        defaultFillColor,
+        menuControlsOpen,
+        modalIsOpen,
     } = useGridContext()
-    const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
-
-    // CONTROLS
-    const [modalIsOpen, setModalOpen] = useState(false)
-    const [menuControlsOpen, setMenuOpen] = useState(true)
 
     // FORM STATE
     const [formError, setFormError] = useState(false)
@@ -33,30 +28,6 @@ function PatternForm({ authorized }: { authorized: boolean }) {
         null,
         pixels as unknown as FormData
     )
-
-    function handleResetGridToDefault(e: React.MouseEvent) {
-        handleResetGridSize(e)
-        handleRemoveGridFill(e)
-        setPixelFillColor(defaultFillColor)
-    }
-
-    function handleResetGridSize(e: React.MouseEvent) {
-        e.preventDefault()
-        renderEmptyGrid()
-    }
-
-    function handleRemoveGridFill(e: React.MouseEvent) {
-        e.preventDefault()
-        let pixels = document.querySelectorAll(
-            ".grid-pixel"
-        ) as NodeListOf<HTMLDivElement>
-
-        pixels &&
-            pixels.forEach((p) => {
-                removePixelFill(p)
-                setPixelIsFilled(false)
-            })
-    }
 
     function handlePatternFormChange(e: React.FormEvent) {
         const target = e.target as HTMLInputElement
@@ -158,13 +129,7 @@ function PatternForm({ authorized }: { authorized: boolean }) {
 
     return (
         <>
-            <EditorMenu
-                menuControlsOpen={menuControlsOpen}
-                modalIsOpen={modalIsOpen}
-                setModalOpen={setModalOpen}
-                setMenuOpen={setMenuOpen}
-                handleResetGridToDefault={handleResetGridToDefault}
-            />
+            <EditorMenu />
             <Modal isOpen={!formSaveText ? false : true}>{formSaveText}</Modal>
 
             {menuControlsOpen && modalIsOpen && (
@@ -173,11 +138,11 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                         <form
                             id="form"
                             action={async (data) => await handleSubmit(data)}
-                            className="flex flex-col justify-between w-3/4 my-4"
+                            className="flex flex-col justify-between w-3/4"
                         >
                             <>
                                 <div>
-                                    <label htmlFor="title">Title</label>
+                                    {/* <label htmlFor="title">Title</label> */}
                                     {/* <input
                                         className="hidden"
                                         name="pixelGridId"

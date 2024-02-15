@@ -2,6 +2,10 @@ import { SetStateAction } from "react"
 import { Pattern } from "./pattern"
 
 export type GridContextType = {
+    modalIsOpen: boolean
+    setModalOpen: React.Dispatch<SetStateAction<boolean>>
+    menuControlsOpen: boolean
+    setMenuOpen: React.Dispatch<SetStateAction<boolean>>
     mouseIsDown: boolean
     setFillOnDrag: React.Dispatch<SetStateAction<boolean>>
     fillWhenDragged: boolean

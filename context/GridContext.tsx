@@ -31,6 +31,10 @@ export default function ContextProvider({
         )
     )
 
+    /** Editor Menu State */
+    const [modalIsOpen, setModalOpen] = useState(false)
+    const [menuControlsOpen, setMenuOpen] = useState(true)
+
     /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
     const [fillWhenDragged, setFillOnDrag] = useState(false)
@@ -121,6 +125,10 @@ export default function ContextProvider({
 
     /** Export Stuff */
     const ctx: GridContextType = {
+        modalIsOpen,
+        setModalOpen,
+        menuControlsOpen,
+        setMenuOpen,
         mouseIsDown,
         setMouseDownState,
         maxGridWidth,
