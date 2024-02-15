@@ -9,7 +9,7 @@ const Header = () => {
     const pathname = usePathname()
 
     return (
-        <header className="flex items-center justify-between pb-10">
+        <header className="flex items-center justify-between p-4 w-full">
             <div>
                 <Link href="/" aria-label={siteMetadata.headerTitle}>
                     <div className="flex items-center justify-between">
