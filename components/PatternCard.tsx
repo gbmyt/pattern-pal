@@ -28,7 +28,7 @@ const PatternCard = ({ p }: { p: Pattern }) => {
                 </div>
 
                 <div onClick={handleClick} className="mt-2">
-                    Check it out &rarr;
+                    View &rarr;
                 </div>
             </button>
         </div>
