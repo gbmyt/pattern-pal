@@ -1,5 +1,7 @@
 import { SetStateAction } from "react"
 import Button from "./Button"
+import { deletePixelGridServerAction } from "@/lib/actions"
+import { useGridContext } from "@/context/GridContext"
 
 function EditorMenu({
     modalIsOpen,
@@ -14,6 +16,7 @@ function EditorMenu({
     setMenuOpen: React.Dispatch<SetStateAction<boolean>>
     handleResetGridToDefault: (e: React.MouseEvent) => void
 }) {
+    const { pattern } = useGridContext()
     return (
         <div className="flex justify-center mb-4">
             <div
@@ -45,8 +48,8 @@ function EditorMenu({
                         <Button
                             style="none"
                             buttonText="Delete Grid"
-                            handleClick={(e) => {
-                                console.log("Deleting pattern")
+                            handleClick={async (e) => {
+                                await deletePixelGridServerAction(pattern.id)
                             }}
                         />
                     </div>

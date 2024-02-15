@@ -43,6 +43,7 @@ export default function ContextProvider({
 
     /** Pattern State */
     const [pattern, setPattern] = useState<Pattern>({
+        id: "",
         title: "",
         gridHeight: defaultGridHeight,
         gridWidth: defaultGridWidth,
@@ -67,6 +68,7 @@ export default function ContextProvider({
             )
 
             setPattern({
+                id: "",
                 title: "",
                 gridHeight: defaultGridHeight,
                 gridWidth: defaultGridWidth,

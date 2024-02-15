@@ -39,7 +39,7 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     }
 }
 
-export async function createPatternServerAction(
+export async function createPixelGridServerAction(
     pixels: FormData,
     formData: FormData
 ) {
@@ -61,6 +61,28 @@ export async function createPatternServerAction(
             })
         } catch (e) {
             console.log("There was an error in create pattern server action", e)
+        } finally {
+            revalidatePath("/pattern")
+        }
+    }
+}
+
+export async function deletePixelGridServerAction(id: string) {
+    const user = await getUserByClerkId()
+    console.log("ID is: ", id)
+
+    if (user) {
+        try {
+            await db.pattern.delete({
+                where: {
+                    id,
+                },
+            })
+        } catch (e) {
+            console.log(
+                "An error occurred while deleting your pixel grid - from delete server action",
+                e
+            )
         } finally {
             revalidatePath("/pattern")
         }
