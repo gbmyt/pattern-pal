@@ -9,7 +9,7 @@ import Modal from "@/components/Modal"
 import ColorWheel from "./ColorWheel"
 import EditorMenu from "./EditorMenu"
 
-function PatternForm() {
+function PatternForm({ authorized }: { authorized: boolean }) {
     const {
         pattern,
         setPattern,
@@ -115,24 +115,39 @@ function PatternForm() {
     }
 
     async function handleSubmit(data: FormData) {
-        const form = document.getElementById("form") as HTMLFormElement
+        if (authorized) {
+            const form = document.getElementById("form") as HTMLFormElement
 
-        if (!data.get("title")) {
-            console.log("Whoops! Please add a title and try again.")
-            setFormText("Whoops! Please add a title and try again.")
-            setFormError(true)
-        } else if (menuControlsOpen && modalIsOpen) {
+            if (!data.get("title")) {
+                console.log("Whoops! Please add a title and try again.")
+                setFormText("Whoops! Please add a title and try again.")
+                setFormError(true)
+            } else if (menuControlsOpen && modalIsOpen) {
+                try {
+                    await saveGrid(data)
+                } catch (e) {
+                    console.log("Error Message:", e)
+                    throw new Error(
+                        "There was a problem saving your grid to the database. Try again later."
+                    )
+                } finally {
+                    form && form.reset()
+                    setFormError(false)
+                    setFormText("Saved!")
+                }
+            }
+        } else {
             try {
-                await saveGrid(data)
+                setFormError(true)
+                setFormText(
+                    "You must be logged in to save your pixel grid. Please log in and try again. "
+                )
             } catch (e) {
-                console.log("Error Message:", e)
                 throw new Error(
                     "There was a problem saving your grid to the database. Try again later."
                 )
             } finally {
-                form && form.reset()
                 setFormError(false)
-                setFormText("Saved!")
             }
         }
     }
@@ -218,15 +233,12 @@ function PatternForm() {
                             </>
 
                             <div className="m-4 ml-0">
-                                <Button
-                                    handleClick={handleRemoveGridFill}
-                                    buttonText="Remove Pixel Fill"
-                                />
-                                <Button
-                                    handleClick={handleResetGridSize}
-                                    buttonText="Reset Size"
-                                />
-                                <Button type="submit" buttonText="Save Grid" />
+                                {authorized && (
+                                    <Button
+                                        type="submit"
+                                        buttonText="Save Grid"
+                                    />
+                                )}
                             </div>
                         </form>
                     </Modal>

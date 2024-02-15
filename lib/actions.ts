@@ -69,7 +69,6 @@ export async function createPixelGridServerAction(
 
 export async function deletePixelGridServerAction(id: string) {
     const user = await getUserByClerkId()
-    console.log("ID is: ", id)
 
     if (user) {
         try {
