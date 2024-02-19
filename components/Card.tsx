@@ -4,10 +4,10 @@ import { useGridContext } from "@/context/GridContext"
 import { Chart } from "@prisma/client"
 
 const Card = ({ p }: { p: Chart }) => {
-    const { setCurrentChart } = useGridContext()
+    const { setDbChart } = useGridContext()
 
     const handleClick = async (e: React.MouseEvent) => {
-        setCurrentChart(p)
+        setDbChart(p)
     }
     return (
         <div className="h-full">
