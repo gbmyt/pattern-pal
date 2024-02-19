@@ -4,7 +4,7 @@ import { useState } from "react"
 
 export function usePixelIsFilled() {
     const [pixelIsFilled, setPixelIsFilled] = useState(false)
-    const { pixelFillColor, setPattern } = useGridContext()
+    const { pixelFillColor, setChart } = useGridContext()
 
     async function updatePixelFillStateInGrid(
         type: string,
@@ -16,7 +16,7 @@ export function usePixelIsFilled() {
         pixels[x][y] = type === "fill" ? pixelFillColor : null
 
         try {
-            setPattern((prevState) => ({
+            setChart((prevState) => ({
                 ...prevState,
                 pixels: JSON.stringify(pixels),
             }))

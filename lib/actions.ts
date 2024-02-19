@@ -35,7 +35,7 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     } catch (e) {
         console.log("CREATE USER MATCH CLERK ID ERROR", e)
     } finally {
-        redirect("/pattern")
+        redirect("/editor")
     }
 }
 
@@ -50,7 +50,7 @@ export async function createPixelGridServerAction(
 
     if (user) {
         try {
-            await db.pattern.create({
+            await db.chart.create({
                 data: {
                     title,
                     gridWidth: Number(width) || DEFAULTGRIDHEIGHT,
@@ -60,9 +60,9 @@ export async function createPixelGridServerAction(
                 },
             })
         } catch (e) {
-            console.log("There was an error in create pattern server action", e)
+            console.log("There was an error in create server action", e)
         } finally {
-            revalidatePath("/pattern")
+            revalidatePath("/editor")
         }
     }
 }
@@ -79,7 +79,7 @@ export async function updatePixelGridServerAction(
 
     if (user) {
         try {
-            await db.pattern.upsert({
+            await db.chart.upsert({
                 where: {
                     id,
                     userId: user.id,
@@ -101,7 +101,7 @@ export async function updatePixelGridServerAction(
         } catch (e) {
             console.log("There was an error in update server action", e)
         } finally {
-            revalidatePath("/pattern")
+            revalidatePath("/editor")
         }
     }
 }
@@ -111,7 +111,7 @@ export async function deletePixelGridServerAction(id: string) {
 
     if (user) {
         try {
-            await db.pattern.delete({
+            await db.chart.delete({
                 where: {
                     id,
                 },
@@ -122,7 +122,7 @@ export async function deletePixelGridServerAction(id: string) {
                 e
             )
         } finally {
-            revalidatePath("/pattern")
+            revalidatePath("/editor")
         }
     }
 }

@@ -1,5 +1,5 @@
 import { SetStateAction } from "react"
-import { Pattern } from "./pattern"
+import { Chart } from "./chart"
 
 export type GridContextType = {
     modalIsOpen: boolean
@@ -16,8 +16,8 @@ export type GridContextType = {
     defaultFillColor: string
     pixelFillColor: string
     setPixelFillColor: React.Dispatch<SetStateAction<string>>
-    pattern: Pattern
-    setPattern: React.Dispatch<SetStateAction<Pattern>>
-    currentPattern: Pattern | null
-    setCurrentPattern: React.Dispatch<SetStateAction<Pattern | null>>
+    chart: Chart
+    setChart: React.Dispatch<SetStateAction<Chart>>
+    chartFromDatabase: Chart | null
+    setDbChart: React.Dispatch<SetStateAction<Chart | null>>
 }

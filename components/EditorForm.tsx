@@ -11,10 +11,10 @@ import Modal from "@/components/Modal"
 import ColorWheel from "./ColorWheel"
 import EditorMenu from "./EditorMenu"
 
-function PatternForm({ authorized }: { authorized: boolean }) {
+function EditorForm({ authorized }: { authorized: boolean }) {
     const {
-        pattern,
-        setPattern,
+        chart,
+        setChart,
         setPixelFillColor,
         maxGridWidth,
         menuControlsOpen,
@@ -25,7 +25,7 @@ function PatternForm({ authorized }: { authorized: boolean }) {
     const [formError, setFormError] = useState(false)
     const [formSaveText, setFormText] = useState<string | null>(null)
 
-    const pixels = pattern.pixels
+    const pixels = chart.pixels
     const saveGrid = createPixelGridServerAction.bind(
         null,
         pixels as unknown as FormData
@@ -33,28 +33,28 @@ function PatternForm({ authorized }: { authorized: boolean }) {
     const updateGrid = updatePixelGridServerAction.bind(
         null,
         pixels as unknown as FormData,
-        pattern.id
+        chart.id
     )
 
-    function handlePatternFormChange(e: React.FormEvent) {
+    function handleChartFormChange(e: React.FormEvent) {
         const target = e.target as HTMLInputElement
 
         switch (target.name) {
             case "title":
-                setPattern((prevState) => ({
+                setChart((prevState) => ({
                     ...prevState,
                     title: target.value,
                 }))
                 break
             case "gridHeight":
-                setPattern((prevState) => ({
+                setChart((prevState) => ({
                     ...prevState,
                     gridHeight: target.valueAsNumber,
                     pixels: JSON.stringify(
-                        new Array(pattern.gridWidth || 0).fill(
+                        new Array(chart.gridWidth || 0).fill(
                             new Array(
                                 (target && target.valueAsNumber) ||
-                                    (pattern && pattern.gridHeight) ||
+                                    (chart && chart.gridHeight) ||
                                     0
                             ).fill(null)
                         )
@@ -64,20 +64,20 @@ function PatternForm({ authorized }: { authorized: boolean }) {
             case "gridWidth":
                 if (target.valueAsNumber > maxGridWidth) {
                     alert(
-                        "Sorry, your pattern is too wide! Try setting a smaller width."
+                        "Sorry, your chart is too wide! Try setting a smaller width."
                     )
                 } else {
-                    setPattern((prevState) => ({
+                    setChart((prevState) => ({
                         ...prevState,
                         gridWidth: target.valueAsNumber,
                         pixels: JSON.stringify(
                             new Array(
                                 (target && target.valueAsNumber) ||
-                                    (pattern && pattern.gridWidth) ||
+                                    (chart && chart.gridWidth) ||
                                     0
                             ).fill(
                                 new Array(
-                                    (pattern && pattern.gridHeight) || 0
+                                    (chart && chart.gridHeight) || 0
                                 ).fill(null)
                             )
                         ),
@@ -103,9 +103,9 @@ function PatternForm({ authorized }: { authorized: boolean }) {
             } else if (menuControlsOpen && modalIsOpen) {
                 try {
                     setFormText("Saving Your Changes..")
-                    if (pattern.id) {
+                    if (chart.id) {
                         updateGrid(data)
-                    } else if (!pattern.id || pattern.id == null) {
+                    } else if (!chart.id || chart.id == null) {
                         await saveGrid(data)
                     }
                 } catch (e) {
@@ -158,10 +158,8 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                                         type="text"
                                         aria-label="title"
                                         placeholder="Name Your Grid"
-                                        value={
-                                            pattern.title ? pattern.title : ""
-                                        }
-                                        onChange={handlePatternFormChange}
+                                        value={chart.title ? chart.title : ""}
+                                        onChange={handleChartFormChange}
                                     />
 
                                     <label htmlFor="grid-height">Height</label>
@@ -170,7 +168,7 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                                         name="gridHeight"
                                         type="number"
                                         aria-label="height"
-                                        onChange={handlePatternFormChange}
+                                        onChange={handleChartFormChange}
                                         placeholder="Height in Pixels"
                                     />
 
@@ -180,7 +178,7 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                                         name="gridWidth"
                                         type="number"
                                         aria-label="width"
-                                        onChange={handlePatternFormChange}
+                                        onChange={handleChartFormChange}
                                         placeholder="Width in Pixels"
                                     />
                                 </div>
@@ -206,4 +204,4 @@ function PatternForm({ authorized }: { authorized: boolean }) {
     )
 }
 
-export default PatternForm
+export default EditorForm
