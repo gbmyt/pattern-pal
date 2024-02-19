@@ -31,6 +31,10 @@ export default function ContextProvider({
         )
     )
 
+    /** Editor Menu State */
+    const [modalIsOpen, setModalOpen] = useState(false)
+    const [menuControlsOpen, setMenuOpen] = useState(true)
+
     /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
     const [fillWhenDragged, setFillOnDrag] = useState(false)
@@ -43,6 +47,7 @@ export default function ContextProvider({
 
     /** Pattern State */
     const [pattern, setPattern] = useState<Pattern>({
+        id: "",
         title: "",
         gridHeight: defaultGridHeight,
         gridWidth: defaultGridWidth,
@@ -67,6 +72,7 @@ export default function ContextProvider({
             )
 
             setPattern({
+                id: "",
                 title: "",
                 gridHeight: defaultGridHeight,
                 gridWidth: defaultGridWidth,
@@ -119,6 +125,10 @@ export default function ContextProvider({
 
     /** Export Stuff */
     const ctx: GridContextType = {
+        modalIsOpen,
+        setModalOpen,
+        menuControlsOpen,
+        setMenuOpen,
         mouseIsDown,
         setMouseDownState,
         maxGridWidth,

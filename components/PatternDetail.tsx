@@ -1,28 +1,42 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
+import Button from "./Button"
+import { deletePixelGridServerAction } from "@/lib/actions"
 
-const PatternDetail = () => {
+const PatternDetail = ({ authorized }: { authorized: boolean }) => {
     const { pattern, currentPattern, pixelFillColor } = useGridContext()
     return (
-        <div className="mt-4">
-            <div className="font-semibold">Current Pattern</div>
+        <div className="m-8">
+            <span className="inline-flex items-center my-2">
+                <h1 className="mr-4 font-semibold">Grid Details</h1>
+                {authorized && (
+                    <Button
+                        buttonText="Delete Grid"
+                        handleClick={async (e) => {
+                            await deletePixelGridServerAction(pattern.id)
+                        }}
+                    />
+                )}
+            </span>
             <div>
                 Title:{" "}
                 <span className="text-slate-500/75">
-                    {currentPattern
+                    {authorized && currentPattern
                         ? pattern.title
-                        : "You Haven't Named Your Pattern Yet!"}
+                        : authorized && !currentPattern
+                        ? "Untitled"
+                        : "Create an Account to Name & Save Your Grid"}
                 </span>
             </div>
             <div>
                 Height:{" "}
-                <span className="text-slate-500/75">{pattern.gridHeight}</span>
-            </div>
-            <div>
+                <span className="text-slate-500/75 mr-4">
+                    {pattern.gridHeight}
+                </span>
                 Width:{" "}
-                <span className="text-slate-500/75">{pattern.gridWidth}</span>
-            </div>
-            <div>
+                <span className="text-slate-500/75 mr-4">
+                    {pattern.gridWidth}
+                </span>
                 Color:{" "}
                 <span className="text-slate-500/75">{pixelFillColor}</span>
             </div>

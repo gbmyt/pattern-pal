@@ -39,7 +39,7 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     }
 }
 
-export async function createPatternServerAction(
+export async function createPixelGridServerAction(
     pixels: FormData,
     formData: FormData
 ) {
@@ -61,6 +61,66 @@ export async function createPatternServerAction(
             })
         } catch (e) {
             console.log("There was an error in create pattern server action", e)
+        } finally {
+            revalidatePath("/pattern")
+        }
+    }
+}
+
+export async function updatePixelGridServerAction(
+    pixels: FormData,
+    id: string,
+    formData: FormData
+) {
+    const user = await getUserByClerkId()
+    const title = formData.get("title") as string
+    const width = formData.get("gridWidth")
+    const height = formData.get("gridHeight")
+
+    if (user) {
+        try {
+            await db.pattern.upsert({
+                where: {
+                    id,
+                    userId: user.id,
+                },
+                update: {
+                    title,
+                    gridWidth: Number(width) || DEFAULTGRIDHEIGHT,
+                    gridHeight: Number(height) || DEFAULTGRIDWIDTH,
+                    pixels: pixels as unknown as string,
+                },
+                create: {
+                    title,
+                    gridWidth: Number(width) || DEFAULTGRIDHEIGHT,
+                    gridHeight: Number(height) || DEFAULTGRIDWIDTH,
+                    pixels: pixels as unknown as string,
+                    userId: user.id,
+                },
+            })
+        } catch (e) {
+            console.log("There was an error in update server action", e)
+        } finally {
+            revalidatePath("/pattern")
+        }
+    }
+}
+
+export async function deletePixelGridServerAction(id: string) {
+    const user = await getUserByClerkId()
+
+    if (user) {
+        try {
+            await db.pattern.delete({
+                where: {
+                    id,
+                },
+            })
+        } catch (e) {
+            console.log(
+                "An error occurred while deleting your pixel grid - from delete server action",
+                e
+            )
         } finally {
             revalidatePath("/pattern")
         }

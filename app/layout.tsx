@@ -23,9 +23,10 @@ export default function RootLayout({
     return (
         <ClerkProvider {...pageProps}>
             <html lang="en">
-                <body className={`${inter.className} p-10`}>
+                <body className={`${inter.className} pb-10`}>
                     <div className="flex h-screen flex-col">
                         <Header />
+                        <hr />
                         <main>{children}</main>
                         <Footer />
                     </div>

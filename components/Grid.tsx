@@ -2,13 +2,13 @@
 import { useGridContext } from "@/context/GridContext"
 import { useEffect, useRef } from "react"
 import html2canvas from "html2canvas"
+import Button from "./Button"
 
 function Grid() {
     const {
         currentPattern,
         setPattern,
         grid,
-        mouseIsDown,
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
@@ -54,26 +54,33 @@ function Grid() {
     }
 
     return (
-        <div onClick={handleClick}>
-            <header>
+        <div className="flex flex-col w-fit m-auto" onClick={handleClick}>
+            <div
+                className="flex justify-center"
+                id="grid"
+                aria-label="grid"
+                data-testid="grid"
+            >
                 <div
-                    className="flex justify-center"
-                    id="grid"
-                    aria-label="grid"
-                    data-testid="grid"
+                    style={{
+                        gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
+                    }}
+                    className="border-solid border-2 grid rounded-lg"
+                    ref={ref}
                 >
-                    <div
-                        style={{
-                            gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
-                        }}
-                        className="border-solid border-2 grid rounded-lg"
-                        ref={ref}
-                    >
-                        {grid.length && grid}
-                    </div>
+                    {grid.length && grid}
                 </div>
-            </header>
-            <button onClick={handleDownloadImage}>Download Img</button>
+            </div>
+            <div className="h-0"></div>
+
+            <div className="flex justify-end">
+                <Button
+                    style="custom"
+                    extraStyle="p-2 mt-4"
+                    handleClick={handleDownloadImage}
+                    buttonText="Download As Img"
+                />
+            </div>
         </div>
     )
 }

@@ -3,15 +3,18 @@ import PatternForm from "@/components/PatternForm"
 import Grid from "@/components/Grid"
 import PatternList from "@/components/PatternList"
 import PatternDetail from "@/components/PatternDetail"
+import { auth } from "@clerk/nextjs"
 
 export const dynamic = "force-dynamic"
-function Page() {
+async function Page() {
+    const { userId } = await auth()
+
     return (
         <ContextProvider>
-            <PatternForm />
-            <PatternDetail />
+            <PatternForm authorized={userId ? true : false} />
+            <PatternDetail authorized={userId ? true : false} />
             <Grid />
-            <PatternList />
+            {userId && <PatternList />}
         </ContextProvider>
     )
 }
