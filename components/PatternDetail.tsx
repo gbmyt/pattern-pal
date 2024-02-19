@@ -19,7 +19,6 @@ const PatternDetail = ({ authorized }: { authorized: boolean }) => {
                 )}
             </span>
             <div>
-                {/* <span>Id: {pattern.id}</span> */}
                 Title:{" "}
                 <span className="text-slate-500/75">
                     {authorized && currentPattern

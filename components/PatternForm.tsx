@@ -1,9 +1,11 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 import Button from "@/components/Button"
 
-import { createPixelGridServerAction } from "@/lib/actions"
+import {
+    createPixelGridServerAction,
+    updatePixelGridServerAction,
+} from "@/lib/actions"
 import { useState } from "react"
 import Modal from "@/components/Modal"
 import ColorWheel from "./ColorWheel"
@@ -27,6 +29,11 @@ function PatternForm({ authorized }: { authorized: boolean }) {
     const saveGrid = createPixelGridServerAction.bind(
         null,
         pixels as unknown as FormData
+    )
+    const updateGrid = updatePixelGridServerAction.bind(
+        null,
+        pixels as unknown as FormData,
+        pattern.id
     )
 
     function handlePatternFormChange(e: React.FormEvent) {
@@ -89,18 +96,23 @@ function PatternForm({ authorized }: { authorized: boolean }) {
         if (authorized) {
             const form = document.getElementById("form") as HTMLFormElement
 
+            // TODO: Error-handling refactor
             if (!data.get("title")) {
-                console.log("Whoops! Please add a title and try again.")
                 setFormText("Whoops! Please add a title and try again.")
                 setFormError(true)
             } else if (menuControlsOpen && modalIsOpen) {
                 try {
-                    await saveGrid(data)
+                    setFormText("Saving Your Changes..")
+                    if (pattern.id) {
+                        updateGrid(data)
+                    } else if (!pattern.id || pattern.id == null) {
+                        await saveGrid(data)
+                    }
                 } catch (e) {
-                    console.log("Error Message:", e)
-                    throw new Error(
+                    setFormText(
                         "There was a problem saving your grid to the database. Try again later."
                     )
+                    setFormError(true)
                 } finally {
                     form && form.reset()
                     setFormError(false)
@@ -115,16 +127,12 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                 )
             } catch (e) {
                 throw new Error(
-                    "There was a problem saving your grid to the database. Try again later."
+                    "There was an unexpected problem accessing the database. Please check the logs for more information."
                 )
             } finally {
                 setFormError(false)
             }
         }
-    }
-
-    function handleUpdateCurrentPattern(e: React.MouseEvent) {
-        console.log("Updating Pattern")
     }
 
     return (
@@ -142,21 +150,6 @@ function PatternForm({ authorized }: { authorized: boolean }) {
                         >
                             <>
                                 <div>
-                                    {/* <label htmlFor="title">Title</label> */}
-                                    {/* <input
-                                        className="hidden"
-                                        name="pixelGridId"
-                                        type="text"
-                                        aria-label="pixelGridId"
-                                        placeholder="Grid Id"
-                                        value={
-                                            pattern.id
-                                                ? pattern.id
-                                                : "Missing ID error"
-                                        }
-                                        onChange={handlePatternFormChange}
-                                    /> */}
-
                                     <label htmlFor="title">Title</label>
                                     <input
                                         className="text-slate-600 border-2 border-black/10 rounded-md w-1/4 m-2"

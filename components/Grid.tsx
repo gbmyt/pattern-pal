@@ -9,7 +9,6 @@ function Grid() {
         currentPattern,
         setPattern,
         grid,
-        mouseIsDown,
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
