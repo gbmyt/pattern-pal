@@ -1,8 +1,8 @@
 import ContextProvider from "@/context/GridContext"
-import PatternForm from "@/components/PatternForm"
+import EditorForm from "@/components/EditorForm"
 import Grid from "@/components/Grid"
-import PatternList from "@/components/PatternList"
-import PatternDetail from "@/components/PatternDetail"
+import RecentChartsList from "@/components/RecentChartsList"
+import ChartDetail from "@/components/ChartDetail"
 import { auth } from "@clerk/nextjs"
 
 export const dynamic = "force-dynamic"
@@ -11,10 +11,10 @@ async function Page() {
 
     return (
         <ContextProvider>
-            <PatternForm authorized={userId ? true : false} />
-            <PatternDetail authorized={userId ? true : false} />
+            <EditorForm authorized={userId ? true : false} />
+            <ChartDetail authorized={userId ? true : false} />
             <Grid />
-            {userId && <PatternList />}
+            {userId && <RecentChartsList />}
         </ContextProvider>
     )
 }

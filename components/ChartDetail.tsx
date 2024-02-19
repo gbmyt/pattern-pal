@@ -3,8 +3,8 @@ import { useGridContext } from "@/context/GridContext"
 import Button from "./Button"
 import { deletePixelGridServerAction } from "@/lib/actions"
 
-const PatternDetail = ({ authorized }: { authorized: boolean }) => {
-    const { pattern, currentPattern, pixelFillColor } = useGridContext()
+const ChartDetail = ({ authorized }: { authorized: boolean }) => {
+    const { chart, chartFromDatabase, pixelFillColor } = useGridContext()
     return (
         <div className="m-8">
             <span className="inline-flex items-center my-2">
@@ -13,7 +13,7 @@ const PatternDetail = ({ authorized }: { authorized: boolean }) => {
                     <Button
                         buttonText="Delete Grid"
                         handleClick={async (e) => {
-                            await deletePixelGridServerAction(pattern.id)
+                            await deletePixelGridServerAction(chart.id)
                         }}
                     />
                 )}
@@ -21,9 +21,9 @@ const PatternDetail = ({ authorized }: { authorized: boolean }) => {
             <div>
                 Title:{" "}
                 <span className="text-slate-500/75">
-                    {authorized && currentPattern
-                        ? pattern.title
-                        : authorized && !currentPattern
+                    {authorized && chartFromDatabase
+                        ? chart.title
+                        : authorized && !chartFromDatabase
                         ? "Untitled"
                         : "Create an Account to Name & Save Your Grid"}
                 </span>
@@ -31,11 +31,11 @@ const PatternDetail = ({ authorized }: { authorized: boolean }) => {
             <div>
                 Height:{" "}
                 <span className="text-slate-500/75 mr-4">
-                    {pattern.gridHeight}
+                    {chart.gridHeight}
                 </span>
                 Width:{" "}
                 <span className="text-slate-500/75 mr-4">
-                    {pattern.gridWidth}
+                    {chart.gridWidth}
                 </span>
                 Color:{" "}
                 <span className="text-slate-500/75">{pixelFillColor}</span>
@@ -43,4 +43,4 @@ const PatternDetail = ({ authorized }: { authorized: boolean }) => {
         </div>
     )
 }
-export default PatternDetail
+export default ChartDetail

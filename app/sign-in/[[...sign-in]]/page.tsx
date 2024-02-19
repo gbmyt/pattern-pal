@@ -8,8 +8,8 @@ const SignInPage = () => {
                     rootBox: "m-auto",
                 },
             }}
-            afterSignInUrl="/pattern"
-            redirectUrl="/pattern"
+            afterSignInUrl="/editor"
+            redirectUrl="/editor"
         />
     )
 }

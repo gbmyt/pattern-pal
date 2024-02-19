@@ -1,4 +1,4 @@
-export type Pattern = {
+export type Chart = {
     id: string
     title: string | undefined
     gridWidth: number | undefined

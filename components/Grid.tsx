@@ -6,18 +6,19 @@ import Button from "./Button"
 
 function Grid() {
     const {
-        currentPattern,
-        setPattern,
+        chartFromDatabase,
+        setChart,
         grid,
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
+
     const ref = useRef<HTMLDivElement>(null)
 
-    // Render the pattern the user selected
+    // Fetch from db and render a user-selected grid
     useEffect(() => {
-        currentPattern && setPattern(currentPattern)
-    }, [currentPattern, setPattern])
+        chartFromDatabase && setChart(chartFromDatabase)
+    }, [chartFromDatabase, setChart])
 
     function handleClick(e: React.MouseEvent) {
         const target = e.target as HTMLInputElement

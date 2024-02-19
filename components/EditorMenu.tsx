@@ -6,7 +6,7 @@ import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 
 function EditorMenu() {
     const {
-        pattern,
+        chart,
         menuControlsOpen,
         setMenuOpen,
         modalIsOpen,
@@ -72,7 +72,7 @@ function EditorMenu() {
                         <Button
                             style="none"
                             handleClick={handleResetGridToDefault}
-                            buttonText="Reset Grid to Default"
+                            buttonText="Start Over"
                         />
                         {/* <Button
                             style="none"

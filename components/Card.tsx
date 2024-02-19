@@ -1,13 +1,13 @@
 "use client"
 
 import { useGridContext } from "@/context/GridContext"
-import { Pattern } from "@prisma/client"
+import { Chart } from "@prisma/client"
 
-const PatternCard = ({ p }: { p: Pattern }) => {
-    const { setCurrentPattern } = useGridContext()
+const Card = ({ p }: { p: Chart }) => {
+    const { setCurrentChart } = useGridContext()
 
     const handleClick = async (e: React.MouseEvent) => {
-        setCurrentPattern(p)
+        setCurrentChart(p)
     }
     return (
         <div className="h-full">
@@ -18,7 +18,7 @@ const PatternCard = ({ p }: { p: Pattern }) => {
                 {/* Grid Preview Image Here? */}
 
                 <div className="inline-flex items-center">
-                    <div className="text-slate-500/75 mr-1">Pattern Colors</div>
+                    <div className="text-slate-500/75 mr-1">Colors</div>
                     <div className="rounded-full bg-red-400 p-2 h-4 w-4 mr-1"></div>
                     <div className="rounded-full bg-green-400 p-2 h-4 w-4 mr-1"></div>
                 </div>
@@ -34,4 +34,4 @@ const PatternCard = ({ p }: { p: Pattern }) => {
         </div>
     )
 }
-export default PatternCard
+export default Card

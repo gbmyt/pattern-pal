@@ -14,7 +14,7 @@ function GridPixel({
     const { pixelIsFilled, setPixelIsFilled, fillGridPixel, removePixelFill } =
         usePixelIsFilled()
     const {
-        pattern,
+        chart,
         pixelFillColor,
         mouseIsDown,
         fillWhenDragged,
@@ -27,11 +27,11 @@ function GridPixel({
         if (target) {
             if (!pixelIsFilled) {
                 setPixelIsFilled(true)
-                fillGridPixel(target, JSON.parse(pattern.pixels), position)
+                fillGridPixel(target, JSON.parse(chart.pixels), position)
                 setFillOnDrag(true)
             } else if (pixelIsFilled) {
                 setPixelIsFilled(false)
-                removePixelFill(target, JSON.parse(pattern.pixels), position)
+                removePixelFill(target, JSON.parse(chart.pixels), position)
             }
         }
     }
@@ -42,10 +42,10 @@ function GridPixel({
         if (target && mouseIsDown) {
             if (fillWhenDragged) {
                 setPixelIsFilled(true)
-                fillGridPixel(target, JSON.parse(pattern.pixels), position)
+                fillGridPixel(target, JSON.parse(chart.pixels), position)
             } else {
                 setPixelIsFilled(false)
-                removePixelFill(target, JSON.parse(pattern.pixels), position)
+                removePixelFill(target, JSON.parse(chart.pixels), position)
             }
         }
     }
