@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   id="svg18165"
+   viewBox="0 0 19.333333333333333333 7.333333333333333333"
+   height="22"
+   width="0.58E2">
+  <defs
+     id="defs18167" />
+  <metadata
+     id="metadata18170">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <cc:license
+           rdf:resource="https://opensource.org/licenses/MIT" />
+        <dc:description />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0.16666667,-1045.0288)"
+     id="layer1">
+    <path
+       id="path9827"
+       d="m 9.500002,1045.0288 v 7.3333"
+       style="fill:none;fill-rule:evenodd;stroke:#cccccc;stroke-width:0.16666669;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path13484"
+       d="m 1.8333336,1051.5288 5.833334,-2.1667"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.60000008;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <use
+       height="100%"
+       width="100%"
+       transform="rotate(180,9.5000015,1048.6955)"
+       id="use13486"
+       xlink:href="#path13484"
+       y="0"
+       x="0" />
+    <path
+       d="m 6.6677296,1046.1851 -1.834467,-0.6599 c -0.33553,-0.1208 -0.708772,0.02 -0.877039,0.3331 -0.168296,0.313 -0.1272,0.7375 0.205659,0.916 l 13.0047844,4.7545"
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60000008;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path3356" />
+  </g>
+</svg>
