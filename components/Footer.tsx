@@ -24,9 +24,8 @@ const FOOTER_LINKS = {
 function Footer() {
     return (
         <footer>
-            <hr />
-            <div className="flex flex-row m-8" id="footer-links">
-                <div className="ml-32 my-8">
+            <div className="flex flex-row mt-8 ml-32">
+                <div className="my-8 mr-8">
                     {FOOTER_LINKS.main.map((link, index) => (
                         <a
                             className="flex text-xs my-2 text-gray-300 hover:text-purple-300"
@@ -37,7 +36,7 @@ function Footer() {
                         </a>
                     ))}
                 </div>
-                <div className="mx-16 my-8">
+                <div className="my-8 mr-8">
                     {FOOTER_LINKS.secondary.map((link, index) => (
                         <a
                             className="flex text-xs my-2 text-gray-300
