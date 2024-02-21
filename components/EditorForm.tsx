@@ -169,7 +169,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                                         className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
                                         name="gridHeight"
                                         type="number"
-                                        aria-label="height"
+                                        aria-label="gridHeight"
                                         onChange={handleChartFormChange}
                                         placeholder="Height in Pixels"
                                     />
@@ -179,7 +179,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                                         className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
                                         name="gridWidth"
                                         type="number"
-                                        aria-label="width"
+                                        aria-label="gridWidth"
                                         onChange={handleChartFormChange}
                                         placeholder="Width in Pixels"
                                     />

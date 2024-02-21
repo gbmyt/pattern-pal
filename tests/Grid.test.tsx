@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
-import PatternMaker from "@/components/PatternMaker"
-import { render, renderWithProvider, screen } from "@/test/utils"
+import EditorForm from "@/components/EditorForm"
+import { render, renderWithProvider, screen } from "./utils"
 
 import Grid from "@/components/Grid"
 
@@ -11,7 +11,7 @@ const defaultPattern = {
     pixels: JSON.stringify(new Array(3).fill(new Array(3).fill(null))),
 }
 
-describe.only("Grid Component", function () {
+describe.only("Editor Grid", function () {
     it.todo(
         "Grid height should be divisible by its width OR its width should be divisible by its height",
         function () {
@@ -46,15 +46,17 @@ describe.only("Grid Component", function () {
         expect.hasAssertions()
 
         var { user } = await renderWithProvider(
-            <PatternMaker pattern={defaultPattern} />
+            <EditorForm authorized={true} /> // check for guest user too TODO
         )
+        const editBtn = screen.getByRole("button", { name: "Edit ✎" })
+        await user.click(editBtn)
 
         // Confirm a user can type in a number in the width/height form fields
         const heightInput = screen.getByRole("spinbutton", {
-            name: "height",
+            name: "gridHeight",
         })
         const widthInput = screen.getByRole("spinbutton", {
-            name: "width",
+            name: "gridWidth",
         })
 
         await user.clear(heightInput)
@@ -74,23 +76,23 @@ describe.only("Grid Component", function () {
                 gridUI[Object.keys(gridUI)[0]].child.pendingProps.style
                     .gridTemplateColumns
 
-            const gridHeight = parseInt(
+            const height = parseInt(
                 Array.from(gridHeightFromStyle)
                     .slice(7, gridHeightFromStyle.split("").indexOf(","))
                     .join("")
             )
 
-            var gridWidth
+            var width
             Array.from(gridUI.children).forEach(function (element) {
-                gridWidth = element.children.length / gridHeight
+                width = element.children.length / height
             })
 
             // Expect Rendered Grid Height & Width to match user input values
-            expect(gridHeight).toBe(
+            expect(height).toBe(
                 parseInt((heightInput as HTMLInputElement).value)
             )
-            gridWidth &&
-                expect(parseInt(gridWidth)).toBe(
+            width &&
+                expect(parseInt(width)).toBe(
                     parseInt((widthInput as HTMLInputElement).value)
                 )
         }

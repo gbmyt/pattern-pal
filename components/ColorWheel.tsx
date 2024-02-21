@@ -9,7 +9,7 @@ import {
     Block,
     Github,
     Chrome,
-} from "@uiw/react-color"
+} from "@uiw/react-color/src/index"
 // import { Alpha, Hue, ShadeSlider, Saturation, Interactive, hsvaToHslaString } from '@uiw/react-color';
 // import { EditableInput, EditableInputRGBA, EditableInputHSLA } from '@uiw/react-color';
 import { useState } from "react"
