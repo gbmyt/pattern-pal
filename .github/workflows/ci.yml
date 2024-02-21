@@ -20,6 +20,8 @@ jobs:
 
             - name: Setup pnpm
               uses: pnpm/action-setup@v2
+              with:
+                  version: 8.9.2
 
             - run: pnpm install --frozen-lockfile
               name: Install Deps
