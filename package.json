@@ -4,11 +4,12 @@
     "private": true,
     "scripts": {
         "build": "next build",
-        "test:coverage": "vitest run --watch --coverage",
         "dev": "next dev",
         "lint": "next lint",
         "start": "next start",
-        "test": "vitest --allowOnly"
+        "test": "vitest --allowOnly",
+        "test:coverage": "vitest run --watch --coverage",
+        "test:ui": "vitest --ui --coverage"
     },
     "dependencies": {
         "@clerk/nextjs": "^4.26.2",
