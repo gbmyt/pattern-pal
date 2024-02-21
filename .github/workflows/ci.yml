@@ -18,6 +18,9 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v3
 
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v2
+
             - run: pnpm install --frozen-lockfile
               name: Install Deps
 
