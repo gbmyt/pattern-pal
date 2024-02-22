@@ -42,7 +42,7 @@ function EditorMenu() {
     }
 
     return (
-        <div className="flex justify-center mb-4">
+        <div className="flex min-w-screen justify-center mb-4">
             <div
                 className={`flex justify-between w-auto max-w-fit border-x-2 border-b-2 rounded-b-md py-2 px-4 mb-4 ${
                     !menuControlsOpen ? "" : ""

@@ -22,7 +22,7 @@ async function RecentChartsList() {
     var allPatterns = await fetchData()
 
     return (
-        <div className="mt-10">
+        <div className="ml-32 my-8">
             <h1 className="font-semibold mb-2 text-center md:text-left">
                 Recent
             </h1>

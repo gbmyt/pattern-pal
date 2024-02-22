@@ -1,9 +1,9 @@
+import { auth } from "@clerk/nextjs"
 import ContextProvider from "@/context/GridContext"
+
 import EditorForm from "@/components/EditorForm"
 import Grid from "@/components/Grid"
 import RecentChartsList from "@/components/RecentChartsList"
-import ChartDetail from "@/components/ChartDetail"
-import { auth } from "@clerk/nextjs"
 
 export const dynamic = "force-dynamic"
 async function Page() {
@@ -12,7 +12,6 @@ async function Page() {
     return (
         <ContextProvider>
             <EditorForm authorized={userId ? true : false} />
-            <ChartDetail authorized={userId ? true : false} />
             <Grid />
             {userId && <RecentChartsList />}
         </ContextProvider>
