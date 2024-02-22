@@ -1,5 +1,5 @@
 "use client"
-import headerNavLinks from "@/data/headerNavLinks"
+import links from "@/data/links"
 import siteMetadata from "@/data/siteMetadata"
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
@@ -25,7 +25,7 @@ const Header = () => {
             </div>
 
             <div className="flex items-center leading-5 space-x-4 sm:space-x-6">
-                {headerNavLinks
+                {links.headerNavLinks
                     .filter((link) => link.href !== "/")
                     .map((link) => (
                         <Link

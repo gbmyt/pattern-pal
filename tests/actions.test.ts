@@ -27,13 +27,14 @@ describe.todo("Pattern Server Actions", function () {
         })
 
         // Tell test what to expect to get back from the fake DB call
-        db.pattern.create.mockResolvedValue({
+        db.chart.create.mockResolvedValue({
             id: "1",
             createdAt: "2023-10-25T19:46:37.781Z" as unknown as Date,
             title: "Smol Boi",
             gridHeight: 3,
             gridWidth: 3,
             pixels: '[["#0000FF",null,"#0000FF"],[null,null,null],[null,"#0000FF",null]]',
+            userId: "1",
         })
         // REPLACE THIS
         // const p = await createNewPattern(req, res)

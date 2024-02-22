@@ -26,7 +26,7 @@ describe.only("Editor Grid", function () {
         async function () {
             expect.hasAssertions()
 
-            render(<Grid pattern={defaultPattern} />)
+            render(<Grid />)
         }
     )
 

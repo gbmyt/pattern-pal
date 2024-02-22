@@ -8,7 +8,7 @@
         "lint": "next lint",
         "start": "next start",
         "test": "vitest --allowOnly",
-        "test:coverage": "vitest run --watch --coverage",
+        "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui --coverage"
     },
     "dependencies": {

@@ -6,7 +6,6 @@ import RecentChartsList from "@/components/RecentChartsList"
 
 import db from "@/lib/__mocks__/db"
 import mockPatterns from "../__mocks__/patterns"
-// import createNewPattern from "@/pages/api/pattern"
 
 vi.mock("@/lib/db")
 
@@ -65,6 +64,7 @@ describe("Pattern List", function () {
                 gridHeight: 3,
                 gridWidth: 3,
                 pixels: '[["#0000FF",null,"#0000FF"],[null,null,null],[null,"#0000FF",null]]',
+                userId: "1",
             })
             const p = await createNewPattern(req, res)
 
