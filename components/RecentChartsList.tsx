@@ -1,6 +1,7 @@
 import { getUserByClerkId } from "@/lib/auth"
 import Card from "./Card"
 import db from "@/lib/db"
+import Carousel from "./Carousel"
 
 async function fetchData() {
     const user = await getUserByClerkId()
@@ -19,17 +20,14 @@ async function fetchData() {
 }
 
 async function RecentChartsList() {
-    var allPatterns = await fetchData()
+    var chartsFromDatabase = await fetchData()
 
     return (
         <div className="ml-32 my-8">
-            <h1 className="font-semibold mb-2 text-center md:text-left">
-                Recent
-            </h1>
-            <div className="md:h-60 flex flex-col justify-center items-center md:flex-row md:overflow-scroll md:flex-nowrap md:justify-start">
-                {allPatterns &&
-                    allPatterns.map((p, i) => <Card p={p} key={i} />)}
-            </div>
+            <Carousel>
+                {chartsFromDatabase &&
+                    chartsFromDatabase.map((p, i) => <Card p={p} key={i} />)}
+            </Carousel>
         </div>
     )
 }
