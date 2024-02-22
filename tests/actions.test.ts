@@ -2,13 +2,13 @@
 import { createMocks } from "node-mocks-http"
 
 import db from "@/lib/__mocks__/db"
-import mockPatterns from "../__mocks__/patterns"
+import mockCharts from "../__mocks__/charts"
 // import createNewPattern from "@/ignore/api/pattern" // NO LONGER USING THIS
 
 vi.mock("@/lib/db")
 
-describe.todo("Pattern Server Actions", function () {
-    it.only("createPattern should save a pattern to the database", async function () {
+describe.todo("Server Actions", function () {
+    it("createPattern should save a pattern to the database", async function () {
         expect.hasAssertions()
         expect.assertions(3)
 
@@ -18,12 +18,12 @@ describe.todo("Pattern Server Actions", function () {
             gridHeight: number
             gridWidth: number
             pixels: string
-        } = mockPatterns[0]
+        } = mockCharts[0]
 
         // Mock the Next Req/Res objects
         const { req, res } = createMocks({
             method: "POST",
-            body: mockPatterns[0],
+            body: mockCharts[0],
         })
 
         // Tell test what to expect to get back from the fake DB call
