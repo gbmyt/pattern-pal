@@ -39,6 +39,37 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     }
 }
 
+const deleteUser = async () => {
+    const user = await currentUser()
+
+    try {
+        // to find and delete the user from our database, AND all of their charts.
+        const match = await db.user.findUnique({
+            where: {
+                clerkId: user?.id as string,
+            },
+        })
+
+        try {
+            if (user && match) {
+                await db.user.delete({
+                    where: {
+                        clerkId: user?.id,
+                    },
+                })
+            }
+        } catch (e) {
+            console.log("THERE WAS A PROBLEM DELETING YOUR ACCOUNT", e)
+        }
+    } catch (e) {
+        // error handling
+        console.log("Couldn't find your account. Please try again", e)
+    } finally {
+        // clean up, maybe re-route them to the home page or sign up page
+    }
+}
+
+// Chart Editor Actions
 export async function createPixelGridServerAction(
     pixels: FormData,
     formData: FormData
