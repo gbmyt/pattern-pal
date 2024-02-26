@@ -44,10 +44,3 @@ describe.todo("Server Actions", function () {
         expect(res._getJSONData().payload).toStrictEqual(newP)
     })
 })
-
-describe.todo("Fetcher", function () {
-    it("TODO", function () {
-        expect.hasAssertions()
-        // expect().toBe();
-    })
-})
