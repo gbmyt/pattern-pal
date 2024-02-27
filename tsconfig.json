@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": "./",
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
         "types": ["vitest/globals", "node", "@testing-library/jest-dom"],

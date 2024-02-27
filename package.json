@@ -9,7 +9,8 @@
         "start": "next start",
         "test": "vitest --allowOnly",
         "test:coverage": "vitest --coverage",
-        "test:ui": "vitest --ui --coverage"
+        "test:ui": "vitest --ui --coverage",
+        "cypress:open": "cypress open"
     },
     "dependencies": {
         "@clerk/nextjs": "^4.26.2",
@@ -35,6 +36,7 @@
         "@testing-library/user-event": "^14.5.1",
         "@vitejs/plugin-react": "^4.0.4",
         "@vitest/coverage-v8": "^0.34.6",
+        "cypress": "^13.6.6",
         "jsdom": "^22.1.0",
         "netlify-cli": "^16.9.0",
         "node-mocks-http": "^1.13.0",

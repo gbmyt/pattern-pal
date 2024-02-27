@@ -1,4 +1,4 @@
-async function Carousel({
+function Carousel({
     title,
     children,
 }: {
