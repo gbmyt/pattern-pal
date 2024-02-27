@@ -22,7 +22,7 @@ describe("Home Page", () => {
     })
 })
 
-describe.only("Chart Editor", () => {
+describe("Chart Editor", () => {
     it("displays the editor menu bar", function () {
         cy.visit("/editor", { failOnStatusCode: false })
 
