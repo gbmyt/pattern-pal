@@ -49,7 +49,9 @@ const Header = () => {
 
                 <SignedIn>
                     {/* Mount the UserButton component */}
-                    <UserButton afterSignOutUrl="/" />
+                    <div id="user-button">
+                        <UserButton afterSignOutUrl="/" />
+                    </div>
                 </SignedIn>
                 <SignedOut>
                     {/* Signed out users get sign in button */}
