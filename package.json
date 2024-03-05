@@ -10,7 +10,8 @@
         "test": "vitest --allowOnly",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui --coverage",
-        "cypress:open": "cypress open"
+        "cypress:open": "cypress open",
+        "cypress:all": "cypress run"
     },
     "dependencies": {
         "@clerk/nextjs": "^4.26.2",
