@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { AppProps } from "next/app"
 import { ClerkProvider } from "@clerk/nextjs"
+import { Suspense } from "react"
 
 // Styles
 import { Inter } from "next/font/google"
@@ -29,10 +30,12 @@ export default function RootLayout({
         <ClerkProvider {...pageProps}>
             <html lang="en">
                 <body className={`${inter.className} max-w-screen`}>
-                    <h1 className="w-screen">
-                        <Header />
-                        <hr />
-                    </h1>
+                    <Suspense fallback={<h2>Loading...</h2>}>
+                        <h1 className="w-screen">
+                            <Header />
+                            <hr />
+                        </h1>
+                    </Suspense>
 
                     <div className="flex flex-row max-w-screen">
                         <SideBar />
