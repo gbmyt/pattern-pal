@@ -7,6 +7,7 @@ declare global {
              * Custom command to authenticate a user with Clerk auth.
              * @example cy.signIn()
              */
+            signUp(): Chainable<JQuery<HTMLElement>>
             signIn(): Chainable<JQuery<HTMLElement>>
             signOut(): Chainable<JQuery<HTMLElement>>
         }

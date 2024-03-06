@@ -1,3 +1,5 @@
+// create test user with cypress env credentials and then this works. Still need to debug sign up flow
+
 describe("Signed out", () => {
     it("should navigate to the dashboard in a signed out state", () => {
         // open dashboard page

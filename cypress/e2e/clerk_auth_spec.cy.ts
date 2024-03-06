@@ -45,7 +45,7 @@ describe("Auth", () => {
         it("errors on a blank password input", function () {
             cy.get("input#emailAddress-field")
                 .click()
-                .type(Cypress.env(`test_email`))
+                .type(Cypress.env(`test_register_email`))
 
             cy.get("button:contains('Continue')").click()
             cy.url().should("include", "/sign-up")
@@ -55,10 +55,10 @@ describe("Auth", () => {
             // Create your account
             cy.get("input#emailAddress-field")
                 .click()
-                .type(Cypress.env(`test_email`))
+                .type(Cypress.env(`test_register_email`))
             cy.get("input#password-field")
                 .click()
-                .type(Cypress.env(`test_password`))
+                .type(Cypress.env(`test_register_password`))
 
             // Press the button to create an account
             cy.get("button:contains('Continue')").click()
@@ -123,7 +123,7 @@ describe("Auth", () => {
         it("errors on a blank password input", function () {
             cy.get("input#identifier-field")
                 .click()
-                .type(Cypress.env(`test_email`))
+                .type(Cypress.env(`test_register_email`))
 
             cy.get("button:contains('Continue')").click()
             cy.url().should("include", "/sign-in")

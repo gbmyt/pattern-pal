@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+import { useSignIn, useSignUp } from "@clerk/nextjs"
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,6 +38,53 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add(`signUp`, () => {
+    cy.log(`Registering.`)
+    cy.visit("/", { failOnStatusCode: false })
+
+    cy.window()
+        .should((window) => {
+            expect(window).to.not.have.property(`Clerk`, undefined)
+            expect(window.Clerk.isReady()).to.eq(true)
+        })
+        .then(async (window) => {
+            // sign out
+            await cy.clearCookies({ domain: window.location.domain })
+
+            await window.Clerk.client.signUp.create({
+                emailAddress: Cypress.env("test_register_email"),
+                password: Cypress.env("test_register_password"),
+            })
+
+            await window.Clerk.signUp.prepareEmailAddressVerification({
+                strategy: "email_code",
+            })
+
+            const completeSignUp =
+                await window.Clerk.signUp.attemptEmailAddressVerification({
+                    code: Cypress.env("verification_code"),
+                })
+
+            if (
+                completeSignUp.verifications.emailAddress.status !== "complete"
+            ) {
+                /*  investigate the response, to see if there was an error
+                   or if the user needs to complete more steps.*/
+                console.log(JSON.stringify(completeSignUp, null, 2))
+            }
+
+            if (
+                completeSignUp.verifications.emailAddress.status === "complete"
+            ) {
+                await window.Clerk.setActive({
+                    session: completeSignUp.createdSessionId,
+                })
+                cy.visit("/new-user")
+            }
+        })
+})
+
 Cypress.Commands.add(`signIn`, () => {
     cy.log(`Signing in.`)
     cy.visit(`/`, { failOnStatusCode: false })
@@ -45,10 +95,12 @@ Cypress.Commands.add(`signIn`, () => {
             expect(window.Clerk.isReady()).to.eq(true)
         })
         .then(async (window) => {
-            await cy.clearCookies({ domain: window.location.domain })
+            // sign out
+            // await cy.clearCookies({ domain: window.location.domain })
+            cy.signOut()
             const res = await window.Clerk.client.signIn.create({
-                identifier: Cypress.env(`test_email`),
-                password: Cypress.env(`test_password`),
+                identifier: Cypress.env(`test_login_email`),
+                password: Cypress.env(`test_login_password`),
             })
 
             await window.Clerk.setActive({
@@ -57,4 +109,9 @@ Cypress.Commands.add(`signIn`, () => {
 
             cy.log(`Finished Signing in.`)
         })
+})
+
+Cypress.Commands.add(`signOut`, () => {
+    cy.log(`sign out by clearing all cookies.`)
+    cy.clearCookies({ domain: window.location.domain })
 })
