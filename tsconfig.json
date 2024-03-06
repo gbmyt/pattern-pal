@@ -3,7 +3,12 @@
         "baseUrl": "./",
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "types": ["vitest/globals", "node", "@testing-library/jest-dom"],
+        "types": [
+            "vitest/globals",
+            "webpack-env",
+            "node",
+            "@testing-library/jest-dom"
+        ],
         "allowJs": false,
         "skipLibCheck": true,
         "strict": true,
@@ -31,5 +36,5 @@
         ".next/types/**/*.ts",
         "vitest.config.mts"
     ],
-    "exclude": ["node_modules"]
+    "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
