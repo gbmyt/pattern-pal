@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs"
 const Main = async () => {
     const { userId } = await auth()
     return (
-        <div className="flex h-screen flex-col items-center justify-between p-24">
+        <div className="flex h-max flex-col items-center justify-between pr-24 py-24">
             <div className="max-w-5xl items-center text-sm pb-4 md:pb-0">
                 <p className="mb-14">
                     A fiber artist and garment designer&apos;s best friend! The
@@ -24,8 +24,9 @@ const Main = async () => {
 
             <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
                 <a
+                    id="editor-cta"
                     href="/editor"
-                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 mr-6"
                     rel="noopener noreferrer"
                 >
                     <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -40,25 +41,8 @@ const Main = async () => {
                 </a>
 
                 <a
-                    href="/faq"
-                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-                    rel="noopener noreferrer"
-                >
-                    <h2 className={`mb-3 text-2xl font-semibold`}>
-                        FAQ{" "}
-                        <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                            -&gt;
-                        </span>
-                    </h2>
-                    <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-                        Learn about fiber arts and how to make patterns of your
-                        own!
-                    </p>
-                </a>
-
-                <a
                     href="/templates"
-                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 mr-6"
                     rel="noopener noreferrer"
                 >
                     <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -77,7 +61,7 @@ const Main = async () => {
 
                 <a
                     href={userId ? "/share" : "/new-user"}
-                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    className="group rounded-lg border border-transparent px-5 py-4 transition-colors border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 mr-6"
                     rel="noopener noreferrer"
                 >
                     <h2 className={`mb-3 text-2xl font-semibold`}>

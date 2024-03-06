@@ -2,19 +2,45 @@
 import { useGridContext } from "@/context/GridContext"
 import Button from "./Button"
 import { deletePixelGridServerAction } from "@/lib/actions"
+import Modal from "./Modal"
+import { useState } from "react"
 
 const ChartDetail = ({ authorized }: { authorized: boolean }) => {
     const { chart, chartFromDatabase, pixelFillColor } = useGridContext()
+    const [open, setOpen] = useState(false) // organize modal states, Grid uses another, formError yet another
+
     return (
-        <div className="m-8">
+        <div className="my-8">
+            <Modal isOpen={open}>
+                Are you sure you want to delete this chart? This action cannot
+                be undone.
+                <Button
+                    style="customWithDefaults"
+                    extraStyle="mx-2 text-red-800 border-red-800 hover:bg-red-800"
+                    buttonText="Yes"
+                    handleClick={async (e) => {
+                        setOpen(false)
+                        await deletePixelGridServerAction(chart.id)
+                    }}
+                />
+                <Button
+                    buttonText="Cancel"
+                    style="customWithDefaults"
+                    extraStyle="mx-2 text-gray-800 border-gray-800 hover:bg-gray-800"
+                    handleClick={() => {
+                        setOpen(false)
+                    }}
+                />
+            </Modal>
+
             <span className="inline-flex items-center my-2">
-                <h1 className="mr-4 font-semibold">Grid Details</h1>
+                <h1 className="my-4 mr-4 font-semibold">Grid Details</h1>
                 {authorized && (
                     <Button
-                        buttonText="Delete Grid"
-                        handleClick={async (e) => {
-                            await deletePixelGridServerAction(chart.id)
-                        }}
+                        style="custom"
+                        extraStyle="py-2 px-3 border-2 rounded-[55%]"
+                        buttonText="❌"
+                        handleClick={async (e) => setOpen(true)}
                     />
                 )}
             </span>

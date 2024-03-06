@@ -1,36 +1,41 @@
 import { getUserByClerkId } from "@/lib/auth"
 import Card from "./Card"
 import db from "@/lib/db"
+import Carousel from "./Carousel"
 
 async function fetchData() {
     const user = await getUserByClerkId()
 
-    const data = await db.chart.findMany({
-        where: {
-            userId: user?.id,
-        },
-        orderBy: [
-            {
-                createdAt: "desc",
+    if (user) {
+        const data = await db.chart.findMany({
+            where: {
+                userId: user?.id,
             },
-        ],
-    })
-    return data
+            orderBy: [
+                {
+                    createdAt: "desc",
+                },
+            ],
+        })
+        return data
+    } else if (!user) {
+        return null
+    }
 }
 
 async function RecentChartsList() {
-    var allPatterns = await fetchData()
+    var chartsFromDatabase = await fetchData()
 
-    return (
-        <div className="mt-10">
-            <h1 className="font-semibold mb-2 text-center md:text-left">
-                Recent
-            </h1>
-            <div className="md:h-60 flex flex-col justify-center items-center md:flex-row md:overflow-scroll md:flex-nowrap md:justify-start">
-                {allPatterns &&
-                    allPatterns.map((p, i) => <Card p={p} key={i} />)}
+    if (chartsFromDatabase) {
+        return (
+            <div className="ml-32 my-8">
+                <Carousel>
+                    {chartsFromDatabase.map((p, i) => (
+                        <Card p={p} key={i} />
+                    ))}
+                </Carousel>
             </div>
-        </div>
-    )
+        )
+    }
 }
 export default RecentChartsList

@@ -1,5 +1,6 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
+import ChartDetail from "@/components/ChartDetail"
 import Button from "@/components/Button"
 
 import {
@@ -149,6 +150,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                             className="flex flex-col justify-between w-3/4"
                         >
                             <>
+                                <ChartDetail authorized={authorized} />
                                 <div>
                                     <label htmlFor="title">Title</label>
                                     <input

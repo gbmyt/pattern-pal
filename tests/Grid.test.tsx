@@ -26,7 +26,7 @@ describe.only("Editor Grid", function () {
         async function () {
             expect.hasAssertions()
 
-            render(<Grid pattern={defaultPattern} />)
+            render(<Grid />)
         }
     )
 
@@ -45,9 +45,12 @@ describe.only("Editor Grid", function () {
     it("User can set a custom grid size ", async function () {
         expect.hasAssertions()
 
+        // Render the Editor Form
         var { user } = await renderWithProvider(
             <EditorForm authorized={true} /> // check for guest user too TODO
         )
+
+        // Click on the Edit Button to expand Menu Controls
         const editBtn = screen.getByRole("button", { name: "Edit ✎" })
         await user.click(editBtn)
 
@@ -69,7 +72,7 @@ describe.only("Editor Grid", function () {
         expect(widthInput).toHaveValue(3)
 
         // Confirm rendered Grid updated to render the user's updated dimensions
-        const gridUI = await screen.queryByTestId("grid")
+        const gridUI = (await screen.queryByTestId("grid")) as Array
 
         if (gridUI) {
             const gridHeightFromStyle =

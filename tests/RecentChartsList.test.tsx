@@ -5,12 +5,11 @@ import { createMocks } from "node-mocks-http"
 import RecentChartsList from "@/components/RecentChartsList"
 
 import db from "@/lib/__mocks__/db"
-import mockPatterns from "../__mocks__/patterns"
-// import createNewPattern from "@/pages/api/pattern"
+import mockCharts from "../__mocks__/charts"
 
 vi.mock("@/lib/db")
 
-describe("Pattern List", function () {
+describe("Recent Charts List", function () {
     it.todo(
         "should render a list of Charts from the database",
         async function () {
@@ -20,8 +19,8 @@ describe("Pattern List", function () {
             render(<RecentChartsList />)
 
             const list = await screen.findByText("Recent")
-            const first = await screen.findByText(mockPatterns[0].title)
-            const second = await screen.findByText(mockPatterns[1].title)
+            const first = await screen.findByText(mockCharts[0].title)
+            const second = await screen.findByText(mockCharts[1].title)
 
             expect(list).toBeInTheDocument()
             expect(first).toBeInTheDocument()
@@ -65,6 +64,7 @@ describe("Pattern List", function () {
                 gridHeight: 3,
                 gridWidth: 3,
                 pixels: '[["#0000FF",null,"#0000FF"],[null,null,null],[null,"#0000FF",null]]',
+                userId: "1",
             })
             const p = await createNewPattern(req, res)
 
@@ -78,8 +78,8 @@ describe("Pattern List", function () {
             var { user } = await render(<RecentChartsList />)
 
             const list = await screen.findByText("Recent")
-            const first = await screen.findByText(mockPatterns[0].title)
-            const second = await screen.findByText(mockPatterns[1].title)
+            const first = await screen.findByText(mockCharts[0].title)
+            const second = await screen.findByText(mockCharts[1].title)
 
             expect(list).toBeInTheDocument()
             expect(first).toBeInTheDocument()
