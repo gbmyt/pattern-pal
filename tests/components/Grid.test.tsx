@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import EditorForm from "@/components/EditorForm"
-import { render, renderWithProvider, screen } from "./utils"
+import { render, renderWithProvider, screen } from "../utils"
 
 import Grid from "@/components/Grid"
 

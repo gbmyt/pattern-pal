@@ -1,11 +1,11 @@
 // @vitest-environment jsdom
 
-import { render, screen } from "./utils"
+import { render, screen } from "../utils"
 import { createMocks } from "node-mocks-http"
 import RecentChartsList from "@/components/RecentChartsList"
 
-import db from "@/lib/__mocks__/db"
-import mockCharts from "../__mocks__/charts"
+import db from "@/__mocks__/db"
+import mockCharts from "../../__mocks__/charts"
 
 vi.mock("@/lib/db")
 

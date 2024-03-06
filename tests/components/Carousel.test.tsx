@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import Carousel from "@/components/Carousel"
-import { render, renderWithProvider, screen } from "./utils"
+import { render, renderWithProvider, screen } from "../utils"
 import mockCharts from "@/__mocks__/charts"
 import Card from "@/components/Card"
 

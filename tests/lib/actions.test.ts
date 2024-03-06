@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
 import { createMocks } from "node-mocks-http"
 
-import db from "@/lib/__mocks__/db"
-import mockCharts from "../__mocks__/charts"
+import db from "@/__mocks__/db"
+import mockCharts from "../../__mocks__/charts"
 // import createNewPattern from "@/ignore/api/pattern" // NO LONGER USING THIS
 
 vi.mock("@/lib/db")
