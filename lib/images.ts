@@ -1,6 +1,6 @@
 import { SymbolType } from "@/types/images"
 
-export function convertSVGs(svgs) {
+export function convertSVGs(svgs: __WebpackModuleApi.RequireContext) {
     var matches: string[] = []
 
     // Convert SVGs to an iterable
