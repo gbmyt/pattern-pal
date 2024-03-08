@@ -2,10 +2,16 @@ import { useGridContext } from "@/context/GridContext"
 import { Sketch } from "@uiw/react-color"
 // import { Alpha, Hue, ShadeSlider, Saturation, Interactive, hsvaToHslaString } from '@uiw/react-color';
 // import { EditableInput, EditableInputRGBA, EditableInputHSLA } from '@uiw/react-color';
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 import Button from "./Button"
 
-function ColorWheel({ disabled }: { disabled: boolean }) {
+function ColorWheel({
+    disabled,
+    setOpen,
+}: {
+    disabled: boolean
+    setOpen: React.Dispatch<SetStateAction<boolean>>
+}) {
     const { pixelFillColor, setPixelFillColor, defaultFillColor } =
         useGridContext()
     const [hex, setHex] = useState(pixelFillColor)
@@ -19,6 +25,7 @@ function ColorWheel({ disabled }: { disabled: boolean }) {
                     handleClick={() => {
                         setHex(defaultFillColor)
                         setPixelFillColor(defaultFillColor)
+                        setOpen(false)
                     }}
                 />
             </div>

@@ -185,6 +185,7 @@ function EditorMenu({
                             setOpen={setColorWheelOpen}
                         >
                             <ColorWheel
+                                setOpen={setColorWheelOpen}
                                 disabled={!colorwheelOpen || !menuControlsOpen}
                             />
                         </Modal>
