@@ -29,7 +29,7 @@ async function Page() {
             <h1 className="font-semibold text-lg mb-8">
                 Check out our Contributors
             </h1>
-            <ContributorsList contributors={contributors} />
+            <ContributorsList contributorsList={contributors} />
         </div>
     )
 }
