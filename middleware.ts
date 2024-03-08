@@ -10,6 +10,7 @@ export default authMiddleware({
         "/symbols",
         "/editor",
         "/faq",
+        "/contributors",
         "/templates",
     ],
 })
