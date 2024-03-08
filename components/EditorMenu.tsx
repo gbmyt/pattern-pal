@@ -31,8 +31,8 @@ function EditorMenu({
     var menuLinks = [
         {
             type: "select",
-            value: "Mode",
-            options: ["Mode", "Fill", "Erase", "Symbol", "Paste"],
+            value: "Fill Mode",
+            options: ["Fill Mode", "Paint", "Erase", "Symbol", "Paste"],
             handleChange: (e: React.ChangeEvent) => {
                 let target = e.target as HTMLSelectElement
                 setFillMode(target.value)
@@ -125,6 +125,7 @@ function EditorMenu({
             } else if (link.type === "select") {
                 return (
                     <select
+                        className="border-none rounded-md bg-transparent"
                         name="mode"
                         key={index}
                         onChange={link.handleChange}
@@ -197,15 +198,14 @@ function EditorMenu({
                         </Modal>
                         {links && links}
                     </div>
+
                     <Button
                         style="none"
                         buttonText={`${menuControlsOpen ? "X" : "Menu +"}`}
                         handleClick={() => {
-                            if (modalIsOpen) {
-                                setModalOpen(false)
-                            } else {
-                                setMenuOpen(!menuControlsOpen)
-                            }
+                            modalIsOpen
+                                ? setModalOpen(false)
+                                : setMenuOpen(!menuControlsOpen)
                         }}
                     />
                 </div>
