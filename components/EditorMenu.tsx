@@ -21,19 +21,21 @@ function EditorMenu({
         defaultFillColor,
         renderEmptyGrid,
         setPixelFillColor,
+        setFillMode,
     } = useGridContext()
 
     const [open, setOpen] = useState(false)
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
     const [colorwheelOpen, setColorWheelOpen] = useState(false)
 
-    var buttons = [
+    var menuLinks = [
         {
             type: "select",
             value: "Mode",
-            options: ["Mode", "Fill", "Erase", "Paste"],
-            handleClick: () => {
-                // setPMOpen(!paintModeOpen)
+            options: ["Mode", "Fill", "Erase", "Symbol", "Paste"],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+                setFillMode(target.value)
             },
             style: "none",
         },
@@ -109,8 +111,8 @@ function EditorMenu({
     }
 
     const links =
-        buttons &&
-        buttons.map((link, index) => {
+        menuLinks &&
+        menuLinks.map((link, index) => {
             if (link.type === "button") {
                 return (
                     <Button
@@ -122,7 +124,11 @@ function EditorMenu({
                 )
             } else if (link.type === "select") {
                 return (
-                    <select name="mode" key={index}>
+                    <select
+                        name="mode"
+                        key={index}
+                        onChange={link.handleChange}
+                    >
                         {link.options &&
                             link.options.map((text, index) => {
                                 return (

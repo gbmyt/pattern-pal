@@ -33,6 +33,7 @@ export default function ContextProvider({
 
     /** Editor Menu State */
     const [menuControlsOpen, setMenuOpen] = useState(true)
+    const [editorFillMode, setFillMode] = useState("Fill")
 
     /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
@@ -120,6 +121,8 @@ export default function ContextProvider({
 
     /** Export Stuff */
     const ctx: GridContextType = {
+        editorFillMode,
+        setFillMode,
         menuControlsOpen,
         setMenuOpen,
         mouseIsDown,
