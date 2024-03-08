@@ -33,7 +33,7 @@ export default function ContextProvider({
 
     /** Editor Menu State */
     const [menuControlsOpen, setMenuOpen] = useState(true)
-    const [editorFillMode, setFillMode] = useState("Fill")
+    const [editorFillMode, setFillMode] = useState("Paint")
 
     /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
