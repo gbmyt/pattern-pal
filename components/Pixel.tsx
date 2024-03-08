@@ -19,19 +19,47 @@ function GridPixel({
         mouseIsDown,
         fillWhenDragged,
         setFillOnDrag,
+        editorFillMode,
     } = useGridContext()
 
-    function handleClick(e: React.MouseEvent) {
+    function handleGridPixelClick(e: React.MouseEvent) {
         const target = e.target as HTMLDivElement
 
+        // Implementation TODO:
+        // Hold down cmd + click/drag to erase when in paint mode, to paint when in erase mode,
+        // and to select a block of pixels when in copy/paste mode
         if (target) {
-            if (!pixelIsFilled) {
-                setPixelIsFilled(true)
-                fillGridPixel(target, JSON.parse(chart.pixels), position)
-                setFillOnDrag(true)
-            } else if (pixelIsFilled) {
-                setPixelIsFilled(false)
-                removePixelFill(target, JSON.parse(chart.pixels), position)
+            try {
+                switch (editorFillMode) {
+                    case "Paint":
+                        setFillOnDrag(true)
+                        setPixelIsFilled(true)
+                        fillGridPixel(
+                            target,
+                            JSON.parse(chart.pixels),
+                            position
+                        )
+                        break
+                    case "Erase":
+                        console.log("erase fill mode")
+                        setPixelIsFilled(false)
+                        removePixelFill(
+                            target,
+                            JSON.parse(chart.pixels),
+                            position
+                        )
+                        break
+                    case "Symbol":
+                        console.log("symbol fill mode")
+                        // IMPLEMENTATION TODO
+                        break
+                    case "Paste":
+                        console.log("paste fill mode")
+                        // IMPLEMENTATION TODO
+                        break
+                }
+            } catch (e) {
+                console.log("problem filling grid pixel")
             }
         }
     }
@@ -53,13 +81,13 @@ function GridPixel({
     const fill = !filled ? undefined : fillColor ? fillColor : pixelFillColor
     return (
         <div
-            onMouseDown={handleClick}
+            onMouseDown={handleGridPixelClick}
             onMouseEnter={handleClickandDrag}
             style={{
                 backgroundColor: fill,
             }}
             className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
-        ></div>
+        ></div> // Custom pixel size TODO
     )
 }
 
