@@ -1,6 +1,6 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-import { useEffect, useRef } from "react"
+import { Suspense, useEffect, useRef } from "react"
 import html2canvas from "html2canvas"
 import Button from "./Button"
 
@@ -54,36 +54,38 @@ function Grid() {
         }
     }
 
-    return (
-        <div className="flex flex-col w-fit m-auto" onClick={handleClick}>
-            <div
-                className="flex justify-center"
-                id="grid"
-                aria-label="grid"
-                data-testid="grid"
-            >
+    if (grid.length) {
+        return (
+            <div className="flex flex-col w-fit m-auto" onClick={handleClick}>
                 <div
-                    style={{
-                        gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
-                    }}
-                    className="border-solid border-2 grid rounded-lg"
-                    ref={ref}
+                    className="flex justify-center"
+                    id="grid"
+                    aria-label="grid"
+                    data-testid="grid"
                 >
-                    {grid.length && grid}
+                    <div
+                        style={{
+                            gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
+                        }}
+                        className="border-solid border-2 grid rounded-lg"
+                        ref={ref}
+                    >
+                        {grid && grid}
+                    </div>
+                </div>
+                <div className="h-0"></div>
+
+                <div className="flex justify-end my-4">
+                    <Button
+                        style="custom"
+                        extraStyle="p-2 mt-4"
+                        handleClick={handleDownloadImage}
+                        buttonText="Download As Img"
+                    />
                 </div>
             </div>
-            <div className="h-0"></div>
-
-            <div className="flex justify-end">
-                <Button
-                    style="custom"
-                    extraStyle="p-2 mt-4"
-                    handleClick={handleDownloadImage}
-                    buttonText="Download As Img"
-                />
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Grid
