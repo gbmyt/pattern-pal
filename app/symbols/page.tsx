@@ -1,4 +1,4 @@
-import ChartSymbolsList from "@/components/ChartSymbols"
+import ChartSymbolsList from "@/components/ChartSymbolsList"
 
 function Page() {
     return (
