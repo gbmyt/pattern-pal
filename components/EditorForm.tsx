@@ -9,7 +9,7 @@ import {
 } from "@/lib/actions"
 import { useState } from "react"
 import Modal from "@/components/Modal"
-import ColorWheel from "./ColorWheel"
+
 import EditorMenu from "./EditorMenu"
 
 function EditorForm({ authorized }: { authorized: boolean }) {
@@ -19,8 +19,8 @@ function EditorForm({ authorized }: { authorized: boolean }) {
         setPixelFillColor,
         maxGridWidth,
         menuControlsOpen,
-        modalIsOpen,
     } = useGridContext()
+    const [modalIsOpen, setModalOpen] = useState(false)
 
     // FORM STATE
     const [formError, setFormError] = useState(false)
@@ -108,6 +108,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                         updateGrid(data)
                     } else if (!chart.id || chart.id == null) {
                         await saveGrid(data)
+                        setFormText("Saved!")
                     }
                 } catch (e) {
                     setFormText(
@@ -116,8 +117,11 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                     setFormError(true)
                 } finally {
                     form && form.reset()
+                    setModalOpen(false)
                     setFormError(false)
-                    setFormText("Saved!")
+                    setInterval(() => {
+                        setFormText(null)
+                    }, 3000)
                 }
             }
         } else {
@@ -138,23 +142,23 @@ function EditorForm({ authorized }: { authorized: boolean }) {
 
     return (
         <>
-            <EditorMenu />
-            <Modal isOpen={!formSaveText ? false : true}>{formSaveText}</Modal>
+            <EditorMenu modalIsOpen={modalIsOpen} setModalOpen={setModalOpen} />
+            {/* <Modal isOpen={!formSaveText ? false : true}>{formSaveText}</Modal> */}
 
             {menuControlsOpen && modalIsOpen && (
                 <div className="flex flex-row justify-center items-center">
-                    <Modal isOpen={modalIsOpen}>
+                    <Modal isOpen={modalIsOpen} setOpen={setModalOpen}>
                         <form
                             id="form"
                             action={async (data) => await handleSubmit(data)}
-                            className="flex flex-col justify-between w-3/4"
+                            className="flex flex-col justify-between items-center w-3/4"
                         >
                             <>
                                 <ChartDetail authorized={authorized} />
                                 <div>
                                     <label htmlFor="title">Title</label>
                                     <input
-                                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/4 m-2"
+                                        className="text-slate-600 border-2 border-black/10 rounded-md w-fit m-2"
                                         name="title"
                                         id="title"
                                         type="text"
@@ -164,37 +168,38 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                                         onChange={handleChartFormChange}
                                     />
 
-                                    <label htmlFor="grid-height">Height</label>
-                                    <input
-                                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
-                                        name="gridHeight"
-                                        type="number"
-                                        aria-label="gridHeight"
-                                        onChange={handleChartFormChange}
-                                        placeholder="Height in Pixels"
-                                    />
-
-                                    <label htmlFor="grid-width">Width</label>
-                                    <input
-                                        className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
-                                        name="gridWidth"
-                                        type="number"
-                                        aria-label="gridWidth"
-                                        onChange={handleChartFormChange}
-                                        placeholder="Width in Pixels"
-                                    />
+                                    <div>
+                                        <label htmlFor="grid-height">
+                                            Height
+                                        </label>
+                                        <input
+                                            className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
+                                            name="gridHeight"
+                                            type="number"
+                                            aria-label="gridHeight"
+                                            onChange={handleChartFormChange}
+                                            placeholder="Height in Pixels"
+                                        />
+                                        <label htmlFor="grid-width">
+                                            Width
+                                        </label>
+                                        <input
+                                            className="text-slate-600 border-2 border-black/10 rounded-md w-1/6 m-2"
+                                            name="gridWidth"
+                                            type="number"
+                                            aria-label="gridWidth"
+                                            onChange={handleChartFormChange}
+                                            placeholder="Width in Pixels"
+                                        />
+                                    </div>
                                 </div>
-
-                                <ColorWheel
-                                    disabled={!modalIsOpen || !menuControlsOpen}
-                                />
                             </>
 
                             <div className="m-4 ml-0">
                                 {authorized && (
                                     <Button
                                         type="submit"
-                                        buttonText="Save Grid"
+                                        buttonText="Save Changes →"
                                     />
                                 )}
                             </div>

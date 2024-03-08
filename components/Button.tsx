@@ -1,5 +1,4 @@
 function Button({
-    modalIsOpen,
     buttonText,
     handleClick,
     type,
@@ -9,15 +8,13 @@ function Button({
 }: {
     style?: string
     extraStyle?: string
-    modalIsOpen?: boolean
     buttonText: string
     handleClick?: (e: React.MouseEvent) => void
     type?: "button" | "submit" | "reset" | undefined
     children?: React.ReactNode
 }) {
-    const defaultStyle = `w-fit rounded-lg border-solid border-2 border-black/20 text-black/80 p-2 ${
-        modalIsOpen && "hidden"
-    }`
+    const defaultStyle = `w-fit rounded-lg border-solid border-2 border-black/20 text-black/80 p-2`
+
     return (
         <button
             type={type ? type : "button"}

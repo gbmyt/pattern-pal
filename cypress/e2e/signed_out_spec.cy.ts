@@ -38,20 +38,16 @@ describe("Landing Page", () => {
 // =============================================
 //              Chart Editor
 // =============================================
-describe.only("Chart Editor", () => {
+describe("Chart Editor", () => {
     beforeEach(() => {
         cy.visit("/editor", { failOnStatusCode: false })
-        cy.get("button:contains('Edit ✎')").click()
     })
 
-    describe("Layout", () => {
+    describe("layout", () => {
         it("displays the editor menu bar", function () {
             // the editor should render a controls menu
-            cy.get("button:contains('Reset Color')")
-
-            // Clicking 'X' collapses the menu bar
-            cy.get("button:contains('X')").click()
-            cy.get("button:contains('Reset Color')").should("not.exist")
+            cy.get("button:contains('Color')").click()
+            // cy.get("button:contains('Reset Color')").should("be.visible")
         })
 
         // it("displays the default grid", () => {})
@@ -59,20 +55,39 @@ describe.only("Chart Editor", () => {
         // it("does not display Recent Charts carousel", () => {})
     })
 
-    // =============================================
-    // Editor Functionality
-    // =============================================
-    // describe("Editor Grid Functionality", () => {
-    //     // -   Pixel fill modes (paint/symbol/erase) operate as expected
-    //     // -   Drag to fill operates as expected
-    //     // -   Grid size exceeds max errors display correctly
-    //     // -   Increasing/decreasing grid dimensions modified grid component as expected
-    //     // -   Download image works and saves the current chart state
-    // })
-
     describe("Chart Details", () => {
         it("does not render a chart from the database", () => {
+            cy.get("button:contains('Save')").click()
             cy.get("div").contains("Create an Account to Name & Save Your Grid")
+        })
+    })
+
+    // // =============================================
+    // // Editor Functionality
+    // // =============================================
+    describe("Editor Menu", () => {
+        describe("Color Wheel", () => {
+            it("user can set custom fill color", function () {
+                cy.get("button:contains('Color')").click()
+                cy.get("button:contains('Reset Color')").click()
+
+                // Clicking 'X' collapses the menu bar
+                // cy.get("button:contains('X')").should("exist").click()
+                cy.get("button:contains('Reset Color')").should("not.exist")
+            })
+        })
+        // -   Pixel fill modes (paint/symbol/erase) operate as expected
+        // -   Drag to fill operates as expected
+        // -   Grid size exceeds max errors display correctly
+        // -   Increasing/decreasing grid dimensions modified grid component as expected
+        // -   Download image works and saves the current chart state
+
+        describe("CTAs", () => {
+            it("New, Save, and Delete buttons should exist", function () {
+                cy.get("button:contains('New')").should("be.visible")
+                cy.get("button:contains('Delete')").should("be.visible")
+                cy.get("button:contains('Save')").should("be.visible")
+            })
         })
     })
 })

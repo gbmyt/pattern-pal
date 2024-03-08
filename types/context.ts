@@ -2,8 +2,6 @@ import { SetStateAction } from "react"
 import { Chart } from "./chart"
 
 export type GridContextType = {
-    modalIsOpen: boolean
-    setModalOpen: React.Dispatch<SetStateAction<boolean>>
     menuControlsOpen: boolean
     setMenuOpen: React.Dispatch<SetStateAction<boolean>>
     mouseIsDown: boolean
