@@ -19,8 +19,3 @@ export type GridContextType = {
     chartFromDatabase: Chart | null
     setDbChart: React.Dispatch<SetStateAction<Chart | null>>
 }
-
-export type ContextType = {
-    modalIsOpen: boolean
-    setModalOpen: React.Dispatch<SetStateAction<boolean>>
-}
