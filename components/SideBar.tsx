@@ -4,7 +4,7 @@ const sideBarLinkStyles =
     "group rounded-lg border border-transparent first-letter:transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-sm p-4"
 
 const sideBarLinks = [
-    { href: "/editor", linkText: "Chart Editor" },
+    { href: "/chart/new", linkText: "Chart Editor" },
     { href: "/symbols", linkText: "Symbols" },
     { href: "/templates", linkText: "Templates" },
     { href: "/community", linkText: "Community" },

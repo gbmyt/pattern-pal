@@ -35,7 +35,7 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     } catch (e) {
         console.log("CREATE USER MATCH CLERK ID ERROR", e)
     } finally {
-        redirect("/editor")
+        redirect("/dashboard")
     }
 }
 

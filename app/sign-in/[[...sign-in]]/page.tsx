@@ -8,8 +8,8 @@ const SignInPage = () => {
                     rootBox: "m-auto",
                 },
             }}
-            afterSignInUrl="/editor" // if changing these does not work, refer to local env and update redirect routes there
-            redirectUrl="/editor"
+            afterSignInUrl="/dashboard" // if changing these does not work, refer to local env and update redirect routes there
+            redirectUrl="/dashboard"
         />
     )
 }
