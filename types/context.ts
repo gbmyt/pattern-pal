@@ -2,6 +2,8 @@ import { SetStateAction } from "react"
 import { Chart } from "./chart"
 
 export type GridContextType = {
+    advancedEditorOptionsOpen: boolean
+    setAdvancedOptionsOpen: React.Dispatch<SetStateAction<boolean>>
     editorFillMode: string
     setFillMode: React.Dispatch<SetStateAction<string>>
     menuControlsOpen: boolean

@@ -1,3 +1,4 @@
+import AdvancedOptionsMenu from "./AdvancedOptionsMenu"
 import EditorForm from "./EditorForm"
 import Grid from "./Grid"
 import SearchBar from "./SearchBar"
@@ -10,6 +11,7 @@ const Chart = ({ userId }: { userId: string | null }) => {
 
             <Suspense fallback={<h2>Loading...</h2>}>
                 <SearchBar />
+                <AdvancedOptionsMenu />
                 <Grid />
             </Suspense>
         </div>
