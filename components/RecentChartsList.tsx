@@ -30,7 +30,7 @@ async function RecentChartsList() {
         return (
             <div className="mx-16">
                 <div className="flex justify-center items-center">
-                    <div className={`max-w-1/2 w-fit overflow-scroll`}>
+                    <div className={`max-w-1/2 w-fit overflow-auto`}>
                         <Carousel title="Recently Viewed">
                             {chartsFromDatabase.map((p, i) => (
                                 <Card p={p} key={i} />
