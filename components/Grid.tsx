@@ -38,14 +38,17 @@ function Grid() {
         return (
             <div
                 id="grid"
-                onMouseLeave={() => {
-                    setFillOnDrag(false)
-                    setMouseDownState(false)
-                }}
                 className="flex flex-col w-fit m-auto pt-8 pb-16"
                 onClick={handleClick}
             >
-                <div className="flex justify-center" aria-label="grid">
+                <div
+                    onMouseLeave={() => {
+                        setFillOnDrag(false)
+                        setMouseDownState(false)
+                    }}
+                    className="flex justify-center"
+                    aria-label="grid"
+                >
                     <div
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
