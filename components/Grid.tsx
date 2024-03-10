@@ -13,8 +13,6 @@ function Grid() {
         setFillOnDrag,
     } = useGridContext()
 
-    const ref = useRef<HTMLDivElement>(null)
-
     // Fetch from db and render a user-selected grid
     useEffect(() => {
         chartFromDatabase && setChart(chartFromDatabase)
@@ -36,61 +34,28 @@ function Grid() {
         }
     }
 
-    const handleDownloadImage = async () => {
-        const element = ref.current as HTMLDivElement
-        const canvas = await html2canvas(element)
-
-        const data = canvas.toDataURL("image/jpg")
-        const link = document.createElement("a")
-
-        if (typeof link.download === "string") {
-            link.href = data
-            link.download = "image.jpg"
-
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
-        } else {
-            window.open(data)
-        }
-    }
-
     if (grid.length) {
         return (
             <div
+                id="grid"
                 onMouseLeave={() => {
                     setFillOnDrag(false)
                     setMouseDownState(false)
                 }}
-                className="flex flex-col w-fit m-auto"
+                className="flex flex-col w-fit m-auto p-16"
                 onClick={handleClick}
             >
-                <div
-                    className="flex justify-center"
-                    id="grid"
-                    aria-label="grid"
-                    data-testid="grid"
-                >
+                <div className="flex justify-center" aria-label="grid">
                     <div
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
                         }}
                         className="border-solid border-2 grid rounded-lg"
-                        ref={ref}
                     >
                         {grid && grid}
                     </div>
                 </div>
                 <div className="h-0"></div>
-
-                <div className="flex justify-end my-4">
-                    <Button
-                        style="custom"
-                        extraStyle="p-2 mt-4"
-                        handleClick={handleDownloadImage}
-                        buttonText="Download As Img"
-                    />
-                </div>
             </div>
         )
     }

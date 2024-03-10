@@ -31,16 +31,6 @@ function GridPixel({
         // and to select a block of pixels when in copy/paste mode
         if (target) {
             try {
-                // target.addEventListener("mousedown", function () {
-                //     setFillOnDrag(true)
-                //     setMouseDownState(true)
-                // })
-
-                // target.addEventListener("mouseup", function () {
-                //     setFillOnDrag(false)
-                //     setMouseDownState(false)
-                // })
-
                 switch (editorFillMode) {
                     case "Paint":
                         setMouseDownState(true)

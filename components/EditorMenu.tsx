@@ -1,10 +1,14 @@
 "use client"
+import html2canvas from "html2canvas"
 import { SetStateAction, useState } from "react"
-import Button from "./Button"
+import { deletePixelGridServerAction } from "@/lib/actions"
+
 import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
+
+// Components
 import Modal from "./Modal"
-import { deletePixelGridServerAction } from "@/lib/actions"
+import Button from "./Button"
 import ColorWheel from "./ColorWheel"
 
 function EditorMenu({
@@ -31,6 +35,36 @@ function EditorMenu({
     var menuLinks = [
         {
             type: "select",
+            value: "Chart",
+            options: ["Chart", "New", "Save", "Delete", "Export PNG"],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+
+                try {
+                    switch (target.value) {
+                        case "Delete":
+                            setOpen(!open)
+                            break
+                        case "Save":
+                            setModalOpen(!modalIsOpen)
+                            break
+                        case "New":
+                            handleResetGridToDefault()
+                            break
+                        case "Export PNG":
+                            handleDownloadImage()
+                            break
+                        default:
+                            console.log("targval", target.value)
+                    }
+                } catch (e) {
+                    console.log("there was a problem in select Chart option")
+                }
+            },
+            style: "none",
+        },
+        {
+            type: "select",
             value: "Fill Mode",
             options: ["Fill Mode", "Paint", "Erase", "Symbol", "Paste"],
             handleChange: (e: React.ChangeEvent) => {
@@ -54,51 +88,18 @@ function EditorMenu({
         {
             type: "button",
             value: "Reset Size",
-            handleClick: handleResetGridSize,
+            handleClick: renderEmptyGrid,
             style: "none",
         },
-        {
-            type: "button",
-            value: "New",
-            handleClick: handleResetGridToDefault,
-            style: "none",
-        },
-
-        {
-            type: "button",
-            value: "Delete", // only show this if rendering a saved chart TODO
-            handleClick: () => {
-                setOpen(!open)
-            },
-            modalIsOpen: modalIsOpen,
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "Save",
-            handleClick: () => {
-                setModalOpen(!modalIsOpen)
-            },
-            modalIsOpen: modalIsOpen,
-            style: "none",
-        },
-
-        // { value: "", handleClick: () => {}, modalIsOpen: null, style: "" },
     ]
 
-    function handleResetGridToDefault(e: React.MouseEvent) {
-        handleResetGridSize(e)
-        handleRemoveGridFill(e)
+    function handleResetGridToDefault() {
+        renderEmptyGrid()
+        handleRemoveGridFill()
         setPixelFillColor(defaultFillColor)
     }
 
-    function handleResetGridSize(e: React.MouseEvent) {
-        e.preventDefault()
-        renderEmptyGrid()
-    }
-
-    function handleRemoveGridFill(e: React.MouseEvent) {
-        e.preventDefault()
+    function handleRemoveGridFill() {
         let pixels = document.querySelectorAll(
             ".grid-pixel"
         ) as NodeListOf<HTMLDivElement>
@@ -108,6 +109,25 @@ function EditorMenu({
                 removePixelFill(p)
                 setPixelIsFilled(false)
             })
+    }
+
+    const handleDownloadImage = async () => {
+        const element = document.getElementById("grid") as HTMLDivElement
+        const canvas = await html2canvas(element)
+
+        const data = canvas.toDataURL("image/jpg")
+        const link = document.createElement("a")
+
+        if (typeof link.download === "string") {
+            link.href = data
+            link.download = "image.jpg"
+
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        } else {
+            window.open(data)
+        }
     }
 
     const links =
