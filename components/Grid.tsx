@@ -56,7 +56,14 @@ function Grid() {
 
     if (grid.length) {
         return (
-            <div className="flex flex-col w-fit m-auto" onClick={handleClick}>
+            <div
+                onMouseLeave={() => {
+                    setFillOnDrag(false)
+                    setMouseDownState(false)
+                }}
+                className="flex flex-col w-fit m-auto"
+                onClick={handleClick}
+            >
                 <div
                     className="flex justify-center"
                     id="grid"
