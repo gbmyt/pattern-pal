@@ -9,6 +9,8 @@ export type GridContextType = {
     menuControlsOpen: boolean
     setMenuOpen: React.Dispatch<SetStateAction<boolean>>
     mouseIsDown: boolean
+    pixelSizeInPixels: number
+    setPixelSize: React.Dispatch<SetStateAction<number>>
     setFillOnDrag: React.Dispatch<SetStateAction<boolean>>
     fillWhenDragged: boolean
     setMouseDownState: React.Dispatch<SetStateAction<boolean>>

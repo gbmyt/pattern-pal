@@ -20,6 +20,8 @@ function EditorMenu({
 }) {
     const {
         chart,
+        advancedEditorOptionsOpen,
+        setAdvancedOptionsOpen,
         menuControlsOpen,
         setMenuOpen,
         defaultFillColor,
@@ -66,7 +68,7 @@ function EditorMenu({
         {
             type: "select",
             value: "Fill Mode",
-            options: ["Fill Mode", "Paint", "Erase", "Symbol", "Paste"],
+            options: ["Fill Mode", "Paint", "Erase", "Symbol" /* "Paste"*/],
             handleChange: (e: React.ChangeEvent) => {
                 let target = e.target as HTMLSelectElement
                 setFillMode(target.value)
@@ -74,21 +76,36 @@ function EditorMenu({
             style: "none",
         },
         {
+            type: "select",
+            value: "Edit",
+            options: ["Edit", "Remove Fill", "Reset Size"],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+                switch (target.value) {
+                    case "Remove Fill":
+                        handleRemoveGridFill()
+                        break
+                    case "Reset Size":
+                        renderEmptyGrid() // should this preserve the current fill? add a warning about data loss if not
+                        break
+                    default:
+                        console.log("targval", target.value)
+                }
+            },
+            style: "none",
+        },
+        {
+            type: "button",
+            value: "Advanced",
+            handleClick: () =>
+                setAdvancedOptionsOpen &&
+                setAdvancedOptionsOpen(!advancedEditorOptionsOpen),
+            style: "none",
+        },
+        {
             type: "button",
             value: "Color",
             handleClick: () => setColorWheelOpen(!colorwheelOpen),
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "Remove Fill",
-            handleClick: handleRemoveGridFill,
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "Reset Size",
-            handleClick: renderEmptyGrid,
             style: "none",
         },
     ]
@@ -145,8 +162,7 @@ function EditorMenu({
             } else if (link.type === "select") {
                 return (
                     <select
-                        className="border-none rounded-md bg-transparent"
-                        name="mode"
+                        className="rounded-md bg-transparent mx-1 text-center"
                         key={index}
                         onChange={link.handleChange}
                     >
@@ -178,7 +194,7 @@ function EditorMenu({
                             buttonText="Yes"
                             handleClick={async (e) => {
                                 setOpen(false)
-                                await handleResetGridToDefault(e)
+                                await handleResetGridToDefault()
                                 await deletePixelGridServerAction(chart.id)
                             }}
                         />

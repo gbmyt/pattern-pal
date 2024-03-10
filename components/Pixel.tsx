@@ -21,6 +21,7 @@ function GridPixel({
         fillWhenDragged,
         setFillOnDrag,
         editorFillMode,
+        pixelSizeInPixels,
     } = useGridContext()
 
     function handleFillGridPixel(e: React.MouseEvent) {
@@ -97,9 +98,11 @@ function GridPixel({
             }}
             style={{
                 backgroundColor: fill,
+                width: `${pixelSizeInPixels}px`,
+                height: `${pixelSizeInPixels}px`,
             }}
-            className="grid-pixel border-solid border-y border-x w-4 h-4 p-2"
-        ></div> // Custom pixel size TODO
+            className={`grid-pixel border-solid border-y border-x p-2`}
+        ></div>
     )
 }
 

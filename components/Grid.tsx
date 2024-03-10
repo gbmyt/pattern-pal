@@ -42,7 +42,7 @@ function Grid() {
                     setFillOnDrag(false)
                     setMouseDownState(false)
                 }}
-                className="flex flex-col w-fit m-auto p-16"
+                className="flex flex-col w-fit m-auto pt-8 pb-16"
                 onClick={handleClick}
             >
                 <div className="flex justify-center" aria-label="grid">
