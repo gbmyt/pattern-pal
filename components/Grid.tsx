@@ -25,6 +25,7 @@ function Grid() {
 
         if (target) {
             target.addEventListener("mousedown", function () {
+                setFillOnDrag(true)
                 setMouseDownState(true)
             })
 
