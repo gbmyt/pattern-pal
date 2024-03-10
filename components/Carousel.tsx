@@ -5,11 +5,11 @@ function Carousel({
     title?: string
     children: React.ReactNode
 }) {
-    const titleText: string = title ? title : "Recent"
+    const headerText = title ? title : null
     return (
-        <div className="ml-32 my-8">
-            <h1 className="font-semibold mb-2 text-center md:text-left">
-                {titleText}
+        <div className="max-w-3/4 w-fit mx-auto">
+            <h1 className="font-semibold text-center md:text-left my-4">
+                {headerText}
             </h1>
             <div className="md:h-60 flex flex-col justify-center items-center md:flex-row md:overflow-scroll md:flex-nowrap md:justify-start">
                 {children}

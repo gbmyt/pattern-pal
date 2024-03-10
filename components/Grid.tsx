@@ -1,6 +1,6 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-import { useEffect, useRef } from "react"
+import { Suspense, useEffect, useRef } from "react"
 import html2canvas from "html2canvas"
 import Button from "./Button"
 
@@ -13,8 +13,6 @@ function Grid() {
         setFillOnDrag,
     } = useGridContext()
 
-    const ref = useRef<HTMLDivElement>(null)
-
     // Fetch from db and render a user-selected grid
     useEffect(() => {
         chartFromDatabase && setChart(chartFromDatabase)
@@ -25,6 +23,7 @@ function Grid() {
 
         if (target) {
             target.addEventListener("mousedown", function () {
+                setFillOnDrag(true)
                 setMouseDownState(true)
             })
 
@@ -35,55 +34,31 @@ function Grid() {
         }
     }
 
-    const handleDownloadImage = async () => {
-        const element = ref.current as HTMLDivElement
-        const canvas = await html2canvas(element)
-
-        const data = canvas.toDataURL("image/jpg")
-        const link = document.createElement("a")
-
-        if (typeof link.download === "string") {
-            link.href = data
-            link.download = "image.jpg"
-
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
-        } else {
-            window.open(data)
-        }
-    }
-
-    return (
-        <div className="flex flex-col w-fit m-auto" onClick={handleClick}>
+    if (grid.length) {
+        return (
             <div
-                className="flex justify-center"
                 id="grid"
-                aria-label="grid"
-                data-testid="grid"
+                onMouseLeave={() => {
+                    setFillOnDrag(false)
+                    setMouseDownState(false)
+                }}
+                className="flex flex-col w-fit m-auto pt-8 pb-16"
+                onClick={handleClick}
             >
-                <div
-                    style={{
-                        gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
-                    }}
-                    className="border-solid border-2 grid rounded-lg"
-                    ref={ref}
-                >
-                    {grid.length && grid}
+                <div className="flex justify-center" aria-label="grid">
+                    <div
+                        style={{
+                            gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
+                        }}
+                        className="border-solid border-2 grid rounded-lg"
+                    >
+                        {grid && grid}
+                    </div>
                 </div>
+                <div className="h-0"></div>
             </div>
-            <div className="h-0"></div>
-
-            <div className="flex justify-end">
-                <Button
-                    style="custom"
-                    extraStyle="p-2 mt-4"
-                    handleClick={handleDownloadImage}
-                    buttonText="Download As Img"
-                />
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Grid

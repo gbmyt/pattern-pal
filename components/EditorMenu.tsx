@@ -1,10 +1,14 @@
 "use client"
+import html2canvas from "html2canvas"
 import { SetStateAction, useState } from "react"
-import Button from "./Button"
+import { deletePixelGridServerAction } from "@/lib/actions"
+
 import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
+
+// Components
 import Modal from "./Modal"
-import { deletePixelGridServerAction } from "@/lib/actions"
+import Button from "./Button"
 import ColorWheel from "./ColorWheel"
 
 function EditorMenu({
@@ -16,25 +20,86 @@ function EditorMenu({
 }) {
     const {
         chart,
+        advancedEditorOptionsOpen,
+        setAdvancedOptionsOpen,
         menuControlsOpen,
         setMenuOpen,
         defaultFillColor,
         renderEmptyGrid,
         setPixelFillColor,
+        setFillMode,
     } = useGridContext()
 
     const [open, setOpen] = useState(false)
     const { setPixelIsFilled, removePixelFill } = usePixelIsFilled()
     const [colorwheelOpen, setColorWheelOpen] = useState(false)
 
-    var buttons = [
+    var menuLinks = [
         {
             type: "select",
-            value: "Mode",
-            options: ["Mode", "Fill", "Erase", "Paste"],
-            handleClick: () => {
-                // setPMOpen(!paintModeOpen)
+            value: "Chart",
+            options: ["Chart", "New", "Save", "Delete", "Export PNG"],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+
+                try {
+                    switch (target.value) {
+                        case "Delete":
+                            setOpen(!open)
+                            break
+                        case "Save":
+                            setModalOpen(!modalIsOpen)
+                            break
+                        case "New":
+                            handleResetGridToDefault()
+                            break
+                        case "Export PNG":
+                            handleDownloadImage()
+                            break
+                        default:
+                            console.log("targval", target.value)
+                    }
+                } catch (e) {
+                    console.log("there was a problem in select Chart option")
+                }
             },
+            style: "none",
+        },
+        {
+            type: "select",
+            value: "Fill Mode",
+            options: ["Fill Mode", "Paint", "Erase", "Symbol" /* "Paste"*/],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+                setFillMode(target.value)
+            },
+            style: "none",
+        },
+        {
+            type: "select",
+            value: "Edit",
+            options: ["Edit", "Remove Fill", "Reset Size"],
+            handleChange: (e: React.ChangeEvent) => {
+                let target = e.target as HTMLSelectElement
+                switch (target.value) {
+                    case "Remove Fill":
+                        handleRemoveGridFill()
+                        break
+                    case "Reset Size":
+                        renderEmptyGrid() // should this preserve the current fill? add a warning about data loss if not
+                        break
+                    default:
+                        console.log("targval", target.value)
+                }
+            },
+            style: "none",
+        },
+        {
+            type: "button",
+            value: "Advanced",
+            handleClick: () =>
+                setAdvancedOptionsOpen &&
+                setAdvancedOptionsOpen(!advancedEditorOptionsOpen),
             style: "none",
         },
         {
@@ -43,60 +108,15 @@ function EditorMenu({
             handleClick: () => setColorWheelOpen(!colorwheelOpen),
             style: "none",
         },
-        {
-            type: "button",
-            value: "Remove Fill",
-            handleClick: handleRemoveGridFill,
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "Reset Size",
-            handleClick: handleResetGridSize,
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "New",
-            handleClick: handleResetGridToDefault,
-            style: "none",
-        },
-
-        {
-            type: "button",
-            value: "Delete", // only show this if rendering a saved chart TODO
-            handleClick: () => {
-                setOpen(!open)
-            },
-            modalIsOpen: modalIsOpen,
-            style: "none",
-        },
-        {
-            type: "button",
-            value: "Save",
-            handleClick: () => {
-                setModalOpen(!modalIsOpen)
-            },
-            modalIsOpen: modalIsOpen,
-            style: "none",
-        },
-
-        // { value: "", handleClick: () => {}, modalIsOpen: null, style: "" },
     ]
 
-    function handleResetGridToDefault(e: React.MouseEvent) {
-        handleResetGridSize(e)
-        handleRemoveGridFill(e)
+    function handleResetGridToDefault() {
+        renderEmptyGrid()
+        handleRemoveGridFill()
         setPixelFillColor(defaultFillColor)
     }
 
-    function handleResetGridSize(e: React.MouseEvent) {
-        e.preventDefault()
-        renderEmptyGrid()
-    }
-
-    function handleRemoveGridFill(e: React.MouseEvent) {
-        e.preventDefault()
+    function handleRemoveGridFill() {
         let pixels = document.querySelectorAll(
             ".grid-pixel"
         ) as NodeListOf<HTMLDivElement>
@@ -108,9 +128,28 @@ function EditorMenu({
             })
     }
 
+    const handleDownloadImage = async () => {
+        const element = document.getElementById("grid") as HTMLDivElement
+        const canvas = await html2canvas(element)
+
+        const data = canvas.toDataURL("image/jpg")
+        const link = document.createElement("a")
+
+        if (typeof link.download === "string") {
+            link.href = data
+            link.download = "image.jpg"
+
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        } else {
+            window.open(data)
+        }
+    }
+
     const links =
-        buttons &&
-        buttons.map((link, index) => {
+        menuLinks &&
+        menuLinks.map((link, index) => {
             if (link.type === "button") {
                 return (
                     <Button
@@ -122,7 +161,11 @@ function EditorMenu({
                 )
             } else if (link.type === "select") {
                 return (
-                    <select name="mode" key={index}>
+                    <select
+                        className="rounded-md bg-transparent mx-1 text-center"
+                        key={index}
+                        onChange={link.handleChange}
+                    >
                         {link.options &&
                             link.options.map((text, index) => {
                                 return (
@@ -151,7 +194,7 @@ function EditorMenu({
                             buttonText="Yes"
                             handleClick={async (e) => {
                                 setOpen(false)
-                                await handleResetGridToDefault(e)
+                                await handleResetGridToDefault()
                                 await deletePixelGridServerAction(chart.id)
                             }}
                         />
@@ -191,15 +234,14 @@ function EditorMenu({
                         </Modal>
                         {links && links}
                     </div>
+
                     <Button
                         style="none"
                         buttonText={`${menuControlsOpen ? "X" : "Menu +"}`}
                         handleClick={() => {
-                            if (modalIsOpen) {
-                                setModalOpen(false)
-                            } else {
-                                setMenuOpen(!menuControlsOpen)
-                            }
+                            modalIsOpen
+                                ? setModalOpen(false)
+                                : setMenuOpen(!menuControlsOpen)
                         }}
                     />
                 </div>

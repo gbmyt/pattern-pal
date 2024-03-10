@@ -27,6 +27,7 @@ const Card = ({ p }: { p: Chart }) => {
                     Last Updated: Date & Time (TODO)
                 </div>
 
+                {/* TODO Add a modal for confirming you want to lose current editor changes before loading a chart from the database */}
                 <div onClick={handleClick} className="mt-2">
                     View &rarr;
                 </div>

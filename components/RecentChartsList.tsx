@@ -28,12 +28,16 @@ async function RecentChartsList() {
 
     if (chartsFromDatabase) {
         return (
-            <div className="ml-32 my-8">
-                <Carousel>
-                    {chartsFromDatabase.map((p, i) => (
-                        <Card p={p} key={i} />
-                    ))}
-                </Carousel>
+            <div className="mx-16">
+                <div className="flex justify-center items-center">
+                    <div className={`max-w-1/2 w-fit overflow-scroll`}>
+                        <Carousel title="Recently Viewed">
+                            {chartsFromDatabase.map((p, i) => (
+                                <Card p={p} key={i} />
+                            ))}
+                        </Carousel>
+                    </div>
+                </div>
             </div>
         )
     }

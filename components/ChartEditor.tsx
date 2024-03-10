@@ -1,18 +1,17 @@
 import { auth } from "@clerk/nextjs"
-import EditorForm from "./EditorForm"
-import Grid from "./Grid"
-import RecentChartsList from "./RecentChartsList"
 import { Suspense } from "react"
+
+// Components
+import Chart from "./Chart"
+import RecentChartsList from "./RecentChartsList"
 
 async function ChartEditor() {
     const { userId } = await auth()
 
     return (
         <>
-            <EditorForm authorized={userId ? true : false} />
-            <Suspense fallback={<h2>Loading...</h2>}>
-                <Grid />
-            </Suspense>
+            <Chart userId={userId} />
+
             <Suspense fallback={<h2>Loading...</h2>}>
                 <RecentChartsList />
             </Suspense>
