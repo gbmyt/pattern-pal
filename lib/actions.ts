@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import db from "./db"
-import { currentUser } from "@clerk/nextjs"
+import { clerkClient, currentUser } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { getUserByClerkId } from "./auth"
 import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
@@ -39,33 +39,43 @@ export const createNewUser = async (path: string | undefined = undefined) => {
     }
 }
 
-const deleteUser = async () => {
+export const deleteUser = async () => {
     const user = await currentUser()
 
-    try {
-        // to find and delete the user from our database, AND all of their charts.
-        const match = await db.user.findUnique({
-            where: {
-                clerkId: user?.id as string,
-            },
-        })
-
+    if (user) {
         try {
-            if (user && match) {
-                await db.user.delete({
-                    where: {
-                        clerkId: user?.id,
-                    },
-                })
+            // to find and delete the user from our database, AND all of their charts.
+            const match = await db.user.findUnique({
+                where: {
+                    clerkId: user?.id as string,
+                },
+            })
+
+            try {
+                if (user && match) {
+                    await db.user.delete({
+                        where: {
+                            clerkId: user?.id,
+                        },
+                    })
+                    try {
+                        await clerkClient.users.deleteUser(user.id)
+                    } catch (e) {
+                        console.log(
+                            "there was a problem deleting clerk user\n",
+                            e
+                        )
+                    }
+                }
+            } catch (e) {
+                console.log("THERE WAS A PROBLEM DELETING YOUR ACCOUNT", e)
             }
         } catch (e) {
-            console.log("THERE WAS A PROBLEM DELETING YOUR ACCOUNT", e)
+            // error handling
+            console.log("Couldn't find your account. Please try again", e)
+        } finally {
+            revalidatePath("/")
         }
-    } catch (e) {
-        // error handling
-        console.log("Couldn't find your account. Please try again", e)
-    } finally {
-        // clean up, maybe re-route them to the home page or sign up page
     }
 }
 
