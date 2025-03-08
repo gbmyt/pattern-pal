@@ -2,10 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.light {
+    --background: 255, 255, 255;
+    --foreground: 0, 0, 0;
+
+    --primary: ;
+    --secondary: ;
+
+    --button-primary: ;
+    --button-secondary: ;
+
+    --card: ;
+    --cta: ;
+
+    --text-primary: ;
+    --text-secondary: ;
+
+    --border: ;
+
+    background: rgba(var(--background));
+    color: rgb(var(--text-primary));
+}
+
+.dark {
+    --background: 0, 0, 0;
+    --foreground: 255, 255, 255;
+
+    --primary: ;
+    --secondary: ;
+
+    --button-primary: ;
+    --button-secondary: ;
+
+    --card: ;
+    --cta: ;
+
+    --text-primary: 255, 255, 255;
+    --text-secondary: 0, 0, 0;
+
+    --border: ;
+
+    background: rgba(var(--background));
+    color: rgb(var(--text-primary));
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -17,11 +55,6 @@
 } */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+    color: rgb(var(--text-primary));
+    background-color: rgba(var(--background));
 }

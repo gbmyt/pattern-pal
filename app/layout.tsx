@@ -29,7 +29,7 @@ export default function RootLayout({
     return (
         <ClerkProvider {...pageProps}>
             <html lang="en">
-                <body className={`${inter.className} max-w-screen`}>
+                <body className={`light ${inter.className} max-w-screen`}>
                     <Suspense fallback={<h2>Loading...</h2>}>
                         <h1 className="w-screen">
                             <Header />
