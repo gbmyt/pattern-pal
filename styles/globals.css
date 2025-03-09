@@ -15,13 +15,32 @@
     --card: ;
     --cta: ;
 
-    --text-primary: ;
-    --text-secondary: ;
+    --text-primary: 0, 0, 0;
+    --text-secondary: 255, 255, 255;
 
-    --border: ;
+    --purple: 151, 71, 255;
+    --lavender: 198, 155, 255;
+    --red: 255, 0, 0;
+    --lt-red: 255, 65, 87;
+    --dk-grey: 41, 41, 41;
+    --lt-grey: 86, 84, 84;
+
+    --border: 151, 71, 255;
+
+    /* 
+      Linear Gradient Colors: 0% #F04DFF, 35% #FF4157, 70% #FFAC1C, 100% #1DD1B9 
+    */
+    /* --start: #f04dff;
+    --mid-one: #ff4157;
+    --mid-two: #ffac1c;
+    --stop: #1dd1b9;
+
+    --border: linear-gradient(to bottom, transparent, rgb(var(--stop)))
+        rgb(var(--start)); */
 
     background: rgba(var(--background));
     color: rgb(var(--text-primary));
+    /* border: rgb(var(--lavender)); */
 }
 
 .dark {
@@ -31,16 +50,34 @@
     --primary: ;
     --secondary: ;
 
-    --button-primary: ;
-    --button-secondary: ;
+    --button-primary: 151, 71, 255;
+    --button-secondary: 198, 155, 255;
 
     --card: ;
-    --cta: ;
+    --cta: 151, 71, 255;
 
     --text-primary: 255, 255, 255;
     --text-secondary: 0, 0, 0;
 
-    --border: ;
+    --purple: 151, 71, 255;
+    --lavender: 198, 155, 255;
+    --red: 255, 0, 0;
+    --lt-red: 255, 65, 87;
+    --dk-grey: 41, 41, 41;
+    --lt-grey: 86, 84, 84;
+
+    --border: 151, 71, 255;
+
+    /* 
+      Linear Gradient Colors: 0% #F04DFF, 35% #FF4157, 70% #FFAC1C, 100% #1DD1B9 
+    */
+    /* --start: #f04dff;
+    --mid-one: #ff4157;
+    --mid-two: #ffac1c;
+    --stop: #1dd1b9;
+
+    --border: linear-gradient(to bottom, transparent, rgb(var(--stop)))
+        rgb(var(--start)); */
 
     background: rgba(var(--background));
     color: rgb(var(--text-primary));

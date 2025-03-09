@@ -15,11 +15,26 @@ const config: Config = {
             },
             colors: {
                 background: "rgba(var(--background))",
+                foreground: "rgba(var(--foreground))",
                 border: "rgba(var(--border))",
+
+                buttonPrimary: "rgba(var(--button-primary))",
+                buttonSecondary: "rgba(var(--button-secondary))",
                 card: "rgba(var(--card))",
                 cta: "rgba(var(--cta))",
+
+                textPrimary: "rgba(var(--text-primary))",
+                textSecondary: "rgba(var(--text-secondary))",
+
                 black: "rgba(var(--black))",
                 white: "rgba(var(--white))",
+
+                purple: "rgba(var(--purple))",
+                lavender: "rgba(var(--lavender))",
+                red: "rgba(var(--red))",
+                ltRed: "rgba(var(--lt-red))",
+                dkGrey: "rgba(var(--dk-grey))",
+                ltGrey: "rgba(var(--lt-grey))",
             },
         },
     },
