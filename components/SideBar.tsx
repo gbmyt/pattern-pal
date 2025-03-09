@@ -1,36 +1,207 @@
-import { transitionStyles } from "@/data/styles"
+"use client"
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { useSearch } from '@/hooks/useSearch';
+import "@/styles/globals.css"
 
-const sideBarLinkStyles =
-    "group rounded-lg border border-transparent first-letter:transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-sm p-4"
+const drawerWidth = 240;
 
 const sideBarLinks = [
-    { href: "/editor", linkText: "Chart Editor" },
-    { href: "/symbols", linkText: "Symbols" },
-    { href: "/templates", linkText: "Templates" },
-    { href: "/community", linkText: "Community" },
+  { href: "/", linkText: "Home" },
+  { href: "/account", linkText: "Account" },
+  { href: "/settings", linkText: "Settings", parentPage: "Account" },
+  { href: "/projects", linkText: "Projects", parentPage: "Account" },
+  { href: "/queue", linkText: "Queue", parentPage: "Account" },
+  { href: "/favorites", linkText: "Favorites", parentPage: "Account" },
+  { href: "/library", linkText: "Library", parentPage: "Account" },
+  { href: "/stash", linkText: "Stash", parentPage: "Account" },
+
+  { href: "/studio", linkText: "Design Studio" }, // Rename or separate Manage Shop to 'Seller'?
+  { href: "/editor", linkText: "New Chart", parentPage: "Studio" },
+  { href: "/templates", linkText: "Templates", parentPage: "Studio" },
+  { href: "/patterns/new", linkText: "New Pattern", parentPage: "Studio" },
+  { href: "/templates/new", linkText: "Templates", parentPage: "Studio" },
+  { href: "/shop/manage", linkText: "Manage Shop", parentPage: "Studio" },
+  
+  { href: "/symbols", linkText: "Symbols" },
+  { href: "/community", linkText: "Community" },
 ]
 
-const SideBar = async () => {
-    return (
-        <div
-            className={`absolute flex items-start translate-y-[10rem] transition-all ease-in-out duration-750" -translate-x-[85%] hover:translate-x-1`}
-        >
-            <div
-                className={`flex flex-col h-fit min-w-max m-0 py-4 pl-4 pr-8 bg-opacity-100 bg-slate-800 rounded-md`}
-            >
-                {sideBarLinks &&
-                    sideBarLinks.map((link, index) => (
-                        <a
-                            className={sideBarLinkStyles}
-                            key={index}
-                            href={link.href}
-                        >
-                            <h2>{link.linkText}</h2>
-                        </a>
-                    ))}
-            </div>
-        </div>
-    )
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+      },
+    },
+  ],
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
 }
 
-export default SideBar
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
+    },
+  ],
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+export default function PersistentDrawerLeft() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const [isActive, setActiveIndex] = React.useState<number>(0);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar 
+        position="fixed" 
+        open={open} 
+        elevation={0}
+        sx={{ backgroundColor: "transparent" }}
+      >
+        <Toolbar>
+          <IconButton
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              mr: 2,
+              "&:hover": {
+                backgroundColor: "transparent"
+              }
+            }}
+          >
+            <Box sx={[ open && { display: 'none', }, ]}  >
+              <MenuIcon />
+            </Box>
+            <Typography 
+              variant="h5" 
+              component="a" 
+              href="/" 
+              sx={{ 
+                ml: !open ? 2 : 0,
+              }}
+              >Notions</Typography>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {sideBarLinks.map((link, index) => (
+            <ListItem key={link.linkText} disablePadding>
+              <ListItemButton onClick={() => setActiveIndex(index)}>
+                <Typography 
+                  component="a" 
+                  href={link.href} 
+                  sx={{
+                    ml: link.parentPage && 4,
+                    fontWeight: (isActive === index) ? 'bold' : 'normal',
+                    color: (isActive === index) ? 'rgba(151, 71, 255)' : '#000'
+                  }}
+                >{link.linkText}</Typography>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+    </Box>
+  );
+}

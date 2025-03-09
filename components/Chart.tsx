@@ -10,7 +10,6 @@ const Chart = ({ userId }: { userId: string | null }) => {
             <EditorForm authorized={userId ? true : false} />
 
             <Suspense fallback={<h2>Loading...</h2>}>
-                <SearchBar />
                 <AdvancedOptionsMenu />
                 <Grid />
             </Suspense>

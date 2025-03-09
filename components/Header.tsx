@@ -6,14 +6,16 @@ import { usePathname } from "next/navigation"
 import SearchBar from "./SearchBar"
 import SearchBarModal from "./SearchActive"
 import { useSearch } from "@/hooks/useSearch"
+import SideBar from "./SideBar"
 
 const Header = () => {
     const pathname = usePathname()
     const {searchOpen, setOpen} = useSearch();
 
     return (
-        <header className="flex items-center justify-between p-4 w-full">
-            <div>
+        <header className="flex items-center justify-between p-4 pr-8 w-full">
+            <SideBar />
+            {/* <div>
                 <Link href="/" aria-label={siteMetadata.headerTitle}>
                     <div className="flex items-center justify-between">
                         {typeof siteMetadata.headerTitle === "string" ? (
@@ -25,7 +27,7 @@ const Header = () => {
                         )}
                     </div>
                 </Link>
-            </div>
+            </div> */}
 
             {!searchOpen ? 
                 <SearchBar /> 

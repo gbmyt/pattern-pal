@@ -10,7 +10,6 @@ import "@/styles/globals.css"
 // Components
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import SideBar from "@/components/SideBar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -33,14 +32,11 @@ export default function RootLayout({
                     <Suspense fallback={<h2>Loading...</h2>}>
                         <h1 className="w-screen">
                             <Header />
-                            <hr />
                         </h1>
                     </Suspense>
 
                     <div className="flex flex-row max-w-screen">
-                        <SideBar />
-
-                        <div className="flex flex-col max-w-screen">
+                        <div className="flex flex-col max-w-screen h-[calc(100vh-88px)]">
                             <main className="w-screen">
                                 {children}
                             </main>
