@@ -41,7 +41,7 @@ export default function RootLayout({
                         <SideBar />
 
                         <div className="flex flex-col max-w-screen">
-                            <main className="w-screen min-h-[900px]">
+                            <main className="w-screen">
                                 {children}
                             </main>
 
