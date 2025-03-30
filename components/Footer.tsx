@@ -4,6 +4,8 @@ import SocialIcon from "@/components/social-icons"
 
 // TODO: Instead of rendering 2 separate lists, adjust styles to create
 // new columns on the fly/as-needed/dynamically
+
+// TODO: Fix default text color for light mode 
 const FOOTER_LINKS = {
     main: [
         { linkText: "About", href: "/about" },
@@ -28,7 +30,7 @@ function Footer() {
                 <div className="my-8 mr-8">
                     {FOOTER_LINKS.main.map((link, index) => (
                         <a
-                            className="flex text-xs my-2 text-gray-300 hover:text-purple-300"
+                            className="flex text-xs my-2 text-gray-300 hover:text-purple"
                             href={link.href}
                             key={index}
                         >
@@ -40,7 +42,7 @@ function Footer() {
                     {FOOTER_LINKS.secondary.map((link, index) => (
                         <a
                             className="flex text-xs my-2 text-gray-300
-                            hover:text-purple-300"
+                            hover:text-purple"
                             href={link.href}
                             key={index}
                         >
