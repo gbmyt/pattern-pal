@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar"
 import SearchBarModal from "./SearchActive"
 import { useSearch } from "@/hooks/useSearch"
 import SideBar from "./SideBar"
-import { useMediaQuery } from "@mui/material"
+import { Typography, useMediaQuery } from "@mui/material"
 
 const Header = () => {
     const isMobile = useMediaQuery("(max-width:760px)");
@@ -16,8 +16,9 @@ const Header = () => {
     const {searchOpen, setOpen} = useSearch();
 
     return (
-        <header className="flex items-center justify-between p-4 pr-8 w-full">
-            {!isMobile && <SideBar />}
+        <>
+        {!isMobile && <SideBar />}
+        <header className="flex items-center justify-between w-full px-8 py-4">
             {/* <div>
                 <Link href="/" aria-label={siteMetadata.headerTitle}>
                     <div className="flex items-center justify-between">
@@ -32,7 +33,7 @@ const Header = () => {
                 </Link>
             </div> */}
 
-            <div style={{ position: "relative", zIndex: 1101 }}>
+            <div style={{ position: "relative", zIndex: 1101, margin: "0 auto 8px" }}>
                 {!searchOpen ? (
                     <SearchBar />
                 ) : (
@@ -64,6 +65,7 @@ const Header = () => {
                     })}
             </div>
         </header>
+        </>
     )
 }
 export default Header

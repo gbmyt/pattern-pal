@@ -139,16 +139,27 @@ export default function PersistentDrawerLeft() {
               }
             }}
           >
-          <MenuIcon sx={[ open && { display: 'none', },]} />
+          <MenuIcon 
+            sx={[ 
+              open ? { display: 'none', }: {
+                "&:hover": {
+                  backgroundColor: "silver",
+                  borderRadius: 8,
+                }
+              },
+              
+            ]} 
+          />
           </IconButton>
             <Typography 
               component="a"
               href="/" 
-              sx={{ 
+              sx={{
                 fontSize: "30px",
                 color: "#000",
                 fontWeight: 600,
-                ml: !open ? 2 : 0,
+                ml: open ? -3 : 1,
+                mt: "4px",
               }}
               >Notions</Typography>
         </Toolbar>
@@ -196,7 +207,7 @@ export default function PersistentDrawerLeft() {
               <ListItemButton>
                 <ListItemIcon>
                   {/* {isUnread ? <MarkEmailUnreadIcon /> : <MailIcon />} */}
-                  <MarkEmailUnreadIcon />
+                  <MailIcon />
                 </ListItemIcon>
                 <Typography 
                   component="a" 

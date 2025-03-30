@@ -14,9 +14,10 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
                 width: "200px",
                 height: "250px",
                 border: "1px solid rgba(192,192,192, 0.25)",
+                backdropFilter: "blur(2px)",
 
                 // generic 
-                boxShadow: "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;",
+                // boxShadow: "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;",
                 
                 // with border 
                 // boxShadow: "rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;",
@@ -28,7 +29,7 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
                 // boxShadow: "rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;",
                 
                 // fun
-                // boxShadow: "rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;",
+                boxShadow: "rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;",
             }}
         >
             <div style={{ margin: "2px 0 4px 0" }}>
@@ -70,9 +71,9 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
                 
                 <Input 
                     sx={{
-                        border: "1px solid silver",
-                        borderRadius: 2,
+                        borderRadius: 1,
                         padding: 0,
+                        backgroundColor: "#FFF",
                         fontSize: 11,
                         m: 1,
                     }}

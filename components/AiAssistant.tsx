@@ -3,17 +3,16 @@ import AssistantIcon from "@mui/icons-material/Assistant"
 import { useState } from "react";
 import AiAssistantDialogue from "./AiAssistantDialogue";
 import { Box } from "@mui/material";
+import DragWrapper from "./DragWrapper";
 
 const AiAssistant = () => {
     const [chatOpen, setOpen] = useState(false);
         
     const handleOpenChat = () => {
-        console.log('open');
         setOpen(true);
     }
     
     const handleClose = () => {
-        console.log('Closing chat');
         setOpen(false);
     }
     return (
@@ -32,7 +31,12 @@ const AiAssistant = () => {
                 // },
             }}
         >
-            {chatOpen && (<AiAssistantDialogue onClose={handleClose} />)}
+            {chatOpen && (
+                // TODO: Resizable in addition to draggable
+                <DragWrapper>
+                    <AiAssistantDialogue onClose={handleClose} />
+                </DragWrapper>
+            )}
             <AssistantIcon
                 onClick={handleOpenChat}
                 sx={{ fill: "var(--purple)" }}
