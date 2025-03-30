@@ -16,5 +16,6 @@ export default authMiddleware({
 })
 
 export const config = {
+    runtime: "nodejs",
     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 }
