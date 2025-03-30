@@ -3,6 +3,7 @@ import EditorForm from "@/components/EditorForm"
 import { render, renderWithProvider, screen } from "../utils"
 
 import Grid from "@/components/Grid"
+import Chart from "@/components/Chart"
 
 const defaultPattern = {
     title: "",
@@ -45,14 +46,17 @@ describe.only("Editor Grid", function () {
     it("User can set a custom grid size ", async function () {
         expect.hasAssertions()
 
-        // Render the Editor Form
         var { user } = await renderWithProvider(
-            <EditorForm authorized={true} /> // check for guest user too TODO
+            <Chart userId={null} /> 
         )
 
-        // Click on the Edit Button to expand Menu Controls
-        const editBtn = screen.getByRole("button", { name: "Edit ✎" })
+        // Click on the Advanced options button 
+        // to expand chart size controls
+        const editBtn = screen.getByRole("button", { name: "Advanced" });
         await user.click(editBtn)
+
+        const optionsText = screen.getByText('Advanced Options');
+        expect(optionsText).toBeInTheDocument();
 
         // Confirm a user can type in a number in the width/height form fields
         const heightInput = screen.getByRole("spinbutton", {
@@ -67,11 +71,12 @@ describe.only("Editor Grid", function () {
         await user.clear(widthInput)
         await user.type(widthInput, "3")
 
-        // Confirm state was updated to match user-input w/h values
+        // Chart was updated to match user-defined width/height
         expect(heightInput).toHaveValue(3)
         expect(widthInput).toHaveValue(3)
 
         // Confirm rendered Grid updated to render the user's updated dimensions
+        // @ts-ignore
         const gridUI = (await screen.queryByTestId("grid")) as Array
 
         if (gridUI) {
@@ -86,7 +91,7 @@ describe.only("Editor Grid", function () {
             )
 
             var width
-            Array.from(gridUI.children).forEach(function (element) {
+            Array.from(gridUI.children).forEach(function (element: any) {
                 width = element.children.length / height
             })
 

@@ -117,7 +117,7 @@ const AdvancedOptionsMenu = () => {
                         type="number"
                         aria-label="gridHeight"
                         onChange={handleChartFormChange}
-                        placeholder="Height in Pixels"
+                        placeholder="Height in"
                     />
                     <label htmlFor="grid-width">Width</label>
                     <input
@@ -126,7 +126,7 @@ const AdvancedOptionsMenu = () => {
                         type="number"
                         aria-label="gridWidth"
                         onChange={handleChartFormChange}
-                        placeholder="Width in Pixels"
+                        placeholder="Width in"
                     />
                 </div>
                 <Button
