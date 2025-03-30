@@ -33,13 +33,15 @@ const sideBarLinks = [
   { href: "/favorites", linkText: "Favorites", parentPage: "Account" },
   { href: "/library", linkText: "Library", parentPage: "Account" },
   { href: "/stash", linkText: "Stash", parentPage: "Account" },
+  
+  { href: "/sell", linkText: "Seller" },
+  { href: "/shop", linkText: "Shop", parentPage: "Seller" },
+  { href: "/shop/manage", linkText: "Manage", parentPage: "Seller" },
 
   { href: "/studio", linkText: "Design Studio" }, // Rename or separate Manage Shop to 'Seller'?
-  { href: "/editor", linkText: "New Chart", parentPage: "Studio" },
+  { href: "/editor", linkText: "Editor", parentPage: "Studio" },
+  { href: "/patterns", linkText: "New Pattern", parentPage: "Studio" },
   { href: "/templates", linkText: "Templates", parentPage: "Studio" },
-  { href: "/patterns/new", linkText: "New Pattern", parentPage: "Studio" },
-  { href: "/templates/new", linkText: "Templates", parentPage: "Studio" },
-  { href: "/shop/manage", linkText: "Manage Shop", parentPage: "Studio" },
   
   { href: "/symbols", linkText: "Symbols" },
   { href: "/community", linkText: "Community" },
@@ -118,7 +120,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
       <AppBar 
         position="fixed" 
@@ -132,24 +134,24 @@ export default function PersistentDrawerLeft() {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              mr: 2,
+              marginLeft: "2px",
               "&:hover": {
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
               }
             }}
           >
-            <Box sx={[ open && { display: 'none', }, ]}  >
-              <MenuIcon />
-            </Box>
+          <MenuIcon sx={[ open && { display: 'none', },]} />
+          </IconButton>
             <Typography 
-              variant="h5" 
-              component="a" 
+              component="a"
               href="/" 
               sx={{ 
+                fontSize: "30px",
+                color: "#000",
+                fontWeight: 600,
                 ml: !open ? 2 : 0,
               }}
               >Notions</Typography>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

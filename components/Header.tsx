@@ -7,15 +7,17 @@ import SearchBar from "./SearchBar"
 import SearchBarModal from "./SearchActive"
 import { useSearch } from "@/hooks/useSearch"
 import SideBar from "./SideBar"
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useMediaQuery } from "@mui/material"
 
 const Header = () => {
+    const isMobile = useMediaQuery("(max-width:760px)");
+
     const pathname = usePathname()
     const {searchOpen, setOpen} = useSearch();
 
     return (
         <header className="flex items-center justify-between p-4 pr-8 w-full">
-            <SideBar />
+            {!isMobile && <SideBar />}
             {/* <div>
                 <Link href="/" aria-label={siteMetadata.headerTitle}>
                     <div className="flex items-center justify-between">
