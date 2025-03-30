@@ -1,14 +1,13 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-import { Suspense, useEffect, useRef } from "react"
-import html2canvas from "html2canvas"
-import Button from "./Button"
+import { useEffect } from "react"
 
 function Grid() {
     const {
         chartFromDatabase,
         setChart,
         grid,
+        gridBorderWidth,
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
@@ -49,8 +48,9 @@ function Grid() {
                     <div
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
+                            border: `${gridBorderWidth || "0.5"}px solid rgba(192, 192, 192, 0.5)`
                         }}
-                        className="border-solid border-2 grid rounded-lg"
+                        className="grid rounded-lg"
                     >
                         {grid && grid}
                     </div>

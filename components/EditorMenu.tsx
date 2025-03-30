@@ -7,9 +7,10 @@ import { useGridContext } from "@/context/GridContext"
 import { usePixelIsFilled } from "@/hooks/usePixelFillState"
 
 // Components
-import Modal from "./Modal"
+import ColorWheelModal from "./ColorWheelModal"
 import Button from "./Button"
 import ColorWheel from "./ColorWheel"
+import DragWrapper from "./DragWrapper"
 
 function EditorMenu({
     modalIsOpen,
@@ -78,7 +79,8 @@ function EditorMenu({
         {
             type: "select",
             value: "Edit",
-            options: ["Edit", "Remove Fill", "Reset Size"],
+            // TODO: Add border controls for choosing color
+            options: ["Edit", "Remove Fill", "Reset Size", "Toggle Gridlines"],
             handleChange: (e: React.ChangeEvent) => {
                 let target = e.target as HTMLSelectElement
                 switch (target.value) {
@@ -162,7 +164,7 @@ function EditorMenu({
             } else if (link.type === "select") {
                 return (
                     <select
-                        className="rounded-md bg-transparent mx-1 text-center"
+                        className="rounded-md border-2 bg-transparent mx-1 text-center"
                         key={index}
                         onChange={link.handleChange}
                     >
@@ -180,8 +182,8 @@ function EditorMenu({
         })
 
     return (
-        <div className="flex justify-center min-w-screen mb-4">
-            <Modal isOpen={open} setOpen={setOpen}>
+        <div className="flex justify-center">
+            <ColorWheelModal isOpen={open} setOpen={setOpen}>
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex justify-center items-center p-8">
                         Are you sure you want to delete this chart? This action
@@ -208,32 +210,23 @@ function EditorMenu({
                         />
                     </div>
                 </div>
-            </Modal>
+            </ColorWheelModal>
 
-            <div
-                className={`flex justify-between w-auto max-w-fit border-x-2 border-b-2 rounded-b-md py-2 px-4 mb-4 ${
-                    !menuControlsOpen ? "" : ""
-                }`}
-            >
+            <div className={`flex justify-between w-auto max-w-fit px-4 ${ !menuControlsOpen ? "" : "" }`}>
                 <div className="flex justify-between w-full">
-                    <div
-                        className={
-                            !menuControlsOpen
-                                ? "hidden"
-                                : "flex justify-evenly w-full"
-                        }
-                    >
-                        <Modal
+                     {links && links}
+                    {/* TODO: When dragging inside color wheel, disable element dragging */}
+                    <DragWrapper>
+                        <ColorWheelModal
                             isOpen={colorwheelOpen}
                             setOpen={setColorWheelOpen}
                         >
-                            <ColorWheel
-                                setOpen={setColorWheelOpen}
-                                disabled={!colorwheelOpen || !menuControlsOpen}
-                            />
-                        </Modal>
-                        {links && links}
-                    </div>
+                        <ColorWheel
+                            setOpen={setColorWheelOpen}
+                            disabled={ !colorwheelOpen || !menuControlsOpen }
+                        />
+                        </ColorWheelModal>
+                    </DragWrapper>
 
                     <Button
                         style="none"

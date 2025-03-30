@@ -1,9 +1,8 @@
 import { useGridContext } from "@/context/GridContext"
 import { Sketch } from "@uiw/react-color"
-// import { Alpha, Hue, ShadeSlider, Saturation, Interactive, hsvaToHslaString } from '@uiw/react-color';
-// import { EditableInput, EditableInputRGBA, EditableInputHSLA } from '@uiw/react-color';
 import { SetStateAction, useState } from "react"
 import Button from "./Button"
+import { Typography } from "@mui/material"
 
 function ColorWheel({
     disabled,
@@ -16,24 +15,20 @@ function ColorWheel({
         useGridContext()
     const [hex, setHex] = useState(pixelFillColor)
     return (
-        <>
-            <div className="flex m-6">
-                <span>Fill Color</span>
-                <Button
-                    style="link"
-                    buttonText="Reset Color"
-                    handleClick={() => {
-                        setHex(defaultFillColor)
-                        setPixelFillColor(defaultFillColor)
-                        setOpen(false)
-                    }}
-                />
-            </div>
+        <div 
+            style={{ 
+                display: "flex", 
+                justifyContent: "center", 
+                alignItems: "center", 
+                flexDirection: "column", 
+                margin: "24px auto 0",
+            }}
+        >
             <Sketch
                 style={
                     disabled
                         ? { pointerEvents: "none", opacity: "0.4" }
-                        : { marginLeft: 20 }
+                        : {}
                 }
                 color={hex}
                 onChange={(color) => {
@@ -41,7 +36,24 @@ function ColorWheel({
                     setPixelFillColor(color.hex)
                 }}
             />
-        </>
+            <Typography
+                sx={{ 
+                    mt: 2,
+                    textDecoration: "none", 
+                    "&:hover": {
+                        color: "purple",
+                        opacity: 0.6
+                    }, 
+                }}
+                component="button"
+                onClick={() => {
+                    setHex(defaultFillColor)
+                    setPixelFillColor(defaultFillColor)
+                }}
+            >
+                Reset Fill Color
+            </Typography>
+        </div>
     )
 }
 

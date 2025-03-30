@@ -1,6 +1,7 @@
 // Server Actions and Grid Context use these
 export const DEFAULTGRIDWIDTH = 35
 export const DEFAULTGRIDHEIGHT = 25
+export const DEFAULT_GRID_BORDER = 1
 
 // Pixel Sizes
 export const DEFAULT_PIXEL_SIZE_PX = 16

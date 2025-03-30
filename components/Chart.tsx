@@ -1,7 +1,6 @@
 import AdvancedOptionsMenu from "./AdvancedOptionsMenu"
 import EditorForm from "./EditorForm"
 import Grid from "./Grid"
-import SearchBar from "./SearchBar"
 import { Suspense } from "react"
 
 const Chart = ({ userId }: { userId: string | null }) => {

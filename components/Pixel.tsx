@@ -22,6 +22,7 @@ function GridPixel({
         setFillOnDrag,
         editorFillMode,
         pixelSizeInPixels,
+        gridlinesWidth
     } = useGridContext()
 
     function handleFillGridPixel(e: React.MouseEvent) {
@@ -100,8 +101,9 @@ function GridPixel({
                 backgroundColor: fill,
                 width: `${pixelSizeInPixels}px`,
                 height: `${pixelSizeInPixels}px`,
+                border: `${gridlinesWidth > 1 ? gridlinesWidth : 0.5}px solid rgba(192, 192, 192, 0.5)`
             }}
-            className={`grid-pixel border-solid border-y border-x p-2`}
+            className={`grid-pixel p-2`}
         ></div>
     )
 }

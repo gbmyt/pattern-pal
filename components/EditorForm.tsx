@@ -8,7 +8,7 @@ import {
     updatePixelGridServerAction,
 } from "@/lib/actions"
 import { useState } from "react"
-import Modal from "@/components/Modal"
+import ColorWheelModal from "@/components/ColorWheelModal"
 
 import EditorMenu from "./EditorMenu"
 
@@ -147,7 +147,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
 
             {menuControlsOpen && modalIsOpen && (
                 <div className="flex flex-row justify-center items-center">
-                    <Modal isOpen={modalIsOpen} setOpen={setModalOpen}>
+                    <ColorWheelModal isOpen={modalIsOpen} setOpen={setModalOpen}>
                         <form
                             id="form"
                             action={async (data) => await handleSubmit(data)}
@@ -179,7 +179,7 @@ function EditorForm({ authorized }: { authorized: boolean }) {
                                 )}
                             </div>
                         </form>
-                    </Modal>
+                    </ColorWheelModal>
                 </div>
             )}
         </>
