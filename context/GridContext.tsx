@@ -1,8 +1,12 @@
 "use client"
 import GridPixel from "@/components/Pixel"
-import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
+import {
+    DEFAULTGRIDHEIGHT,
+    DEFAULTGRIDWIDTH,
+    DEFAULT_PIXEL_SIZE_PX,
+} from "@/lib/globals"
 import { GridContextType } from "@/types/context"
-import { Pattern } from "@/types/pattern"
+import { Chart } from "@/types/chart"
 import {
     createContext,
     useCallback,
@@ -31,18 +35,27 @@ export default function ContextProvider({
         )
     )
 
+    /** Editor Menu State */
+    const [menuControlsOpen, setMenuOpen] = useState(true)
+    const [editorFillMode, setFillMode] = useState("Paint")
+
+    /** Advanced Editor Options */
+    const [advancedEditorOptionsOpen, setAdvancedOptionsOpen] = useState(false)
+
     /** Grid State */
     const [mouseIsDown, setMouseDownState] = useState(false)
     const [fillWhenDragged, setFillOnDrag] = useState(false)
     const [grid, setGrid] = useState<React.ReactNode[]>([])
 
     /** Pixel State */
+    const [pixelSizeInPixels, setPixelSize] = useState(DEFAULT_PIXEL_SIZE_PX)
     const [pixelFillColor, setPixelFillColor] = useState(defaultFillColor)
-    /** Pattern Maker Currently Rendered Pattern State (pulled from database) */
-    const [currentPattern, setCurrentPattern] = useState<Pattern | null>(null)
 
-    /** Pattern State */
-    const [pattern, setPattern] = useState<Pattern>({
+    /** Grid Currently Rendered in the Editor (from database) */
+    const [chartFromDatabase, setDbChart] = useState<Chart | null>(null)
+
+    const [chart, setChart] = useState<Chart>({
+        id: "",
         title: "",
         gridHeight: defaultGridHeight,
         gridWidth: defaultGridWidth,
@@ -55,18 +68,15 @@ export default function ContextProvider({
     var renderEmptyGrid = useCallback(
         function () {
             var emptyGrid: React.ReactNode[][] = new Array(
-                pattern.gridHeight && pattern.gridHeight > 0
-                    ? pattern.gridHeight
-                    : 0
+                chart.gridHeight && chart.gridHeight > 0 ? chart.gridHeight : 0
             ).fill(
                 new Array(
-                    pattern.gridWidth && pattern.gridWidth > 0
-                        ? pattern.gridWidth
-                        : 0
+                    chart.gridWidth && chart.gridWidth > 0 ? chart.gridWidth : 0
                 ).fill(null)
             )
 
-            setPattern({
+            setChart({
+                id: "",
                 title: "",
                 gridHeight: defaultGridHeight,
                 gridWidth: defaultGridWidth,
@@ -74,28 +84,28 @@ export default function ContextProvider({
             })
             setGrid(composeGrid(emptyGrid))
         },
-        [setGrid, defaultGrid, pattern]
+        [setGrid, defaultGrid, chart]
     )
 
-    var renderGridFromPattern = useCallback(
+    var renderGridFromDatabase = useCallback(
         function () {
-            pattern && setGrid(composeGrid(JSON.parse(pattern.pixels)))
+            chart && setGrid(composeGrid(JSON.parse(chart.pixels)))
         },
-        [pattern]
+        [chart]
     )
 
     // ･ﾟ･｡✧･ﾟ: * .・。.・゜✭・.・✫・゜・。. ゜゜・。.・゜✭・
     // Lifecycle Stuff
 
     useEffect(() => {
-        pattern && pattern.pixels ? renderGridFromPattern() : renderEmptyGrid()
-    }, [pattern, renderGridFromPattern, renderEmptyGrid])
+        chart && chart.pixels ? renderGridFromDatabase() : renderEmptyGrid()
+    }, [chart, renderGridFromDatabase, renderEmptyGrid])
 
     // either render a fresh grid or a grid from database
-    function composeGrid(pattern: PixelRowOptions[]) {
+    function composeGrid(chart: PixelRowOptions[]) {
         var grid: React.ReactNode[] = []
 
-        pattern.forEach((row: PixelRowOptions, idx) => {
+        chart.forEach((row: PixelRowOptions, idx) => {
             var elements: JSX.Element[] = []
 
             for (var i = 0; i < row.length; i++) {
@@ -119,20 +129,28 @@ export default function ContextProvider({
 
     /** Export Stuff */
     const ctx: GridContextType = {
+        advancedEditorOptionsOpen,
+        setAdvancedOptionsOpen,
+        pixelSizeInPixels,
+        setPixelSize,
+        editorFillMode,
+        setFillMode,
+        menuControlsOpen,
+        setMenuOpen,
         mouseIsDown,
         setMouseDownState,
         maxGridWidth,
         pixelFillColor,
         defaultFillColor,
         setPixelFillColor,
-        pattern,
-        setPattern,
+        chart,
+        setChart,
         grid,
         renderEmptyGrid,
         fillWhenDragged,
         setFillOnDrag,
-        currentPattern,
-        setCurrentPattern,
+        chartFromDatabase,
+        setDbChart,
     }
 
     return <GridContext.Provider value={ctx}>{children}</GridContext.Provider>

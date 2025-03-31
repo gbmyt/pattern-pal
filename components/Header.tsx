@@ -1,16 +1,22 @@
 "use client"
-import headerNavLinks from "@/data/headerNavLinks"
+import links from "@/data/links"
 import siteMetadata from "@/data/siteMetadata"
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import SearchBar from "./SearchBar"
+import SearchBarModal from "./SearchActive"
+import { useSearch } from "@/hooks/useSearch"
+import SideBar from "./SideBar"
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Header = () => {
     const pathname = usePathname()
+    const {searchOpen, setOpen} = useSearch();
 
     return (
-        <header className="flex items-center justify-between pb-10">
-            <div>
+        <header className="flex items-center justify-between p-4 pr-8 w-full">
+            <SideBar />
+            {/* <div>
                 <Link href="/" aria-label={siteMetadata.headerTitle}>
                     <div className="flex items-center justify-between">
                         {typeof siteMetadata.headerTitle === "string" ? (
@@ -22,35 +28,38 @@ const Header = () => {
                         )}
                     </div>
                 </Link>
+            </div> */}
+
+            <div style={{ position: "relative", zIndex: 1101 }}>
+                {!searchOpen ? (
+                    <SearchBar />
+                ) : (
+                    <SearchBarModal open={searchOpen} setOpen={setOpen} />
+                )}
             </div>
 
-            <div className="flex items-center leading-5 space-x-4 sm:space-x-6">
-                {headerNavLinks
+            <div
+                className="flex items-center leading-5 space-x-4 sm:space-x-6 relative z-1101"
+                style={{ position: "relative", zIndex: 1101 }}
+            >
+                {links.headerNavLinks
                     .filter((link) => link.href !== "/")
-                    .map((link) => (
-                        <Link
-                            key={link.title}
-                            href={link.href}
-                            className={`${
-                                pathname === link.href
-                                    ? "border-b-2 border-cyan-400"
-                                    : ""
-                            } hidden sm:block font-medium text-gray-900`}
-                        >
-                            {link.title}
-                        </Link>
-                    ))}
-
-                <SignedIn>
-                    {/* Mount the UserButton component */}
-                    <UserButton afterSignOutUrl="/" />
-                </SignedIn>
-                <SignedOut>
-                    {/* Signed out users get sign in button */}
-                    <div className="sm:block font-medium">
-                        <SignInButton />
-                    </div>
-                </SignedOut>
+                    .map((link: any) => {
+                        const Icon = link.icon;
+                        return (
+                            <Link
+                                key={link.title}
+                                href={link.href}
+                                className={`${
+                                    pathname === link.href
+                                        ? "border-b-2 border-purple"
+                                        : ""
+                                } hidden sm:block font-medium text-gray-900`}
+                            >
+                                {Icon ? <Icon /> : <>{link.title}</>}
+                            </Link>
+                        )
+                    })}
             </div>
         </header>
     )

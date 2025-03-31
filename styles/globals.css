@@ -2,10 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.light {
+    --background: 255, 255, 255;
+    --foreground: 0, 0, 0;
+
+    --primary: ;
+    --secondary: ;
+
+    --button-primary: ;
+    --button-secondary: ;
+
+    --card: ;
+    --cta: ;
+
+    --text-primary: 0, 0, 0;
+    --text-secondary: 255, 255, 255;
+
+    --purple: 151, 71, 255;
+    --lavender: 198, 155, 255;
+    --red: 255, 0, 0;
+    --lt-red: 255, 65, 87;
+    --dk-grey: 41, 41, 41;
+    --lt-grey: 86, 84, 84;
+
+    --border: 151, 71, 255;
+
+    /* 
+      Linear Gradient Colors: 0% #F04DFF, 35% #FF4157, 70% #FFAC1C, 100% #1DD1B9 
+    */
+    /* --start: #f04dff;
+    --mid-one: #ff4157;
+    --mid-two: #ffac1c;
+    --stop: #1dd1b9;
+
+    --border: linear-gradient(to bottom, transparent, rgb(var(--stop)))
+        rgb(var(--start)); */
+
+    background: rgba(var(--background));
+    color: rgb(var(--text-primary));
+    /* border: rgb(var(--lavender)); */
+}
+
+.dark {
+    --background: 0, 0, 0;
+    --foreground: 255, 255, 255;
+
+    --primary: ;
+    --secondary: ;
+
+    --button-primary: 151, 71, 255;
+    --button-secondary: 198, 155, 255;
+
+    --card: ;
+    --cta: 151, 71, 255;
+
+    --text-primary: 255, 255, 255;
+    --text-secondary: 0, 0, 0;
+
+    --purple: 151, 71, 255;
+    --lavender: 198, 155, 255;
+    --red: 255, 0, 0;
+    --lt-red: 255, 65, 87;
+    --dk-grey: 41, 41, 41;
+    --lt-grey: 86, 84, 84;
+
+    --border: 151, 71, 255;
+
+    /* 
+      Linear Gradient Colors: 0% #F04DFF, 35% #FF4157, 70% #FFAC1C, 100% #1DD1B9 
+    */
+    /* --start: #f04dff;
+    --mid-one: #ff4157;
+    --mid-two: #ffac1c;
+    --stop: #1dd1b9;
+
+    --border: linear-gradient(to bottom, transparent, rgb(var(--stop)))
+        rgb(var(--start)); */
+
+    background: rgba(var(--background));
+    color: rgb(var(--text-primary));
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -17,11 +92,6 @@
 } */
 
 body {
-  color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+    color: rgb(var(--text-primary));
+    background-color: rgba(var(--background));
 }

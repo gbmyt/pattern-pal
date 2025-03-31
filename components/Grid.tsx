@@ -1,28 +1,29 @@
 "use client"
 import { useGridContext } from "@/context/GridContext"
-
-import { useEffect } from "react"
+import { Suspense, useEffect, useRef } from "react"
+import html2canvas from "html2canvas"
+import Button from "./Button"
 
 function Grid() {
     const {
-        currentPattern,
-        setPattern,
+        chartFromDatabase,
+        setChart,
         grid,
-        mouseIsDown,
         setMouseDownState,
         setFillOnDrag,
     } = useGridContext()
 
-    // Render the pattern the user selected
+    // Fetch from db and render a user-selected grid
     useEffect(() => {
-        currentPattern && setPattern(currentPattern)
-    }, [currentPattern, setPattern])
+        chartFromDatabase && setChart(chartFromDatabase)
+    }, [chartFromDatabase, setChart])
 
     function handleClick(e: React.MouseEvent) {
         const target = e.target as HTMLInputElement
 
         if (target) {
             target.addEventListener("mousedown", function () {
+                setFillOnDrag(true)
                 setMouseDownState(true)
             })
 
@@ -33,27 +34,31 @@ function Grid() {
         }
     }
 
-    return (
-        <div onClick={handleClick}>
-            <header>
-                <div
-                    className="flex justify-center"
-                    id="grid"
-                    aria-label="grid"
-                    data-testid="grid"
-                >
+    if (grid.length) {
+        return (
+            <div
+                id="grid"
+                onMouseLeave={() => {
+                    setFillOnDrag(false)
+                    setMouseDownState(false)
+                }}
+                className="flex flex-col w-fit m-auto pt-8 pb-16"
+                onClick={handleClick}
+            >
+                <div className="flex justify-center" aria-label="grid">
                     <div
                         style={{
                             gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
                         }}
                         className="border-solid border-2 grid rounded-lg"
                     >
-                        {grid.length && grid}
+                        {grid && grid}
                     </div>
                 </div>
-            </header>
-        </div>
-    )
+                <div className="h-0"></div>
+            </div>
+        )
+    }
 }
 
 export default Grid

@@ -1,8 +1,8 @@
 # Pattern Pal
 
-**_A fiber artist and pattern designer's best friend! The goal of this project is to make creating custom pixel-based patterns fun and easy for fiber artists with a love of crochet and/or knitting 🧶._**
+**_A fiber artist and garment designer's best friend! The goal of this project is to make creating custom pixel-based patterns fun and easy for fiber artists with a love of crochet and/or knitting 🧶._**
 
-_Use our pattern-maker to create a custom grid-based design by hand, or import an existing grid to be converted to a pattern as-is- or customize it to your liking by making changes via the pattern-maker. Once you're happy with the way your design looks, save it to your account or share it with other crafters on Ravelry, Instagram, or Facebook!_
+_Use our chart editor to create a custom grid-based design by hand, or import an existing grid & customize it to your liking by making changes via the chart editor. Once you&apos;re happy with the way your design looks, save it to your account or share it with other crafters on Ravelry, Instagram, or Facebook!_
 
 <!-- ## Video and GIF Demo -->
 <!-- To-Do -->
@@ -42,14 +42,14 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 # Maintainers
 
-- Gabriela Taylor - [Github](https://github.com/gbmyt)
+-   Gabriela Taylor - [Github](https://github.com/gbmyt)
 
 # License
 

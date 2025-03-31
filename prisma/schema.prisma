@@ -19,15 +19,13 @@ model User {
   clerkId String @unique
   email   String @unique
 
-  patterns Pattern[]
+  patterns Chart[]
 }
 
-model Pattern {
+model Chart {
   id        String   @id @default(uuid())
   title     String
   createdAt DateTime @default(now())
-
-  // published  Boolean  @default(false)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -35,4 +33,9 @@ model Pattern {
   gridWidth  Int    @default(5)
   gridHeight Int    @default(5)
   pixels     String
+
+  // TODO:
+  // published  Boolean  @default(false)
+  // patternType: [paid, free]
+  // tags: []
 }
