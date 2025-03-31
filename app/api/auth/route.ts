@@ -2,7 +2,7 @@ import { AuthorizationCode } from "simple-oauth2"
 import randomstring from "randomstring"
 
 // move this somewhere else when OAuth working
-export const oauth2 = {
+export const oauth2: any = {
     // The oauth endpoints are all at www.ravelry.com
     auth: {
         tokenHost: "https://www.ravelry.com",

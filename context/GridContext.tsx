@@ -3,6 +3,7 @@ import GridPixel from "@/components/Pixel"
 import {
     DEFAULTGRIDHEIGHT,
     DEFAULTGRIDWIDTH,
+    DEFAULT_GRID_BORDER,
     DEFAULT_PIXEL_SIZE_PX,
 } from "@/lib/globals"
 import { GridContextType } from "@/types/context"
@@ -46,9 +47,11 @@ export default function ContextProvider({
     const [mouseIsDown, setMouseDownState] = useState(false)
     const [fillWhenDragged, setFillOnDrag] = useState(false)
     const [grid, setGrid] = useState<React.ReactNode[]>([])
-
+    const [gridBorderWidth, setGridBorder] = useState(DEFAULT_GRID_BORDER)
+    
     /** Pixel State */
     const [pixelSizeInPixels, setPixelSize] = useState(DEFAULT_PIXEL_SIZE_PX)
+    const [gridlinesWidth, setGridLines] = useState(0)
     const [pixelFillColor, setPixelFillColor] = useState(defaultFillColor)
 
     /** Grid Currently Rendered in the Editor (from database) */
@@ -62,9 +65,7 @@ export default function ContextProvider({
         pixels: defaultGrid,
     })
 
-    // ･ﾟ･｡✧･ﾟ: * .・。.・゜✭・.・✫・゜・。. ゜゜・。.・゜✭・
     // Update UI Logic
-
     var renderEmptyGrid = useCallback(
         function () {
             var emptyGrid: React.ReactNode[][] = new Array(
@@ -133,6 +134,10 @@ export default function ContextProvider({
         setAdvancedOptionsOpen,
         pixelSizeInPixels,
         setPixelSize,
+        gridBorderWidth,
+        setGridBorder,
+        gridlinesWidth, 
+        setGridLines,
         editorFillMode,
         setFillMode,
         menuControlsOpen,

@@ -74,14 +74,17 @@ function Footer() {
 
                 {/* Site References/Contributor Links */}
                 <div className="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-                    <Link href="https://github.com/gbmyt">
+                    <Link 
+                        href="https://github.com/gbmyt" 
+                        className="hover:text-purple"
+                    >
                         {" "}
                         Gabriela Taylor
                     </Link>
                     <div>{` • `}</div>
                     <div>{`© ${new Date().getFullYear()}`}</div>
                     <div>{` • `}</div>
-                    <Link href={siteMetadata.siteRepo}>
+                    <Link href={siteMetadata.siteRepo} className="hover:text-purple">
                         {siteMetadata.title}
                     </Link>
                 </div>

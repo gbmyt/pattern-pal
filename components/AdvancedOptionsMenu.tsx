@@ -11,20 +11,44 @@ const AdvancedOptionsMenu = () => {
         setAdvancedOptionsOpen,
         pixelSizeInPixels,
         setPixelSize,
+        setGridBorder,
+        setGridLines,
         chart,
         setChart,
         maxGridWidth,
     } = useGridContext()
-    const [sliderValue, setSliderValue] = useState(pixelSizeInPixels)
+    const [pxSliderValue, setPixelSlider] = useState(pixelSizeInPixels)
+    const [borderSliderValue, setBorderSlider] = useState(1)
+    const [gridlinesSliderValue, setGridlinesSlider] = useState(1)
 
     function handleSliderChange(e: React.ChangeEvent) {
         const target = e.target as HTMLInputElement
-        setSliderValue(target.valueAsNumber)
+        switch (target.name) {
+            case "border-width":
+                setBorderSlider(target.valueAsNumber)
+                break
+            case "pixel-width":
+                setPixelSlider(target.valueAsNumber)
+                break
+            case "gridlines-width":
+                setGridlinesSlider(target.valueAsNumber)
+                break
+            default:
+                console.log("default", target.name)
+        }
     }
 
     useEffect(() => {
-        sliderValue && setPixelSize(sliderValue)
-    }, [setPixelSize, sliderValue])
+        pxSliderValue && setPixelSize(pxSliderValue)
+    }, [setPixelSize, pxSliderValue])
+    
+    useEffect(() => {
+        borderSliderValue && setGridBorder(borderSliderValue)
+    }, [borderSliderValue, setGridBorder])
+    
+    useEffect(() => {
+        gridlinesSliderValue && setGridLines(gridlinesSliderValue)
+    }, [gridlinesSliderValue, setGridLines])
 
     function handleChartFormChange(e: React.FormEvent) {
         const target = e.target as HTMLInputElement
@@ -79,31 +103,67 @@ const AdvancedOptionsMenu = () => {
     if (advancedEditorOptionsOpen) {
         return (
             <div className="flex flex-col items-left m-4 border-2 border-gray-200 rounded-md max-w-fit mx-auto px-8 pb-8 pt-4">
-                <Button
-                    style="customWithDefaults"
-                    extraStyle="ml-0 mt-0 mr-4 mb-4 border-none px-0"
-                    buttonText="X"
-                    handleClick={() => {
-                        setAdvancedOptionsOpen && setAdvancedOptionsOpen(false)
-                    }}
-                />
                 <h3 className="font-semibold">Advanced Options</h3>
 
                 <div className={`inline-flex items-center my-2 w-fit pr-4`}>
                     <span className="inline-block min-w-fit">
                         <label
-                            htmlFor="pixel-size-range"
+                            htmlFor="pixel-width"
                             className="mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-fit mr-2"
                         >
                             Pixel Size
                         </label>
                     </span>
                     <input
-                        id="pixel-size-range"
+                        id="pixel-width"
+                        name="pixel-width"
                         type="range"
                         min={16}
                         max={50}
-                        value={sliderValue}
+                        value={pxSliderValue}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                        onChange={handleSliderChange}
+                    />
+                </div>
+
+                <div className={`inline-flex items-center my-2 w-fit pr-4`}>
+                    <span className="inline-block min-w-fit">
+                        <label
+                            htmlFor="border-width"
+                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-fit mr-2"
+                        >
+                            Border Size
+                        </label>
+                    </span>
+                    <input
+                        id="border-width"
+                        name="border-width"
+                        type="range"
+                        min={0}
+                        max={10}
+                        value={borderSliderValue}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                        onChange={handleSliderChange}
+                    />
+                </div>
+                
+                <div className={`inline-flex items-center my-2 w-fit pr-4`}>
+                    <span className="inline-block min-w-fit">
+                        <label
+                            htmlFor="gridlines-width"
+                            className="mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-fit mr-2"
+                        >
+                            Gridlines Size
+                        </label>
+                    </span>
+                    <input
+                        id="gridlines-width"
+                        name="gridlines-width"
+                        type="range"
+                        min={1}
+                        max={10}
+                        step={0.5}
+                        value={gridlinesSliderValue}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         onChange={handleSliderChange}
                     />
@@ -129,14 +189,6 @@ const AdvancedOptionsMenu = () => {
                         placeholder="Width in"
                     />
                 </div>
-                <Button
-                    style="customWithDefaults"
-                    extraStyle="mr-4 mt-4"
-                    buttonText="Done"
-                    handleClick={() => {
-                        setAdvancedOptionsOpen && setAdvancedOptionsOpen(false)
-                    }}
-                />
             </div>
         )
     }

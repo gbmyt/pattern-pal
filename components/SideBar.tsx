@@ -16,10 +16,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import MailIcon from '@mui/icons-material/Mail';
-import { useSearch } from '@/hooks/useSearch';
+
 import "@/styles/globals.css"
 
 const drawerWidth = 240;
@@ -33,13 +32,15 @@ const sideBarLinks = [
   { href: "/favorites", linkText: "Favorites", parentPage: "Account" },
   { href: "/library", linkText: "Library", parentPage: "Account" },
   { href: "/stash", linkText: "Stash", parentPage: "Account" },
+  
+  { href: "/sell", linkText: "Seller" },
+  { href: "/shop", linkText: "Shop", parentPage: "Seller" },
+  { href: "/shop/manage", linkText: "Manage", parentPage: "Seller" },
 
   { href: "/studio", linkText: "Design Studio" }, // Rename or separate Manage Shop to 'Seller'?
-  { href: "/editor", linkText: "New Chart", parentPage: "Studio" },
+  { href: "/editor", linkText: "Editor", parentPage: "Studio" },
+  { href: "/patterns", linkText: "New Pattern", parentPage: "Studio" },
   { href: "/templates", linkText: "Templates", parentPage: "Studio" },
-  { href: "/patterns/new", linkText: "New Pattern", parentPage: "Studio" },
-  { href: "/templates/new", linkText: "Templates", parentPage: "Studio" },
-  { href: "/shop/manage", linkText: "Manage Shop", parentPage: "Studio" },
   
   { href: "/symbols", linkText: "Symbols" },
   { href: "/community", linkText: "Community" },
@@ -118,7 +119,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
       <AppBar 
         position="fixed" 
@@ -132,24 +133,35 @@ export default function PersistentDrawerLeft() {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              mr: 2,
+              marginLeft: "2px",
               "&:hover": {
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
               }
             }}
           >
-            <Box sx={[ open && { display: 'none', }, ]}  >
-              <MenuIcon />
-            </Box>
+          <MenuIcon 
+            sx={[ 
+              open ? { display: 'none', }: {
+                "&:hover": {
+                  backgroundColor: "silver",
+                  borderRadius: 8,
+                }
+              },
+              
+            ]} 
+          />
+          </IconButton>
             <Typography 
-              variant="h5" 
-              component="a" 
+              component="a"
               href="/" 
-              sx={{ 
-                ml: !open ? 2 : 0,
+              sx={{
+                fontSize: "30px",
+                color: "#000",
+                fontWeight: 600,
+                ml: open ? -3 : 1,
+                mt: "4px",
               }}
               >Notions</Typography>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -190,13 +202,17 @@ export default function PersistentDrawerLeft() {
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['Inbox'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {/* {isUnread ? <MarkEmailUnreadIcon /> : <MailIcon />} */}
+                  <MailIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <Typography 
+                  component="a" 
+                  href={`/${text.toLowerCase()}`} 
+                >{text}</Typography>
               </ListItemButton>
             </ListItem>
           ))}

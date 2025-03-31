@@ -9,7 +9,7 @@ const SearchBar: React.FC = () => {
                 sx: {
                     width: 400,
                     borderRadius: 4,
-                    height: 40,
+                    height: 35,
                     "& .MuiInputBase-input": {
                         textAlign: "center",
                     },

@@ -1,3 +1,5 @@
+import { Button, Typography } from "@mui/material"
+
 const getPatterns = async () => {
     const res = await fetch("http://localhost:3000/api/patterns", {
         method: "GET",
@@ -11,6 +13,11 @@ const getPatterns = async () => {
 
 const Page = async () => {
     // const { data } = await getPatterns()
-    return <a href="/api/auth">Log in with Ravelry</a>
+    return (
+        <>
+            <Typography>Patterns</Typography>
+            <Button variant="outlined" component="a" href="/api/auth">Log in with Ravelry</Button>
+        </>
+    )
 }
 export default Page
