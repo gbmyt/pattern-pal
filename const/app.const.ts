@@ -7,10 +7,11 @@ export const RAVELRY_TOKEN_PATH = "/oauth2/token"
 export const RAVELRY_AUTH_PATH = "/oauth2/auth"
 
 export const AUTH_COOKIE = "access_token";
+export const AUTH_ENDPOINT = "/api/auth";
 
 // APP Values
 export const API_REDIRECT_URL=`${process.env.APP_BASE_URL}/callback`;
-export const APP_REDIRECT_PATH = '/projects';
+export const APP_REDIRECT_PATH = '/projects'; // Make this dynamic based on original protected/URL before redirect to /login TODO
 export const APP_BASE_URL = process.env.APP_BASE_URL;
 
 export const authorizedUser = 'serendipity-knits';

@@ -1,30 +1,43 @@
-import { client } from "../auth/route"
-import { AuthorizationTokenConfig } from "simple-oauth2"
-import { NextRequest } from "next/server"
+import { cookies } from 'next/headers';
+import { headers } from "@/lib/apiHandlers";
+import { RAVELRY_API_SECRET, RAVELRY_CLIENT_ID, API_REDIRECT_URL, BASE_RAVELRY_URL, RAVELRY_TOKEN_PATH, AUTH_COOKIE } from "@/const/app.const";
 
-export const GET = async (req: NextRequest) => {
-    const code = req.nextUrl.searchParams.get("code")
-    console.log("got here GET CALLBACK")
+export const POST = async (req: Request) => {
+    const { code } = await req.json()
+    
+    const url = `${BASE_RAVELRY_URL}${RAVELRY_TOKEN_PATH}`
+    const clientId = RAVELRY_CLIENT_ID!;
+    const clientSecret = RAVELRY_API_SECRET!;
+    const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
-    if (code && typeof code === "string") {
-        const tokenParams: AuthorizationTokenConfig = {
-            code: code,
-            redirect_uri: "https://pattern-pal.netlify.app/pattern",
-        }
-        try {
-            const accessToken = await client.getToken(tokenParams)
-            // console.log("Got token", accessToken)
+    // Exchange `code` for token with the OAuth provider
+    const tokenRes = await fetch(url, {
+      method: 'POST',
+      headers: { 
+        ...headers,
+        'Authorization': `Basic ${basicAuth}`,
+        },
+        body: new URLSearchParams({
+            grant_type: 'authorization_code',
+            code,
+            redirect_uri: API_REDIRECT_URL,
+        }),
+    })
+    const tokenData = await tokenRes.json()
+    const accessToken = tokenData.access_token;
 
-            return Response.json({
-                data: "Got Access Token: " + accessToken,
-            })
-        } catch (err) {
-            // console.log("Access Token Error", err)
-            return Response.json({
-                data: "😞 authentication failed: " + err,
-            })
-        }
-    } else {
-        return Response.json({ data: "missing auth code" })
-    }
-}
+    // Store the token in a secure HTTP-only cookie
+    cookies().set(
+      AUTH_COOKIE, 
+      accessToken, 
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60, // 1 hour
+        path: '/',
+        sameSite: 'lax',
+    });
+    // handle session, cookie, etc.
+    return Response.json({ success: true, data: tokenData });
+  }
+  

@@ -1,36 +1,47 @@
 import { AuthorizationCode } from "simple-oauth2"
 import randomstring from "randomstring"
+import { 
+    BASE_RAVELRY_URL, 
+    RAVELRY_API_SECRET, 
+    RAVELRY_AUTH_PATH, 
+    RAVELRY_CLIENT_ID,
+    RAVELRY_TOKEN_PATH, 
+    API_REDIRECT_URL, 
+    AUTH_COOKIE,
+} from "@/const/app.const"
+import { cookies } from "next/headers"
 
-// move this somewhere else when OAuth working
-export const oauth2: any = {
+const oauth2: any = {
     // The oauth endpoints are all at www.ravelry.com
     auth: {
-        tokenHost: "https://www.ravelry.com",
-        tokenPath: "/oauth2/token",
-        authorizePath: "/oauth2/auth",
+        tokenHost: BASE_RAVELRY_URL,
+        tokenPath: RAVELRY_TOKEN_PATH,
+        authorizePath: RAVELRY_AUTH_PATH,
     },
     client: {
-        id: process.env.RAVELRY_CLIENT_ID,
-        secret: process.env.RAVELRY_CLIENT_SECRET,
+        id: RAVELRY_CLIENT_ID,
+        secret: RAVELRY_API_SECRET,
     },
 }
+const client = new AuthorizationCode(oauth2)
 
-export const client = new AuthorizationCode(oauth2)
-
+// run: pnpm run dev and then pnpm run tunnel 
+// then paste the url output into Ravelry console's app config
 export const GET = async (req: Request) => {
-    console.log("GET auth host?", req.headers.get("host"))
-    console.log("Auth Protocol", req.headers.get("protocol"))
-
-    // REDIRECT URI ONLY WORKS WITH HTTPS, LOCALHOST WONT WORK HERE
-    // Not sure how to test this locally now -- research TODO
     const authorizationUri = client.authorizeURL({
-        // redirect_uri: `localhost:3000/api/callback`,
-        // redirect_uri: `${window.location.protocol}//${window.location.host}/api/callback`,
-
-        redirect_uri: "https://pattern-pal.netlify.app/api/callback",
+        redirect_uri: API_REDIRECT_URL,
         state: randomstring.generate(),
-        scope: "offline", // offline scope is needed if you want to receive a refresh token (you do)
+        scope: "offline", // offline scope is required for refresh tokens
     })
-    console.log("authorizationUri", authorizationUri)
     return Response.redirect(authorizationUri)
+}
+
+// logout handler 
+export const POST = async (req: Request) => {
+    await cookies().delete(AUTH_COOKIE);
+    if (!cookies().get(AUTH_COOKIE)) {
+        return Response.redirect(`/patterns`)
+    } else {
+        console.error('There was a problem logging out')
+    }
 }
