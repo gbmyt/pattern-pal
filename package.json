@@ -11,7 +11,8 @@
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui --coverage",
         "cypress:open": "cypress open",
-        "cypress:all": "cypress run"
+        "cypress:all": "cypress run",
+        "tunnel": "ngrok http 3000"
     },
     "dependencies": {
         "@clerk/nextjs": "^4.31.8",
