@@ -1,7 +1,7 @@
 "use client"
 
 import { useGridContext } from "@/context/GridContext"
-import { withBorder } from "@/data/styles"
+import { withBorder } from "@/const/styles"
 import { useEffect, useState } from "react"
 import Button from "./Button"
 

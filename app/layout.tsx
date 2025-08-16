@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { AppProps } from "next/app"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Suspense } from "react"
 
@@ -21,20 +20,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
     children,
-    pageProps,
 }: {
-    pageProps: AppProps
     children: React.ReactNode
 }) {
 
     return (
-        <ClerkProvider {...pageProps}>
+        <ClerkProvider>
             <html lang="en">
                 <body className={`light ${inter.className} max-w-screen`}>
                     <Suspense fallback={<h2>Loading...</h2>}>
-                        <h1 className="w-screen">
+                        <header className="w-screen">
                             <Header />
-                        </h1>
+                        </header>
                     </Suspense>
 
                     <AiAssistant />

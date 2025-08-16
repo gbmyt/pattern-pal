@@ -1,6 +1,6 @@
 "use client"
-import links from "@/data/links"
-import siteMetadata from "@/data/siteMetadata"
+import links from "@/const/links"
+import siteMetadata from "@/const/siteMetadata"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import SearchBar from "./SearchBar"

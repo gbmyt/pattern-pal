@@ -1,8 +1,8 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import db from "./db"
-import { currentUser } from "@clerk/nextjs"
+import db from "../db/db"
+import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { getUserByClerkId } from "./auth"
 import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"

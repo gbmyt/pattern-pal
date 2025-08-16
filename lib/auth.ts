@@ -1,5 +1,5 @@
-import { auth } from "@clerk/nextjs"
-import db from "./db"
+import { auth } from "@clerk/nextjs/server"
+import db from "../db/db"
 
 export const getUserByClerkId = async () => {
     const { userId } = await auth()

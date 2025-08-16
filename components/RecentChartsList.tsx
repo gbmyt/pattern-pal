@@ -1,6 +1,6 @@
 import { getUserByClerkId } from "@/lib/auth"
 import Card from "./Card"
-import db from "@/lib/db"
+import db from "@/db/db"
 import Carousel from "./Carousel"
 
 async function fetchData() {

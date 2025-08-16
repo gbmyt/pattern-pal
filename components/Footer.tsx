@@ -1,5 +1,5 @@
 import Link from "next/link"
-import siteMetadata from "@/data/siteMetadata"
+import siteMetadata from "@/const/siteMetadata"
 import SocialIcon from "@/components/social-icons"
 
 // TODO: Instead of rendering 2 separate lists, adjust styles to create

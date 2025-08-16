@@ -1,5 +1,5 @@
 "use client"
-import { transitionStyles } from "@/data/styles"
+import { transitionStyles } from "@/const/styles"
 import Image from "next/image"
 import { Suspense, useEffect, useState } from "react"
 
