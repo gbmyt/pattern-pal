@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
@@ -19,13 +20,16 @@ model User {
   clerkId String @unique
   email   String @unique
 
-  patterns Chart[]
+  charts   Chart[]
+  projects Project[]
+  patterns Pattern[]
 }
 
 model Chart {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid()) // Using CUID for better indexing performance
   title     String
   createdAt DateTime @default(now())
+  published Boolean  @default(false)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -34,8 +38,73 @@ model Chart {
   gridHeight Int    @default(5)
   pixels     String
 
-  // TODO:
-  // published  Boolean  @default(false)
-  // patternType: [paid, free]
-  // tags: []
+  tags      String[]
+  Pattern   Pattern? @relation(fields: [patternId], references: [id])
+  patternId String?
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+  title       String    @db.VarChar(255)
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
+
+  status    ProjectStatus
+  notes     String
+  craft     String
+  gauge     String
+  pattern   Pattern?      @relation(fields: [patternId], references: [id])
+  patternId String?
+
+  images Image[]
+  tags   String[]
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  COMPLETED
+  FROGGED
+  HIBERNATING
+}
+
+model Pattern {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  published  Boolean  @default(false)
+  title      String   @db.VarChar(255)
+  designer   User?    @relation(fields: [designerId], references: [id])
+  designerId String?
+
+  pdfUrl         String
+  description    String
+  craft          String
+  category       String
+  gauge          String
+  sizes          String
+  yarn           String
+  yarnWeight     String
+  needleHookSize String
+  yardage        String
+  price          String
+  languages      String
+
+  images  Image[]
+  tags    String[]
+  Project Project[]
+  charts  Chart[]
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  url       String
+
+  Pattern   Pattern? @relation(fields: [patternId], references: [id])
+  patternId String?
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
 }

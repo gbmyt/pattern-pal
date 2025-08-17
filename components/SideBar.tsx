@@ -36,10 +36,11 @@ const sideBarLinks = [
   { href: "/sell", linkText: "Seller" },
   { href: "/shop", linkText: "Shop", parentPage: "Seller" },
   { href: "/shop/manage", linkText: "Manage", parentPage: "Seller" },
+  { href: "/patterns", linkText: "Patterns", parentPage: "Studio" },
 
   { href: "/studio", linkText: "Design Studio" }, // Rename or separate Manage Shop to 'Seller'?
   { href: "/editor", linkText: "Editor", parentPage: "Studio" },
-  { href: "/patterns", linkText: "New Pattern", parentPage: "Studio" },
+  { href: "/patterns/new", linkText: "New Pattern", parentPage: "Studio" },
   { href: "/templates", linkText: "Templates", parentPage: "Studio" },
   
   { href: "/symbols", linkText: "Symbols" },
