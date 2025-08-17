@@ -1,42 +1,42 @@
 "use server"
-
 import { revalidatePath } from "next/cache"
 import db from "../db/db"
 import { currentUser } from "@clerk/nextjs/server"
-import { redirect } from "next/navigation"
 import { getUserByClerkId } from "./auth"
 import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
 
 export const createNewUser = async (path: string | undefined = undefined) => {
+    console.log('creating user')
     // Get the clerk user
     const user = await currentUser()
 
+    if (!user) {
+        return null;
+    }
+
+    // check if the user exists in our db already
+    const dbUser = await db.user.findUnique({
+        where: {
+            clerkId: user.id,
+        },
+    })
+    if (dbUser) {
+        return dbUser;
+    }
+
     try {
-        // check if the user exists in our db already
-        const match = await db.user.findUnique({
-            where: {
-                clerkId: user?.id as string,
+        // Create one if not
+        const response = await db.user.create({
+            data: {
+                clerkId: user.id,
+                email: user.emailAddresses[0].emailAddress,
             },
         })
-
-        try {
-            // Create one if not
-            if (user && !match) {
-                await db.user.create({
-                    data: {
-                        clerkId: user.id,
-                        email: user.emailAddresses[0].emailAddress,
-                    },
-                })
-            }
-        } catch (e) {
-            console.log("CREATE USER ERROR", e)
-        }
+        return response;
     } catch (e) {
-        console.log("CREATE USER MATCH CLERK ID ERROR", e)
-    } finally {
-        redirect("/editor")
+        console.log("---- ERROR CREATING USER", e)
     }
+    return null;
 }
 
 const deleteUser = async () => {
