@@ -4,17 +4,44 @@ import db from "../db/db"
 import { currentUser } from "@clerk/nextjs/server"
 import { getUserByClerkId } from "./auth"
 import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
+import { generateText, convertToModelMessages, type ModelMessage, type UIMessage } from 'ai';
+import { ROLES, systemInstructions } from "@/types/chat"
 import { model } from '@/lib/ai';
-import { generateText } from 'ai';
 
 // AI Actions 
-export async function getAIResponse(prompt: string) {
-  const { text } = await generateText({
-    model,
-    prompt,
-  });
+export async function getSimpleAIResponse(prompt: string) {
+    const { text } = await generateText({
+        model,
+        prompt,
+    })
 
-  return text;
+    return text;
+}
+
+export async function getAIResponse(
+    userInput: string,
+    conversationHistory: UIMessage[] = []
+): Promise<string> {
+    const systemMessage: ModelMessage = {
+        role: ROLES.SYSTEM,
+        content: systemInstructions,
+    }
+
+    // Convert UIMessage[] to ModelMessage[]
+    const modelHistory: ModelMessage[] = convertToModelMessages(conversationHistory);
+
+    const messages: ModelMessage[] = [
+        systemMessage,
+        ...modelHistory,
+        { role: ROLES.USER, content: userInput },
+    ]
+
+    const { text } = await generateText({
+        model,
+        prompt: messages,
+    })
+
+    return text;
 }
 
 // User Actions 

@@ -8,6 +8,7 @@ import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { getAIResponse } from '@/lib/actions';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { UIMessage } from 'ai';
 
 const MarkdownComponents: ComponentProps<typeof ReactMarkdown>['components'] = {
     p: ({ node, ...props }) => <Typography {...(props as any)} sx={{ mb: 1, fontSize: '11px' }} />,
@@ -24,9 +25,9 @@ const MarkdownComponents: ComponentProps<typeof ReactMarkdown>['components'] = {
 const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
   const [input, setInput] = useState<Message | null>(null);
   const [messages, setMessages] = useState<Message[]>([
-        { role: ROLES.SUGGESTION, content: "How much yarn do I need for size Small?"},
-        { role: ROLES.SUGGESTION, content: "How many sizes are there?"},
-        { role: ROLES.SUGGESTION, content: "Is this an actively supported pattern?"},
+        { role: ROLES.SYSTEM, content: "How much yarn do I need for size Small?"},
+        { role: ROLES.SYSTEM, content: "How many sizes are there?"},
+        { role: ROLES.SYSTEM, content: "Is this an actively supported pattern?"},
     ]);
   const messagesStartRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -45,18 +46,24 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
 
   async function handleSubmit(e: React.FormEvent) {
       e.preventDefault()
-
+      const withSuggestions: boolean = messages.some(m => m.role === ROLES.SYSTEM);
       // On first message, clear suggestions
-      if (messages.some(m => m.role === 'suggestion') && !messages.some(m => m.role === 'user')) {
+      if (withSuggestions && !messages.some(m => m.role === ROLES.USER)) {
         setMessages([{ role: ROLES.USER, content: input?.content || "" }]);
       } else {
         setMessages((prev) => [...prev, { role: ROLES.USER, content: input?.content || "" }]);
       }
 
       setInput(null);
+      const uiMessages: UIMessage[] = messages.map((m) => ({
+        id: crypto.randomUUID(),
+        role: m.role,
+        content: m.content,
+        parts: [{ type: 'text', text: m.content }],
+      }));
 
-      const aiResponse = await getAIResponse(input?.content ?? "");
-      setMessages((prev) => [...prev, { role: ROLES.AI, content: aiResponse || "" }]);
+      const aiResponse = await getAIResponse(input?.content ?? "", uiMessages);
+      setMessages((prev) => [...prev, { role: ROLES.ASSISTANT, content: aiResponse || "" }]);
   }
 
   useEffect(() => {
@@ -176,7 +183,7 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
           <Box>
             <div ref={messagesStartRef} />
             {messages.map((msg: Message, i) => {
-                if (msg.role === ROLES.AI) {
+                if (msg.role === ROLES.ASSISTANT) {
                     return (
                         <Box key={i} className="text-left" sx={{ fontSize: "11px" }}>
                             <strong>AI:</strong>
@@ -188,7 +195,7 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
                 }
 
                 const isUserMessage = msg.role === ROLES.USER;
-                const isSuggestion = msg.role === ROLES.SUGGESTION;
+                const isSuggestion = msg.role === ROLES.SYSTEM;
                 return (
                     <Typography
                         key={i}
