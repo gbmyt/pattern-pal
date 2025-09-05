@@ -1,14 +1,33 @@
 "use client"
-import { Message } from '@/types/chat';
+import { Message, ROLES } from '@/types/chat';
 import { Box, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HistoryIcon from '@mui/icons-material/History';
-import { useEffect, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
+import { getAIResponse } from '@/lib/actions';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+const MarkdownComponents: ComponentProps<typeof ReactMarkdown>['components'] = {
+    p: ({ node, ...props }) => <Typography {...(props as any)} sx={{ mb: 1, fontSize: '11px' }} />,
+    strong: ({ node, ...props }) => <strong {...props} style={{ fontWeight: 'bold' }} />,
+    em: ({ node, ...props }) => <em {...props} style={{ fontStyle: 'italic' }} />,
+    ul: ({ node, ...props }) => <ul {...props} style={{ paddingLeft: '20px', marginBottom: '8px' }} />,
+    ol: ({ node, ...props }) => <ol {...props} style={{ paddingLeft: '20px', marginBottom: '8px' }} />,
+    li: ({ node, ...props }) => <li {...props} style={{ marginBottom: '4px' }} />,
+    table: ({ node, ...props }) => <table {...props} style={{ borderCollapse: 'collapse', width: '100%', marginBottom: '8px' }} />,
+    th: ({ node, ...props }) => <th {...props} style={{ border: '1px solid #ddd', padding: '4px', textAlign: 'left', backgroundColor: '#f2f2f2' }} />,
+    td: ({ node, ...props }) => <td {...props} style={{ border: '1px solid #ddd', padding: '4px' }} />,
+};
 
 const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
   const [input, setInput] = useState<Message | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+        { role: ROLES.SUGGESTION, content: "How much yarn do I need for size Small?"},
+        { role: ROLES.SUGGESTION, content: "How many sizes are there?"},
+        { role: ROLES.SUGGESTION, content: "Is this an actively supported pattern?"},
+    ]);
   const messagesStartRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,14 +43,21 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
     messagesStartRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    setMessages([
-        { role: "suggestion", content: "How much yarn do I need for size Small?"},
-        { role: "suggestion", content: "How many sizes are there?"},
-        { role: "suggestion", content: "Is this an actively supported pattern?"},
+  async function handleSubmit(e: React.FormEvent) {
+      e.preventDefault()
 
-    ]);
-  }, []);
+      // On first message, clear suggestions
+      if (messages.some(m => m.role === 'suggestion') && !messages.some(m => m.role === 'user')) {
+        setMessages([{ role: ROLES.USER, content: input?.content || "" }]);
+      } else {
+        setMessages((prev) => [...prev, { role: ROLES.USER, content: input?.content || "" }]);
+      }
+
+      setInput(null);
+
+      const aiResponse = await getAIResponse(input?.content ?? "");
+      setMessages((prev) => [...prev, { role: ROLES.AI, content: aiResponse || "" }]);
+  }
 
   useEffect(() => {
     scrollToBottom();
@@ -147,25 +173,32 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
             scrollbarWidth: "none",
           }}
         >
-          <Box className="font-semibold">
+          <Box>
             <div ref={messagesStartRef} />
             {messages.map((msg: Message, i) => {
-                const isUserMessage = msg.role === "user";
+                if (msg.role === ROLES.AI) {
+                    return (
+                        <Box key={i} className="text-left" sx={{ fontSize: "11px" }}>
+                            <strong>AI:</strong>
+                            <ReactMarkdown remarkPlugins={[remarkGfm]} components={MarkdownComponents}>
+                                {msg.content}
+                            </ReactMarkdown>
+                        </Box>
+                    );
+                }
+
+                const isUserMessage = msg.role === ROLES.USER;
+                const isSuggestion = msg.role === ROLES.SUGGESTION;
                 return (
                     <Typography
                         key={i}
                         fontSize="11px"
                         className={isUserMessage ? "text-right" : "text-left"}
-                        sx={{ 
-                            pl: isUserMessage ? "20px" : "0", 
-                            pr: !isUserMessage ? "20px" : "0", 
-                            opacity: msg.role === "suggestion" ? "70%" : "100%" 
-
-                        }}
+                        sx={{ pl: isUserMessage ? "20px" : "0", pr: !isUserMessage ? "20px" : "0", opacity: isSuggestion ? "70%" : "100%" }}
                     >
-                        <strong>{msg.role !== "suggestion" && msg.role + ':'}</strong> {msg.content}
+                        <strong>{!isSuggestion && msg.role + ':'}</strong> {msg.content}
                     </Typography>
-                )
+                );
             })}
             <div ref={messagesEndRef} />
           </Box>
@@ -173,11 +206,7 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
 
         {/* User Input Form */}
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setMessages((prev) => [...prev, { role: "user", content: input?.content || "" }]);
-            setInput(null);
-          }}
+          onSubmit={handleSubmit}
         >
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             {/* Jump to conversation top icon */}
@@ -215,7 +244,7 @@ const AiAssistantDialogue = ({ onClose }: { onClose: () => void }) => {
               }}
               placeholder="Type a message..."
               value={input?.content ?? ""}
-              onChange={(e) => setInput({ role: "user", content: e.target.value })}
+              onChange={(e) => setInput({ role: ROLES.USER, content: e.target.value })}
             />
           </Box>
         </form>

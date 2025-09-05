@@ -4,7 +4,20 @@ import db from "../db/db"
 import { currentUser } from "@clerk/nextjs/server"
 import { getUserByClerkId } from "./auth"
 import { DEFAULTGRIDHEIGHT, DEFAULTGRIDWIDTH } from "@/lib/globals"
+import { model } from '@/lib/ai';
+import { generateText } from 'ai';
 
+// AI Actions 
+export async function getAIResponse(prompt: string) {
+  const { text } = await generateText({
+    model,
+    prompt,
+  });
+
+  return text;
+}
+
+// User Actions 
 export const createNewUser = async (path: string | undefined = undefined) => {
     console.log('creating user')
     // Get the clerk user
