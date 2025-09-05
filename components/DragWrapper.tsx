@@ -1,49 +1,61 @@
 "use client"
-import React, { useState, useRef } from "react";
-import AiAssistantDialogue from "./AiAssistantDialogue";
+import React, { useState, useRef, useEffect } from "react";
 
 const DragWrapper = ({ children }: { children: React.ReactNode }) => {
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 40, y: 40 });
   const [isDragging, setIsDragging] = useState(false);
+  const offsetRef = useRef<{ offsetX: number; offsetY: number }>({
+    offsetX: 0,
+    offsetY: 0,
+  });
   const rectRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!rectRef.current) return;
-
     setIsDragging(true);
-    const rect = rectRef.current;
-    (rect as any).startX = e.clientX - position.x;
-    (rect as any).startY = e.clientY - position.y;
+    offsetRef.current = {
+      offsetX: e.clientX - position.x,
+      offsetY: e.clientY - position.y,
+    };
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !rectRef.current) return;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      setPosition({
+        x: e.clientX - offsetRef.current.offsetX,
+        y: e.clientY - offsetRef.current.offsetY,
+      });
+    };
 
-    const rect = rectRef.current;
-    setPosition({
-      x: e.clientX - (rect as any).startX,
-      y: e.clientY - (rect as any).startY,
-    });
-  };
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
 
   return (
     <div
       ref={rectRef}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
       style={{
         position: "absolute",
         left: `${position.x}px`,
         top: `${position.y}px`,
-        cursor: "grab",
+        cursor: isDragging ? "grabbing" : "grab",
+        userSelect: "none", // prevents text highlighting while dragging
       }}
-    >{children}</div>
+    >
+      {children}
+    </div>
   );
 };
 

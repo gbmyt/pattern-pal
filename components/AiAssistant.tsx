@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import DragWrapper from "./DragWrapper";
 
 const AiAssistant = () => {
-    const [chatOpen, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
         
     const handleOpenChat = () => {
         setOpen(true);
@@ -31,14 +31,13 @@ const AiAssistant = () => {
                 // },
             }}
         >
-            {chatOpen && (
-                // TODO: Resizable in addition to draggable
+            {open && (
                 <DragWrapper>
                     <AiAssistantDialogue onClose={handleClose} />
                 </DragWrapper>
             )}
             <AssistantIcon
-                onClick={handleOpenChat}
+                onClick={() => { open ? handleClose() : handleOpenChat() }}
                 sx={{ fill: "var(--purple)" }}
             />
         </Box>
